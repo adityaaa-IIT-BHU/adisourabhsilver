@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Seva | Care Management</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #fffdf5;
+            --bg-panel: #ffffff;
+            --primary: #ff9933; /* Saffron */
+            --primary-hover: #e68a00;
+            --accent: #138808; /* India Green */
+            --text-dark: #1a1a1a;
+            --text-muted: #666666;
+            --navy: #003366;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --border-radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 153, 51, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(19, 136, 8, 0.05) 0%, transparent 20%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Layout --- */
+        .app-container { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            background: var(--bg-panel);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.02);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo {
+            font-family: 'Rozha One', serif;
+            font-size: 1.8rem;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+
+        .nav-item {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #fff5e6;
+            color: var(--primary-hover);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* --- Main Content --- */
+        .main-content { padding: 2rem 3rem; overflow-y: auto; position: relative; }
+
+        /* Views */
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active-view { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+
+        .page-title h1 {
+            font-family: 'Rozha One', serif;
+            font-size: 2.5rem;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .namaste-icon { color: var(--primary); font-size: 2rem; }
+        .page-title p { color: var(--text-muted); font-size: 1rem; margin-top: 5px; }
+
+        /* --- Buttons & Inputs --- */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #ff7700);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 153, 51, 0.4); }
+
+        .btn-mode {
+            background: var(--navy); color: white; padding: 0.5rem 1rem; border-radius: 8px;
+            font-size: 0.8rem; border: none; cursor: pointer; margin-bottom: 1rem; width: 100%;
+        }
+
+        .btn-icon {
+            background: none; border: none; cursor: pointer; color: #999; transition: 0.2s;
+        }
+        .btn-icon:hover { color: #ff4444; }
+
+        /* --- Stats & Cards --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .card {
+            background: var(--bg-panel);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+        .stat-card { border-top: 4px solid var(--primary); }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-value { font-size: 2.5rem; font-weight: 700; margin: 0.5rem 0; color: var(--navy); }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .icon-circle {
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem; background: #fff5e6; color: var(--primary); font-size: 1.2rem;
+        }
+
+        /* --- Nurse Grid --- */
+        .nurse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        
+        .nurse-card { position: relative; border-top: 4px solid transparent; transition: 0.3s; }
+        .nurse-card:hover { border-top: 4px solid var(--accent); transform: translateY(-3px); }
+
+        .delete-btn { position: absolute; top: 1rem; right: 1rem; opacity: 0; transition: 0.2s; }
+        .nurse-card:hover .delete-btn { opacity: 1; }
+
+        .nurse-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .nurse-avatar {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--navy); font-weight: 700;
+            position: relative; border: 2px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-dot {
+            position: absolute; bottom: 2px; right: 2px; width: 14px; height: 14px;
+            border-radius: 50%; border: 2px solid white;
+        }
+        .status-online { background: var(--accent); }
+        .status-busy { background: #ff4444; }
+        .status-offline { background: #ccc; }
+
+        .nurse-info h3 { font-size: 1.15rem; font-weight: 600; color: var(--navy); }
+        .metrics-row {
+            display: flex; justify-content: space-between; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #eee;
+        }
+        .metric-val { font-size: 1.1rem; font-weight: 700; color: var(--primary); display: block; text-align: center;}
+        .metric-lbl { font-size: 0.75rem; color: #888; text-transform: uppercase; display: block; text-align: center;}
+
+        /* --- Modal --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100;
+            align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; padding: 2.5rem; border-radius: 20px; width: 100%; max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2); position: relative; animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; color: var(--navy); margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 500; }
+        .form-input {
+            width: 100%; background: #f9f9f9; border: 1px solid #ddd; padding: 0.8rem; border-radius: 8px; color: #333; outline: none;
+        }
+        .form-input:focus { border-color: var(--primary); background: #fff; }
+
+        .close-modal {
+            position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: #999; cursor: pointer; font-size: 1.2rem;
+        }
+
+        /* --- Camera & Nurse App Specifics --- */
+        .cam-container {
+            width: 100%; max-width: 400px; margin: 0 auto;
+            background: #000; border-radius: 16px; overflow: hidden;
+            position: relative; margin-bottom: 1rem;
+            border: 4px solid var(--navy);
+        }
+        video { width: 100%; height: 350px; object-fit: cover; }
+        
+        /* --- Payroll Table --- */
+        .simple-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .simple-table th { text-align: left; padding: 1rem; background: #fff5e6; color: var(--navy); border-radius: 8px 8px 0 0; }
+        .simple-table td { padding: 1rem; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+
+        /* --- Doc Locker Preview --- */
+        .doc-box {
+            border: 2px dashed #ccc; padding: 1rem; text-align: center; border-radius: 8px; cursor: pointer; color: #777;
+        }
+        .doc-box:hover { border-color: var(--primary); color: var(--primary); }
+
+        .om-symbol {
+            position: absolute; top: -20px; right: -20px; font-size: 10rem; opacity: 0.03;
+            pointer-events: none; color: var(--primary); font-family: 'Rozha One', serif;
+        }
+
+        /* --- New Login UI Styles --- */
+.login-container {
+    background: linear-gradient(135deg, #fffdf5 0%, #fff7e6 100%);
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+
+/* Animated Background Shapes */
+.shape { position: absolute; filter: blur(80px); opacity: 0.6; animation: float 10s infinite ease-in-out; }
+.shape-1 { top: -10%; right: -10%; width: 500px; height: 500px; background: #ff9933; animation-delay: 0s; }
+.shape-2 { bottom: -10%; left: -10%; width: 400px; height: 400px; background: #138808; animation-delay: 2s; }
+.shape-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: #003366; opacity: 0.1; animation-delay: 4s; }
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, 50px); }
+}
+
+/* Glass Card */
+.login-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 32px;
+    padding: 4rem;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 51, 102, 0.15);
+    position: relative;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+    font-size: 4rem; margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #ff9933, #003366);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 3s infinite;
+}
+
+/* Google Button */
+.google-btn {
+    width: 100%;
+    background: white;
+    border: 2px solid #f0f0f0;
+    padding: 1rem;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; color: #333;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 2rem;
+    position: relative; overflow: hidden;
+}
+
+.google-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-color: #ff9933;
+}
+
+.google-btn:active { transform: scale(0.98); }
+
+/* Decorative Elements */
+.divider {
+    height: 1px; background: linear-gradient(90deg, transparent, #ddd, transparent);
+    margin: 2rem 0; width: 100%;
+}
+.secure-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #f0f9ff; color: #003366;
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 0.8rem; font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* Update .login-card width */
+.login-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 24px;
+    padding: 3.5rem; /* More breathing room */
+    width: 100%;
+    max-width: 480px; /* Wider for desktop */
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+/* New Input Styles */
+.input-label {
+    display: block;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+    margin-left: 4px;
+}
+
+.input-group {
+    display: flex;
+    gap: 0; /* Connected inputs */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    border-radius: 12px;
+}
+
+.modern-input {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    font-size: 1rem;
+    outline: none;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.modern-input:focus {
+    border-color: var(--primary);
+    background: #fffdf5;
+}
+
+.input-btn {
+    border-radius: 0 12px 12px 0;
+    padding: 0 1.5rem;
+    margin: 0;
+    box-shadow: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Link Text */
+.link-text {
+    font-size: 0.8rem;
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.link-text:hover { color: var(--primary); }
+
+/* Fix Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0;
+    color: #aaa;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eee;
+}
+.divider span { padding: 0 15px; }
+
+/* --- FIX: Hide Floating ReCAPTCHA Badge --- */
+.grecaptcha-badge { 
+    visibility: hidden; 
+}
+    </style>
+</head>
+<body>
+
+<div id="login-overlay" class="login-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+
+    <div class="login-card">
+        <div class="secure-badge">
+            <i class="fa-solid fa-shield-halved"></i> Secure Staff Portal
+        </div>
+        
+        <h1 class="login-logo" style="font-family: 'Rozha One', serif;">Silver Seva</h1>
+        <p style="color: #555; font-size: 1rem; margin-bottom: 2.5rem;">
+            Log in to manage staff, payroll, and bookings.
+        </p>
+
+        <div id="phone-auth-section">
+            <div id="recaptcha-container"></div>
+            
+            <div id="step-phone">
+                <label class="input-label">Mobile Number</label>
+                <div class="input-group">
+                    <input type="tel" id="phone-number" class="modern-input" placeholder="+91 98765 43210">
+                    <button onclick="sendOTP()" id="send-otp-btn" class="btn-primary input-btn">
+                        Send OTP
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-otp" style="display: none;">
+                <label class="input-label">One Time Password</label>
+                <div class="input-group">
+                    <input type="text" id="otp-code" class="modern-input" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing: 3px; font-weight: 700;">
+                    <button onclick="verifyOTP()" id="verify-otp-btn" class="btn-primary input-btn" style="background: var(--accent);">
+                        Verify
+                    </button>
+                </div>
+                <div style="text-align: right; margin-top: 8px;">
+                    <span class="link-text" onclick="resetPhoneAuth()">Change Number</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"><span>OR</span></div>
+
+        <button onclick="loginWithGoogle()" class="google-btn" id="g-login-btn">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
+            <span>Continue with Google Account</span>
+        </button>
+
+        <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05);">
+    <p style="font-size: 0.7rem; color: #aaa; line-height: 1.4;">
+        By logging in, you agree to the Terms of Service & Privacy Policy.<br>
+        This site is protected by reCAPTCHA and the Google 
+        <a href="https://policies.google.com/privacy" target="_blank" style="color:#aaa;">Privacy Policy</a> and 
+        <a href="https://policies.google.com/terms" target="_blank" style="color:#aaa;">Terms of Service</a> apply.
+    </p>
+</div>
+    </div>
+</div>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="logo" onclick="switchTab('dashboard')">
+                <i class="fa-solid fa-hands-holding-circle" style="color: var(--primary);"></i> Silver Seva
+            </div>
+            
+            <button class="btn-mode" onclick="toggleMode()">
+                <i class="fa-solid fa-mobile-screen"></i> Switch to <span id="mode-text">Nurse App</span>
+            </button>
+
+            <ul class="nav-menu" id="admin-menu">
+                <li class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')">
+                    <i class="fa-solid fa-house-chimney-medical"></i> Seva Kendra (Home)
+                </li>
+                <li class="nav-item" id="nav-staff" onclick="switchTab('staff')">
+                    <i class="fa-solid fa-user-nurse"></i> Karmachari (Staff)
+                </li>
+                <li class="nav-item" id="nav-logs" onclick="switchTab('logs')">
+                    <i class="fa-solid fa-clipboard-list"></i> Daily Logs
+                </li>
+                <li class="nav-item" id="nav-payroll" onclick="switchTab('payroll')">
+                    <i class="fa-solid fa-money-check-dollar"></i> Payroll
+                </li>
+                <li class="nav-item" id="nav-bookings" onclick="switchTab('bookings')">
+    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> AI Bookings
+</li>
+
+<li class="nav-item" onclick="logoutApp()" style="margin-top: 1rem; color: #ff4444;">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+</li>
+            </ul>
+
+            <div style="margin-top: auto; padding: 1rem; background: #f0f7ff; border-radius: 12px; border: 1px solid #dbeafe;">
+                <p style="font-size: 0.8rem; color: var(--navy); font-weight: 600;">System Status</p>
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--accent); font-size: 0.85rem; margin-top: 5px;">
+                    <div class="status-dot status-online" style="position: relative;"></div> Firebase Connected
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="om-symbol">ॐ</div>
+
+            <div id="view-dashboard" class="view-section active-view">
+                <header>
+                    <div class="page-title">
+                        <h1><span class="namaste-icon"><i class="fa-solid fa-hands-praying"></i></span> Namaste, <span id="admin-name">Admin</span></h1>
+                        <p>Welcome to your Digital Seva Portal</p>
+                    </div>
+                    <button class="btn-primary" onclick="openModal()">
+                        <i class="fa-solid fa-plus"></i> Add Sahayak
+                    </button>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
+                        <div class="stat-label">Total Staff</div>
+                        <div class="stat-value" id="stat-total">0</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="icon-circle" style="color: var(--accent);"><i class="fa-solid fa-check-to-slot"></i></div>
+                        <div class="stat-label">Present Today</div>
+                        <div class="stat-value" id="stat-present">0</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="icon-circle" style="color: var(--navy);"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                        <div class="stat-label">Payroll Est.</div>
+                        <div class="stat-value" id="stat-payroll-total">₹0</div>
+                    </div>
+                </div>
+
+                <h2 style="font-family: 'Rozha One'; color: var(--navy); margin-bottom: 1.5rem;">Recent Activity</h2>
+                <div class="nurse-grid" id="dashboard-grid">
+                    </div>
+            </div>
+
+            <div id="view-bookings" class="view-section">
+    <header>
+        <div class="page-title">
+            <h1>WhatsApp Requests</h1>
+            <p>Real-time orders extracted by AI</p>
+        </div>
+    </header>
+    
+    <div class="nurse-grid" id="bookings-grid">
+        <div style="color: #999; grid-column: 1/-1; text-align: center; padding: 2rem;">
+            Waiting for new messages...
+        </div>
+    </div>
+</div>
+
+            <div id="view-nurse" class="view-section">
+                <div class="card" style="max-width: 450px; margin: 0 auto; text-align: center;">
+                    <h2 style="font-family:'Rozha One'; color: var(--navy); margin-bottom: 1rem;">Daily Check-In</h2>
+                    
+                    <div class="form-group" style="text-align: left;">
+                        <label>Select Your Name</label>
+                        <select id="nurse-login-select" class="form-input">
+                            </select>
+                    </div>
+
+                    <div class="cam-container">
+                        <video id="video-feed" autoplay playsinline></video>
+                        <canvas id="canvas-capture" style="display:none;"></canvas>
+                    </div>
+                    
+                    <div id="location-status" style="background: #f0f0f0; padding: 10px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 1rem; color: #555;">
+                        <i class="fa-solid fa-location-crosshairs"></i> Waiting for GPS...
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; padding: 1rem;" onclick="performCheckIn()">
+                        <i class="fa-solid fa-camera"></i> SNAP & CHECK IN
+                    </button>
+                    <p style="font-size: 0.7rem; color: #999; margin-top: 10px;">Location recorded for verification</p>
+                </div>
+            </div>
+
+            <div id="view-staff" class="view-section">
+                <header>
+                    <div class="page-title">
+                        <h1>Staff Directory</h1>
+                        <p>Manage all registered employees</p>
+                    </div>
+                </header>
+                <div class="nurse-grid" id="staff-grid"></div>
+            </div>
+
+            <div id="view-logs" class="view-section">
+                <header>
+                    <div class="page-title">
+                        <h1>Daily Attendance Logs</h1>
+                        <p>Real-time check-in data with location</p>
+                    </div>
+                </header>
+                <div id="logs-list-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                    </div>
+            </div>
+
+            <div id="view-payroll" class="view-section">
+                <header>
+                    <div class="page-title">
+                        <h1>Payroll Calculation</h1>
+                        <p>Automated salary based on attendance</p>
+                    </div>
+                    <button class="btn-primary" onclick="alert('Exporting PDF...')">
+                        <i class="fa-solid fa-download"></i> Export
+                    </button>
+                </header>
+                <div class="card" style="overflow-x: auto;">
+                    <table class="simple-table">
+                        <thead>
+                            <tr>
+                                <th>Nurse Name</th>
+                                <th>Daily Rate</th>
+                                <th>Days Worked</th>
+                                <th>Total Salary</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payroll-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 style="margin-bottom: 1.5rem; font-family: 'Rozha One'; color: var(--navy);">New Staff Entry</h2>
+            <form id="addNurseForm">
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" class="form-input" id="nurseName" required placeholder="Ex. Anjali Gupta">
+    </div>
+    
+    <div class="form-group">
+        <label>WhatsApp Number (Active)</label>
+        <input type="tel" class="form-input" id="nursePhone" required placeholder="919876543210 (No spaces or +)">
+        <p style="font-size: 0.7rem; color: #888;">Must match their WhatsApp number exactly.</p>
+    </div>
+
+    <div class="form-group">
+        <label>Role</label>
+        <input type="text" class="form-input" id="nurseSpec" required placeholder="Ex. Senior Sister">
+    </div>
+    <div class="form-group">
+        <label>Daily Rate (₹)</label>
+        <input type="number" class="form-input" id="nurseRate" required placeholder="Ex. 800">
+    </div>
+    
+    <div class="form-group">
+        <label>Document Locker (Aadhaar/ID)</label>
+        <input type="file" id="nurseDoc" style="display: none;" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+        <div class="doc-box" id="doc-trigger" onclick="document.getElementById('nurseDoc').click()">
+            <i class="fa-solid fa-cloud-arrow-up" id="doc-icon"></i> 
+            <span id="doc-text">Upload ID Card</span>
+        </div>
+    </div>
+    <button type="submit" class="btn-primary" style="width: 100%;">Save Entry</button>
+</form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { 
+    getAuth, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    signOut, 
+    onAuthStateChanged,
+    RecaptchaVerifier,
+    signInWithPhoneNumber
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+        // --- FIREBASE CONFIG ---
+        const firebaseConfig = {
+  apiKey: "AIzaSyADbFSo1XZA78Sj-ooJ7Av8tDxbctS-Qws",
+  authDomain: "silvercareprototype.firebaseapp.com",
+  projectId: "silvercareprototype",
+  storageBucket: "silvercareprototype.firebasestorage.app",
+  messagingSenderId: "695863800030",
+  appId: "1:695863800030:web:751cb3b0d536464957924f"
+};
+
+        // Init Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Init Auth
+// ... imports and app init ...
+    const auth = getAuth(app); 
+
+    // State Variables
+   
+    let currentUser = null; // Stores the logged-in user
+
+    // Unsubscribe functions (to stop listening when you log out)
+    let unsubscribeNurses = null;
+    let unsubscribeLogs = null;
+    let unsubscribeBookings = null;
+
+// --- AUTH LOGIC START ---
+
+// 1. Listen for Login State Changes
+// 1. Listen for Login State Changes
+    onAuthStateChanged(auth, (user) => {
+        const overlay = document.getElementById('login-overlay');
+        const nameSpan = document.getElementById('admin-name');
+
+        if (user) {
+            // --- LOGGED IN ---
+            currentUser = user;
+            overlay.style.display = 'none';
+            nameSpan.innerText = user.displayName ? user.displayName.split(' ')[0] : 'Admin';
+            
+            // Start listening to THIS specific user's data
+            setupRealtimeListeners(user.uid);
+        } else {
+            // --- LOGGED OUT ---
+            currentUser = null;
+            overlay.style.display = 'flex';
+            nameSpan.innerText = 'Guest';
+            
+            // Stop listening to old data and clear UI
+            if(unsubscribeNurses) unsubscribeNurses();
+            if(unsubscribeLogs) unsubscribeLogs();
+            if(unsubscribeBookings) unsubscribeBookings();
+            
+            allNurses = [];
+            allLogs = [];
+            renderStaffList();
+            renderDashboardLogs();
+            document.getElementById('bookings-grid').innerHTML = '<p style="color:#888;">Waiting for login...</p>';
+        }
+    });
+
+    // 2. Setup Listeners for specific User ID
+    function setupRealtimeListeners(uid) {
+        // Path: users/{uid}/nurses
+        unsubscribeNurses = onSnapshot(collection(db, "nurses"), (snapshot) => {
+        allNurses = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        renderStaffList();
+        populateLoginSelect();
+        calculatePayroll();
+        document.getElementById('stat-total').innerText = allNurses.length;
+    });
+
+        // Path: users/{uid}/attendance
+        const attendanceRef = collection(db, "users", uid, "attendance");
+        unsubscribeLogs = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
+            allLogs = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            renderDashboardLogs();
+            renderAllLogs();
+            calculatePayroll();
+            
+            const today = new Date().toDateString();
+            const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
+            document.getElementById('stat-present').innerText = todayCount;
+        });
+
+        // Path: users/{uid}/bookings
+        const bookingsRef = collection(db, "users", uid, "bookings");
+        unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+             // Re-use your existing render logic here, just ensure the grid ID matches
+             const grid = document.getElementById('bookings-grid');
+             grid.innerHTML = ''; 
+             if (snapshot.empty) { grid.innerHTML = '<p style="color:#888;">No new bookings.</p>'; return; }
+             snapshot.docs.forEach(doc => {
+                 const b = doc.data();
+                 // ... Insert your existing Booking Card HTML generation here ...
+                 // (For brevity, I'm assuming you keep your HTML generation logic the same)
+                 grid.innerHTML += `<div class="card"><h3>${b.clientPhone}</h3><p>${b.location}</p></div>`; 
+             });
+        });
+    }
+
+// 2. Global Login Function (Attached to window for HTML access)
+// 2. Global Login Function
+window.loginWithGoogle = () => {
+    const btn = document.getElementById('g-login-btn');
+    const originalContent = btn.innerHTML;
+    
+    // Set Loading State
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Signing in...`;
+    btn.style.opacity = "0.7";
+
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // Success handles automatically by onAuthStateChanged
+        }).catch((error) => {
+            console.error(error);
+            alert("Login Failed: " + error.message);
+            // Reset Button on Error
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+            btn.style.opacity = "1";
+        });
+};
+
+// 3. Global Logout Function
+window.logoutApp = () => {
+    signOut(auth).then(() => {
+        // Redirect back to Landing Page
+        window.location.href = 'https://silvercareproj.web.app/'; 
+    }).catch((error) => {
+        console.error("Logout Error", error);
+    });
+};
+// --- AUTH LOGIC END ---
+        
+        // Collections
+        const nursesCol = collection(db, "nurses");
+        const attendanceCol = collection(db, "attendance");
+        const bookingsCol = collection(db, "bookings");
+
+        // State
+        let allNurses = [];
+        let allLogs = [];
+        let currentStream = null;
+
+        // --- PHONE AUTH LOGIC START ---
+
+   // --- PHONE AUTH LOGIC START ---
+
+    // 1. Initialize ReCAPTCHA (Fixed to prevent "Already Rendered" error)
+    window.setupRecaptcha = () => {
+        // A. If the verifier already exists in memory, use it.
+        if (window.recaptchaVerifier) return;
+
+        // B. CRITICAL FIX: If verifier is null but the HTML container still has 
+        // old reCAPTCHA junk in it, manually clear the HTML before creating a new one.
+        const container = document.getElementById('recaptcha-container');
+        if (container) {
+            container.innerHTML = ''; 
+        }
+
+        // C. Create new verifier
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            'size': 'invisible',
+            'callback': (response) => {
+                console.log("Recaptcha Verified");
+            },
+            'expired-callback': () => {
+                // Reset if the captcha expires
+                if(window.recaptchaVerifier) window.recaptchaVerifier.clear();
+                window.recaptchaVerifier = null;
+            }
+        });
+    };
+
+    // 2. Send OTP Function
+    window.sendOTP = () => {
+        const phoneNumber = document.getElementById('phone-number').value;
+        const btn = document.getElementById('send-otp-btn');
+        
+        if (!phoneNumber) return alert("Please enter a valid phone number (+91...)");
+
+        // Initialize ReCAPTCHA
+        try {
+            window.setupRecaptcha();
+        } catch (e) {
+            // Force reset if setup fails
+            window.recaptchaVerifier = null;
+            document.getElementById('recaptcha-container').innerHTML = '';
+            window.setupRecaptcha();
+        }
+        
+        // UI Loading State
+        const originalBtnText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...';
+        btn.disabled = true;
+
+        const appVerifier = window.recaptchaVerifier;
+
+        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                window.confirmationResult = confirmationResult;
+                
+                // Switch UI to OTP Step
+                document.getElementById('step-phone').style.display = 'none';
+                document.getElementById('step-otp').style.display = 'block';
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                alert("OTP Sent to " + phoneNumber);
+            }).catch((error) => {
+                console.error("SMS Error:", error);
+                
+                // Reset everything on error so user can try again
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                
+                if (window.recaptchaVerifier) {
+                    window.recaptchaVerifier.clear();
+                    window.recaptchaVerifier = null;
+                }
+                
+                // Specific error messages
+                if(error.code === 'auth/invalid-phone-number') {
+                    alert("Invalid phone number format. Use +91 XXXXX XXXXX");
+                } else if(error.code === 'auth/too-many-requests') {
+                    alert("Too many requests. Please wait a while before trying again.");
+                } else {
+                    alert("SMS Error: " + error.message);
+                }
+            });
+    };
+
+    // 3. Verify OTP Function
+    window.verifyOTP = () => {
+        const code = document.getElementById('otp-code').value;
+        const btn = document.getElementById('verify-otp-btn');
+        const originalBtnText = btn.innerHTML;
+
+        if(!code) return alert("Enter the 6-digit OTP");
+
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
+        btn.disabled = true;
+        
+        window.confirmationResult.confirm(code).then((result) => {
+            console.log("Phone Auth Success:", result.user);
+            // onAuthStateChanged will handle the redirect
+        }).catch((error) => {
+            console.error(error);
+            alert("Invalid OTP. Please try again.");
+            btn.innerHTML = originalBtnText;
+            btn.disabled = false;
+        });
+    };
+
+    // 4. Reset View
+    window.resetPhoneAuth = () => {
+        document.getElementById('step-otp').style.display = 'none';
+        document.getElementById('step-phone').style.display = 'block';
+        document.getElementById('otp-code').value = '';
+        document.getElementById('phone-number').focus();
+    }
+
+// --- PHONE AUTH LOGIC END ---
+
+// --- PHONE AUTH LOGIC END ---
+
+// --- UPDATED LOGOUT FUNCTION ---
+window.logoutApp = () => {
+    signOut(auth).then(() => {
+        // Successful logout. 
+        // onAuthStateChanged will detect this and show the login overlay automatically.
+        // No redirect needed.
+        console.log("User Logged Out");
+        
+        // Optional: Reset Phone Auth UI state for next login
+        if(document.getElementById('step-otp')) {
+            window.resetPhoneAuth();
+        }
+    }).catch((error) => {
+        console.error("Logout Error", error);
+    });
+};
+
+        // --- 1. DATA LISTENERS ---
+
+        // Listen for Nurses
+        onSnapshot(nursesCol, (snapshot) => {
+            allNurses = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            renderStaffList();
+            populateLoginSelect();
+            calculatePayroll(); // Update payroll when staff changes
+            document.getElementById('stat-total').innerText = allNurses.length;
+        });
+
+        // Listen for Attendance
+        const q = query(attendanceCol, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            allLogs = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            renderDashboardLogs();
+            renderAllLogs();
+            calculatePayroll(); // Update payroll when logs change
+            
+            // Calc today's present count
+            const today = new Date().toDateString();
+            const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
+            document.getElementById('stat-present').innerText = todayCount;
+        });
+        // --- LISTEN FOR AI BOOKINGS ---
+const bookingsQuery = query(bookingsCol, orderBy("timestamp", "desc"));
+
+onSnapshot(bookingsQuery, (snapshot) => {
+    const grid = document.getElementById('bookings-grid');
+    grid.innerHTML = ''; // Clear current list
+
+    if (snapshot.empty) {
+        grid.innerHTML = '<p style="color:#888;">No new bookings yet.</p>';
+        return;
+    }
+    
+    snapshot.docs.forEach(doc => {
+        const b = doc.data();
+        // Create a card for each booking
+        grid.innerHTML += `
+        <div class="card" style="border-left: 5px solid #25D366; position: relative;">
+            <div style="display:flex; justify-content:space-between; align-items: flex-start; margin-bottom:10px;">
+                <h3 style="color:var(--navy); font-size: 1.1rem;">
+                    <i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}
+                </h3>
+                <span style="background:${b.status === 'assigned' ? '#e0f2f1' : '#fff3e0'}; 
+                             color:${b.status === 'assigned' ? '#00695c' : '#e65100'}; 
+                             padding:4px 10px; border-radius:12px; font-size:0.75rem; font-weight: 600; text-transform: uppercase;">
+                    ${b.status}
+                </span>
+            </div>
+            
+            <div style="display: grid; gap: 8px; margin-bottom: 1rem;">
+                <p style="font-size: 0.9rem;"><i class="fa-solid fa-map-location-dot" style="color: var(--primary); width: 20px;"></i> <b>Loc:</b> ${b.location}</p>
+                <p style="font-size: 0.9rem;"><i class="fa-regular fa-clock" style="color: var(--primary); width: 20px;"></i> <b>Time:</b> ${b.time}</p>
+                <p style="font-size: 0.9rem; color: #555; background: #f9f9f9; padding: 8px; border-radius: 8px; font-style: italic;">
+                    "${b.patient_details || 'No specific details provided'}"
+                </p>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed #eee; margin: 10px 0;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                <span style="color: #888;">${new Date(b.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                <button class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.8rem;" onclick="alert('Assignment logic coming next!')">
+                    Assign Nurse
+                </button>
+            </div>
+        </div>`;
+    });
+});
+
+        // --- 2. RENDERING UI ---
+
+        function renderStaffList() {
+            const grid = document.getElementById('staff-grid');
+            grid.innerHTML = '';
+            
+            allNurses.forEach(nurse => {
+                const names = nurse.name.split(' ');
+                const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+
+                grid.innerHTML += `
+                <div class="card nurse-card">
+                    <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <div class="nurse-header">
+                        <div class="nurse-avatar">${initials}</div>
+                        <div class="nurse-info">
+                            <h3>${nurse.name}</h3>
+                            <p>${nurse.role}</p>
+                        </div>
+                    </div>
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <span class="metric-val">₹${nurse.rate}</span>
+                            <span class="metric-lbl">Daily Rate</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val" style="color:var(--accent)">Active</span>
+                            <span class="metric-lbl">Status</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function populateLoginSelect() {
+            const sel = document.getElementById('nurse-login-select');
+            sel.innerHTML = '<option value="">-- Select Name --</option>';
+            allNurses.forEach(n => {
+                const opt = document.createElement('option');
+                opt.value = n.id;
+                opt.innerText = n.name;
+                sel.appendChild(opt);
+            });
+        }
+
+        function renderDashboardLogs() {
+            const grid = document.getElementById('dashboard-grid');
+            grid.innerHTML = '';
+            // Show recent 3 logs
+            allLogs.slice(0, 3).forEach(log => {
+                grid.innerHTML += createLogCard(log);
+            });
+        }
+
+        function renderAllLogs() {
+            const container = document.getElementById('logs-list-container');
+            container.innerHTML = '';
+            allLogs.forEach(log => {
+                container.innerHTML += createLogCard(log);
+            });
+        }
+
+        function createLogCard(log) {
+            return `
+            <div class="card" style="display:flex; gap:15px; align-items:center; padding:1rem;">
+                <img src="${log.photo}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #eee;">
+                <div>
+                    <h4 style="color:var(--navy); margin-bottom:2px;">${log.nurseName}</h4>
+                    <p style="font-size:0.8rem; color:#666;">
+                        <i class="fa-solid fa-clock"></i> ${new Date(log.timestamp).toLocaleString()}
+                    </p>
+                    <p style="font-size:0.8rem; color:var(--primary);">
+                        <i class="fa-solid fa-map-pin"></i> ${log.address || "Location Recorded"}
+                    </p>
+                </div>
+            </div>`;
+        }
+
+        function calculatePayroll() {
+            const tbody = document.getElementById('payroll-table-body');
+            tbody.innerHTML = '';
+            let totalPayroll = 0;
+
+            allNurses.forEach(nurse => {
+                // Count how many logs exist for this nurse
+                const daysWorked = allLogs.filter(l => l.nurseId === nurse.id).length;
+                const salary = daysWorked * (parseInt(nurse.rate) || 0);
+                totalPayroll += salary;
+
+                tbody.innerHTML += `
+                <tr>
+                    <td><b>${nurse.name}</b></td>
+                    <td>₹${nurse.rate}</td>
+                    <td>${daysWorked}</td>
+                    <td style="color:var(--primary); font-weight:700;">₹${salary}</td>
+                    <td><span style="color:var(--accent); font-size:0.8rem;">Paid</span></td>
+                </tr>`;
+            });
+
+            document.getElementById('stat-payroll-total').innerText = '₹' + totalPayroll;
+        }
+
+        // --- 3. NURSE CHECK-IN LOGIC ---
+
+        // Start Camera
+        async function startCamera() {
+            try {
+                const video = document.getElementById('video-feed');
+                currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                video.srcObject = currentStream;
+                getLocation();
+            } catch (e) {
+                alert("Please allow Camera access.");
+            }
+        }
+
+        function stopCamera() {
+            if(currentStream) currentStream.getTracks().forEach(track => track.stop());
+        }
+
+        // Get Location & Reverse Geocode
+        function getLocation() {
+            const status = document.getElementById('location-status');
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    
+                    status.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Getting Address...`;
+
+                    // Reverse Geocoding via OpenStreetMap (No API Key needed)
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                        const data = await res.json();
+                        const address = data.display_name.split(',').slice(0, 3).join(','); // Shorten address
+                        
+                        window.currentLocation = { lat, lng, address };
+                        status.innerHTML = `<i class="fa-solid fa-check"></i> ${address}`;
+                    } catch(err) {
+                        window.currentLocation = { lat, lng, address: "Coordinates Recorded" };
+                        status.innerHTML = "GPS Saved (Address unavailable)";
+                    }
+
+                }, () => status.innerHTML = "GPS Denied");
+            } else {
+                status.innerHTML = "Geolocation not supported";
+            }
+        }
+
+        window.performCheckIn = async () => {
+        if(!currentUser) return alert("System Error: Admin session not found.");
+        
+        const nurseId = document.getElementById('nurse-login-select').value;
+        if(!nurseId) return alert("Please select your name.");
+        
+        const nurseObj = allNurses.find(n => n.id === nurseId);
+        
+        // ... (Keep your existing canvas/photo capture code) ...
+        const video = document.getElementById('video-feed');
+        const canvas = document.getElementById('canvas-capture');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const photoData = canvas.toDataURL('image/jpeg', 0.5);
+
+        try {
+            // SAVE TO: users/{uid}/attendance
+            await addDoc(collection(db, "users", currentUser.uid, "attendance"), {
+                nurseId: nurseId,
+                nurseName: nurseObj.name,
+                timestamp: Date.now(),
+                photo: photoData,
+                location: window.currentLocation || { lat:0, lng:0, address:"Unknown" },
+                address: window.currentLocation?.address || "Unknown"
+            });
+            alert("Check-in Successful!");
+            window.toggleMode(); 
+        } catch(e) {
+            console.error(e);
+            alert("Error saving attendance.");
+        }
+    };
+
+        // --- 4. FORM ACTIONS ---
+
+        document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
+   e.preventDefault();
+    if(!currentUser) return alert("You must be logged in to add staff.");
+
+    const name = document.getElementById('nurseName').value;
+    const phone = document.getElementById('nursePhone').value; // <--- GET PHONE
+    const role = document.getElementById('nurseSpec').value;
+    const rate = document.getElementById('nurseRate').value;
+    
+    // Validate Phone (Basic)
+    if(phone.length < 10) return alert("Please enter a valid phone number");
+
+    // SAVE TO: users/{uid}/nurses
+    await addDoc(collection(db, "nurses"), { 
+        name, 
+        phone, 
+        role, 
+        rate, 
+        status: "offline", 
+        currentLocation: null,
+        timestamp: Date.now() 
+    });
+
+    window.closeModal();
+    e.target.reset();
+    
+    // Reset the file picker UI manually
+    document.getElementById('doc-text').innerText = "Upload ID Card";
+    document.getElementById('doc-icon').className = "fa-solid fa-cloud-arrow-up";
+    document.getElementById('doc-icon').style.color = ""; 
+    document.getElementById('doc-trigger').style.borderColor = "#ccc";
+    document.getElementById('doc-trigger').style.backgroundColor = "";
+});
+
+        window.removeNurse = async (id) => {
+        if(!currentUser) return;
+        if(confirm("Remove this staff member?")) {
+            // DELETE FROM: users/{uid}/nurses/{id}
+            await deleteDoc(doc(db, "users", currentUser.uid, "nurses", id));
+        }
+    }
+
+        // --- 5. APP NAVIGATION ---
+
+        let isNurseMode = false;
+        
+        window.toggleMode = () => {
+            isNurseMode = !isNurseMode;
+            const btnText = document.getElementById('mode-text');
+            const adminMenu = document.getElementById('admin-menu');
+            
+            // Toggle Views
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
+            
+            if(isNurseMode) {
+                document.getElementById('view-nurse').classList.add('active-view');
+                btnText.innerText = "Admin Dashboard";
+                adminMenu.style.display = 'none'; // Hide admin links
+                startCamera();
+            } else {
+                document.getElementById('view-dashboard').classList.add('active-view');
+                btnText.innerText = "Nurse App";
+                adminMenu.style.display = 'flex'; // Show admin links
+                stopCamera();
+            }
+        };
+
+        window.switchTab = (tabName) => {
+            if(isNurseMode) return; // Disable tab switching in nurse mode
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if(activeNav) activeNav.classList.add('active');
+            
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active-view'));
+            document.getElementById(`view-${tabName}`).classList.add('active-view');
+        };
+
+        window.openModal = () => document.getElementById('addModal').classList.add('active');
+        window.closeModal = () => document.getElementById('addModal').classList.remove('active');
+
+        // Global assignments for HTML onclick
+        window.startCamera = startCamera;
+        window.getLocation = getLocation;
+
+        // --- File Picker UI Logic ---
+window.handleFileSelect = (input) => {
+    if (input.files && input.files[0]) {
+        const fileName = input.files[0].name;
+        
+        // Update UI to show selected file
+        document.getElementById('doc-text').innerText = fileName;
+        document.getElementById('doc-icon').className = "fa-solid fa-file-circle-check";
+        document.getElementById('doc-icon').style.color = "var(--accent)";
+        document.getElementById('doc-trigger').style.borderColor = "var(--accent)";
+        document.getElementById('doc-trigger').style.backgroundColor = "#f0fff4";
+    }
+};
+
+    </script>
+</body>
+</html>
+
+index.html
