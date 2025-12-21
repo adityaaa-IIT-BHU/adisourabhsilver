@@ -799,6 +799,25 @@
                 opacity: 1;
             }
         }
+        /* --- Profile Modal Styles --- */
+.profile-tabs { display: flex; background: #f5f5f5; border-radius: 10px; padding: 4px; margin-bottom: 1.5rem; }
+.tab-btn { flex: 1; border: none; background: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #666; transition: 0.3s; }
+.tab-btn.active { background: white; color: var(--navy); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Calendar */
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; }
+.cal-day-header { text-align: center; font-size: 0.75rem; color: #888; padding-bottom: 5px; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.9rem; background: #f9f9f9; color: #ccc; }
+.cal-day.present { background: #e8f5e9; color: #2e7d32; font-weight: bold; border: 1px solid #c8e6c9; }
+.cal-day.absent { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+.cal-day.today { border: 2px solid var(--primary); }
+
+/* Document Locker */
+.doc-item { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
+.doc-icon { width: 40px; height: 40px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1565c0; }
+.btn-profile { width: 100%; margin-top: 10px; background: #e3f2fd; color: #1565c0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; }
     </style>
 </head>
 
@@ -1334,6 +1353,69 @@
 
         </div>
     </div>
+
+    <div class="modal" id="profileModal">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+            <button class="close-modal" onclick="document.getElementById('profileModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div style="text-align:center; margin-bottom:1.5rem;">
+                <h2 id="p-name" style="color:var(--navy);">Nurse Name</h2>
+                <p id="p-role" style="color:#666; font-size:0.9rem;">Role</p>
+            </div>
+    
+            <div class="profile-tabs">
+                <button class="tab-btn active" onclick="switchProfileTab('attendance')">Attendance</button>
+                <button class="tab-btn" onclick="switchProfileTab('docs')">Documents</button>
+                <button class="tab-btn" onclick="switchProfileTab('edit')">Edit Info</button>
+            </div>
+    
+            <div id="tab-attendance" class="tab-content active">
+    
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                    <button onclick="changeMonth(-1)" style="border: none; background: none; cursor: pointer; font-size: 1.2rem; color: var(--navy); padding: 0 10px;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    
+                    <h4 id="cal-month-year" style="margin: 0; color: var(--navy);">Month Year</h4>
+                    
+                    <button onclick="changeMonth(1)" style="border: none; background: none; cursor: pointer; font-size: 1.2rem; color: var(--navy); padding: 0 10px;">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            
+                <div class="calendar-grid" id="cal-days-container"></div>
+            
+                <div style="display:flex; gap:15px; justify-content:center; margin-top:15px; font-size:0.8rem;">
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <div style="width:10px; height:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:50%;"></div> Present
+                    </div>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <div style="width:10px; height:10px; background:#ffebee; border:1px solid #ffcdd2; border-radius:50%;"></div> Absent
+                    </div>
+                </div>
+            </div>
+    
+            <div id="tab-docs" class="tab-content">
+                <div style="border:2px dashed #ddd; padding:1.5rem; text-align:center; border-radius:12px; cursor:pointer; margin-bottom:15px;" onclick="document.getElementById('doc-upload').click()">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.5rem; color:var(--primary);"></i>
+                    <p style="font-size:0.8rem; color:#666;">Upload ID/Certificate</p>
+                    <input type="file" id="doc-upload" hidden accept="image/*,.pdf">
+                </div>
+                <div id="doc-list"></div>
+            </div>
+    
+            <div id="tab-edit" class="tab-content">
+                <form id="editNurseForm">
+                    <input type="hidden" id="edit-id">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="edit-name" class="form-input"></div>
+                    <div class="form-group"><label>Phone</label><input type="text" id="edit-phone" class="form-input"></div>
+                    <div class="form-group"><label>Rate (₹)</label><input type="number" id="edit-rate" class="form-input"></div>
+                    <div class="form-group"><label>Role</label><input type="text" id="edit-role" class="form-input"></div>
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script type="module">
         // 1. IMPORTS (VERIFIED & CLEAN)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -1371,6 +1453,9 @@
         let allNurses = [];
         let allLogs = [];
         let currentStream = null;
+        let currentNurseId = null;
+        let currentCalDate = new Date(); // Tracks the calendar month
+
 
         // Unsubscribe functions
         let unsubscribeUserDoc = null;
@@ -1912,6 +1997,198 @@
             // ... (Keep existing CSV logic) ...
             alert("Exporting CSV..."); // Placeholder for brevity
         }
+        // ==========================================
+// 👤 PROFILE MODAL LOGIC (NEW)
+// ==========================================
+
+// ==========================================
+// 👤 PROFILE, TABS & CALENDAR LOGIC
+// ==========================================
+
+// 1. OPEN PROFILE
+window.openProfile = async (id) => {
+    currentNurseId = id;
+    const nurse = allNurses.find(n => n.id === id);
+    if (!nurse) return;
+
+    // Fill Info
+    document.getElementById('p-name').innerText = nurse.name;
+    document.getElementById('p-role').innerText = nurse.role;
+    
+    // Fill Edit Form
+    document.getElementById('edit-id').value = nurse.id;
+    document.getElementById('edit-name').value = nurse.name;
+    document.getElementById('edit-phone').value = nurse.phone;
+    document.getElementById('edit-rate').value = nurse.rate;
+    document.getElementById('edit-role').value = nurse.role;
+
+    // RESET Calendar to Today & Render
+    currentCalDate = new Date(); 
+    renderCalendar(); 
+
+    // Load Docs
+    loadDocuments(id);
+    
+    // Show Modal & Switch to first tab
+    document.getElementById('profileModal').classList.add('active');
+    window.switchProfileTab('attendance');
+};
+
+// 2. SWITCH TABS (Keep this!)
+window.switchProfileTab = (tab) => {
+    // Reset buttons and content
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    // Activate clicked tab
+    // Note: We search for the button that has the onclick handler for this specific tab
+    const btn = Array.from(document.querySelectorAll('.tab-btn'))
+                     .find(b => b.getAttribute('onclick').includes(tab));
+    
+    if(btn) btn.classList.add('active');
+    document.getElementById(`tab-${tab}`).classList.add('active');
+};
+
+// 3. CHANGE MONTH (Next/Prev)
+window.changeMonth = (offset) => {
+    currentCalDate.setMonth(currentCalDate.getMonth() + offset);
+    renderCalendar();
+};
+
+// 4. RENDER CALENDAR
+function renderCalendar() {
+    const container = document.getElementById('cal-days-container');
+    const header = document.getElementById('cal-month-year');
+    
+    // Update Header Text
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    header.innerText = `${monthNames[currentCalDate.getMonth()]} ${currentCalDate.getFullYear()}`;
+
+    // Reset Grid Header
+    container.innerHTML = `<div class="cal-day-header">S</div><div class="cal-day-header">M</div><div class="cal-day-header">T</div><div class="cal-day-header">W</div><div class="cal-day-header">T</div><div class="cal-day-header">F</div><div class="cal-day-header">S</div>`;
+
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth();
+    
+    const firstDayIndex = new Date(year, month, 1).getDay(); 
+    const daysInMonth = new Date(year, month + 1, 0).getDate(); 
+    
+    // Get Presence for THIS specific month/year
+    const nurseLogs = allLogs.filter(l => l.nurseId === currentNurseId);
+    const presentDays = nurseLogs
+        .filter(l => {
+            const d = new Date(l.timestamp);
+            return d.getMonth() === month && d.getFullYear() === year;
+        })
+        .map(l => new Date(l.timestamp).getDate());
+
+    const today = new Date();
+    const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+
+    // Render Empty Slots
+    for (let x = 0; x < firstDayIndex; x++) {
+        container.appendChild(document.createElement('div'));
+    }
+
+    // Render Days
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dayEl = document.createElement('div');
+        dayEl.classList.add('cal-day');
+        dayEl.innerText = i;
+
+        if (isCurrentMonth && i === today.getDate()) dayEl.classList.add('today');
+
+        if (presentDays.includes(i)) {
+            dayEl.classList.add('present');
+        } else {
+            let checkDate = new Date(year, month, i);
+            // Only mark absent if it's in the past
+            if (checkDate < new Date().setHours(0,0,0,0)) {
+                dayEl.classList.add('absent');
+            }
+        }
+        container.appendChild(dayEl);
+    }
+}
+
+// --- DOCUMENT LOCKER LOGIC ---
+async function loadDocuments(nurseId) {
+    const list = document.getElementById('doc-list');
+    list.innerHTML = '<p style="color:#999; text-align:center;">Loading...</p>';
+    
+    // Fetch Docs from Subcollection
+    const q = query(collection(db, "users", currentUser.uid, "nurses", nurseId, "documents"), orderBy("uploadedAt", "desc"));
+    const snapshot = await getDocs(q);
+    
+    list.innerHTML = '';
+    if (snapshot.empty) { 
+        list.innerHTML = '<p style="color:#999; text-align:center; font-size:0.8rem; margin-top:10px;">No documents yet.</p>'; 
+        return; 
+    }
+
+    snapshot.forEach(docSnap => {
+        const d = docSnap.data();
+        list.innerHTML += `
+        <div class="doc-item">
+            <div class="doc-icon"><i class="fa-solid fa-file-contract"></i></div>
+            <div style="flex:1; overflow:hidden;">
+                <div style="font-weight:600; font-size:0.9rem;">${d.name}</div>
+                <div style="font-size:0.7rem; color:#888;">${new Date(d.uploadedAt).toLocaleDateString()}</div>
+            </div>
+            <a href="${d.data}" download="${d.name}" style="color:var(--primary); margin-right:15px;"><i class="fa-solid fa-download"></i></a>
+            <button onclick="window.deleteDoc('${docSnap.id}')" style="color:#ff4444; background:none; border:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+        </div>`;
+    });
+}
+
+// Upload Listener
+const uploadInput = document.getElementById('doc-upload');
+if (uploadInput) {
+    uploadInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file || !currentNurseId) return;
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            const base64 = event.target.result;
+            await addDoc(collection(db, "users", currentUser.uid, "nurses", currentNurseId, "documents"), {
+                name: file.name,
+                data: base64,
+                uploadedAt: Date.now()
+            });
+            loadDocuments(currentNurseId); // Refresh UI
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+window.deleteDoc = async (docId) => {
+    if (confirm('Delete this document permanently?')) {
+        await deleteDoc(doc(db, "users", currentUser.uid, "nurses", currentNurseId, "documents", docId));
+        loadDocuments(currentNurseId);
+    }
+};
+
+// --- EDIT PROFILE SUBMIT ---
+const editForm = document.getElementById('editNurseForm');
+if (editForm) {
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        
+        await updateDoc(doc(db, "users", currentUser.uid, "nurses", id), {
+            name: document.getElementById('edit-name').value,
+            phone: document.getElementById('edit-phone').value,
+            rate: document.getElementById('edit-rate').value,
+            role: document.getElementById('edit-role').value
+        });
+        
+        alert('Profile Updated Successfully!');
+        // Update Modal Title instantly
+        document.getElementById('p-name').innerText = document.getElementById('edit-name').value;
+        document.getElementById('p-role').innerText = document.getElementById('edit-role').value;
+    });
+}
 
         // ==========================================
         // 🛠️ HELPER FUNCTIONS (Render, Camera, Etc)
@@ -1930,20 +2207,44 @@
         function renderStaffList() {
             const grid = document.getElementById('staff-grid');
             grid.innerHTML = '';
+            
             allNurses.forEach(nurse => {
                 const names = nurse.name.split(' ');
                 const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+                
+                // Using flex-direction: column ensures the button stays at the bottom naturally
                 grid.innerHTML += `
-                <div class="card nurse-card">
-                    <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')"><i class="fa-solid fa-trash"></i></button>
-                    <div class="nurse-header">
-                        <div class="nurse-avatar">${initials}</div>
-                        <div class="nurse-info"><h3>${nurse.name}</h3><p>${nurse.role}</p></div>
+                <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px;">
+                    <div style="flex: 1;">
+                        <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+        
+                        <div class="nurse-header">
+                            <div class="nurse-avatar">${initials}</div>
+                            <div class="nurse-info">
+                                <h3>${nurse.name}</h3>
+                                <p>${nurse.role}</p>
+                            </div>
+                        </div>
+        
+                        <div class="metrics-row">
+                            <div class="metric">
+                                <span class="metric-val">₹${nurse.rate}</span>
+                                <span class="metric-lbl">Daily Rate</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-val" style="color:var(--accent)">Active</span>
+                                <span class="metric-lbl">Status</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="metrics-row">
-                        <div class="metric"><span class="metric-val">₹${nurse.rate}</span><span class="metric-lbl">Daily Rate</span></div>
-                        <div class="metric"><span class="metric-val" style="color:var(--accent)">Active</span><span class="metric-lbl">Status</span></div>
-                    </div>
+        
+                    <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
+                        style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
+                               border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        <i class="fa-solid fa-address-card"></i> View Profile
+                    </button>
                 </div>`;
             });
         }
