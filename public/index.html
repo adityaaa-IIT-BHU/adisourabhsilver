@@ -1235,99 +1235,114 @@
     </div>
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card" style="text-align: center; max-width: 450px; position: relative;">
-            
+
             <div id="payment-form-section">
-                <div style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
+                <div
+                    style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
                     <i class="fa-solid fa-calculator"></i> FLEXI-PLAN
                 </div>
-                
+
                 <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Add More Staff</h2>
                 <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">
                     Enter slots needed. Discount applies automatically!
                 </p>
 
-                <div style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
+                <div
+                    style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
                     <p style="margin:0 0 8px 0; font-weight:bold; color:#1565c0; font-size:0.9rem;">
                         🔥 Bulk Discounts Available:
                     </p>
-                    
+
                     <div style="display:flex; gap:5px; justify-content:space-between;">
-                        <div id="badge-5" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-5"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>5+ Slots</b><br>10% OFF
                         </div>
-                        <div id="badge-10" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-10"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>10+ Slots</b><br>15% OFF
                         </div>
-                        <div id="badge-20" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-20"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>20+ Slots</b><br>30% OFF
                         </div>
                     </div>
                 </div>
-    
+
                 <div style="margin-bottom: 1.5rem; text-align: left;">
                     <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Number of Nurses:</label>
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
-                        <input type="number" id="slot-quantity" class="form-input" value="1" min="1" max="100" oninput="calculateTotal()" style="font-size: 1.2rem; font-weight: bold; text-align: center;">
+                        <input type="number" id="slot-quantity" class="form-input" value="1" min="1" max="100"
+                            oninput="calculateTotal()"
+                            style="font-size: 1.2rem; font-weight: bold; text-align: center;">
                     </div>
                     <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Rate: ₹200 / nurse</div>
                 </div>
-    
-                <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px dashed #ccc; margin-bottom: 1.5rem; text-align: left;">
+
+                <div
+                    style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px dashed #ccc; margin-bottom: 1.5rem; text-align: left;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-weight: bold; color: var(--navy);">Total to Pay:</span>
                         <span id="bill-total" style="font-size: 1.4rem; color: #138808; font-weight: bold;">₹200</span>
                     </div>
                 </div>
-    
+
                 <div style="text-align: center; margin-bottom: 1rem;">
-                     <img id="payment-qr-img" src="" style="width: 120px; height: 120px; border-radius: 8px; border: 2px solid #eee;">
-                     <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">Scan via UPI</div>
+                    <img id="payment-qr-img" src=""
+                        style="width: 120px; height: 120px; border-radius: 8px; border: 2px solid #eee;">
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">Scan via UPI</div>
                 </div>
-    
-                <input type="text" id="inp-utr" class="form-input" placeholder="Enter 12-digit UTR" style="margin-bottom: 1rem;">
-                
-                <button id="btn-verify-payment" onclick="submitPaymentUTR()" class="btn-primary" style="width: 100%; margin-bottom: 10px;">
+
+                <input type="text" id="inp-utr" class="form-input" placeholder="Enter 12-digit UTR"
+                    style="margin-bottom: 1rem;">
+
+                <button id="btn-verify-payment" onclick="submitPaymentUTR()" class="btn-primary"
+                    style="width: 100%; margin-bottom: 10px;">
                     Verify Payment
                 </button>
-    
-                <button id="btn-pay-later" onclick="activatePayLater()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">
+
+                <button id="btn-pay-later" onclick="activatePayLater()"
+                    style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">
                     Cancel (Go Back)
                 </button>
             </div>
-    
+
             <div id="payment-pending-section" style="display: none; padding: 1rem;">
-                <i class="fa-solid fa-clock-rotate-left" style="font-size: 3.5rem; color: #ff9933; margin-bottom: 1.5rem;"></i>
-                
+                <i class="fa-solid fa-clock-rotate-left"
+                    style="font-size: 3.5rem; color: #ff9933; margin-bottom: 1.5rem;"></i>
+
                 <h2 style="color: var(--navy); margin-bottom: 1rem;">Verification in Progress</h2>
-                
+
                 <p style="color: #555; font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
                     Thank you! We have received your UTR. <br>
                     Admin is verifying the transaction.
                 </p>
-    
-                <div style="background: #fff8e1; border: 1px solid #ffe0b2; padding: 15px; border-radius: 8px; color: #e65100; font-size: 0.9rem; margin-bottom: 2rem;">
+
+                <div
+                    style="background: #fff8e1; border: 1px solid #ffe0b2; padding: 15px; border-radius: 8px; color: #e65100; font-size: 0.9rem; margin-bottom: 2rem;">
                     <strong>Estimated Wait:</strong><br>
                     Usually 1-2 hours (Max 24 Hours)
                 </div>
-    
-                <button onclick="activatePayLater()" class="btn-primary" style="width: 100%; background-color: #78909c;">
+
+                <button onclick="activatePayLater()" class="btn-primary"
+                    style="width: 100%; background-color: #78909c;">
                     Okay, I'll wait
                 </button>
             </div>
-    
+
         </div>
     </div>
     <script type="module">
-        // 1. IMPORTS (FIXED: Added updateDoc, serverTimestamp, getDoc)
+        // 1. IMPORTS (VERIFIED & CLEAN)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // Add setDoc to this list 👇
-        // FIND THIS LINE and ADD 'increment' to the end 👇
-        // ADD 'where' and 'getDocs' to this list 👇
-import {
-    getFirestore, collection, addDoc, onSnapshot, query, orderBy,
-    deleteDoc, doc, updateDoc, getDoc, serverTimestamp, setDoc, increment,
-    where, getDocs // <--- ADD THESE TWO
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // 👇 This checks all your imports are correct and includes 'where', 'getDocs', 'increment'
+        import {
+            getFirestore, collection, addDoc, onSnapshot, query, orderBy,
+            deleteDoc, doc, updateDoc, getDoc, serverTimestamp, setDoc, increment,
+            where, getDocs
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
         import {
             getAuth, GoogleAuthProvider, signInWithPopup, signOut,
             onAuthStateChanged, RecaptchaVerifier, signInWithPhoneNumber
@@ -1344,6 +1359,7 @@ import {
         };
 
         const app = initializeApp(firebaseConfig);
+        // ... (Your code continues below as normal)
         const db = getFirestore(app);
         const auth = getAuth(app);
 
@@ -1545,184 +1561,184 @@ import {
         }
 
         // ==========================================
-    // 💰 DYNAMIC PRICING ENGINE (Flexi-Plan)
-    // ==========================================
+        // 💰 DYNAMIC PRICING ENGINE (Flexi-Plan)
+        // ==========================================
 
-    const BASE_RATE = 200;
-    const UPI_ID = "8299341343@ptsbi"; 
-    const UPI_NAME = "SilverSeva";
-    const FREE_LIMIT = 0; 
-    
-    // State to hold current calculation
-    let currentOrder = {
-        slots: 1,
-        totalPrice: 200
-    };
+        const BASE_RATE = 200;
+        const UPI_ID = "8299341343@ptsbi";
+        const UPI_NAME = "SilverSeva";
+        const FREE_LIMIT = 0;
 
-    // 1. CALCULATE PRICE LIVE (Updates Text & QR)
-    window.calculateTotal = () => {
-        const input = document.getElementById('slot-quantity');
-        if(!input) return; // Safety check if modal HTML isn't loaded
+        // State to hold current calculation
+        let currentOrder = {
+            slots: 1,
+            totalPrice: 200
+        };
 
-        let qty = parseInt(input.value);
-        
-        // Safety: Minimum 1
-        if (!qty || qty < 1) { qty = 1; }
-        
-        // A. Calculate Discount
-        let discountPercent = 0;
-        if (qty >= 20) discountPercent = 0.30;       // 30% Off
-        else if (qty >= 10) discountPercent = 0.15;  // 15% Off
-        else if (qty >= 5)  discountPercent = 0.10;  // 10% Off
+        // 1. CALCULATE PRICE LIVE (Updates Text & QR)
+        window.calculateTotal = () => {
+            const input = document.getElementById('slot-quantity');
+            if (!input) return; // Safety check if modal HTML isn't loaded
 
-        // B. Calculate Math
-        const subtotal = qty * BASE_RATE;
-        const discountAmount = Math.round(subtotal * discountPercent);
-        const finalPrice = subtotal - discountAmount;
+            let qty = parseInt(input.value);
 
-        // C. Update State
-        currentOrder = { slots: qty, totalPrice: finalPrice };
+            // Safety: Minimum 1
+            if (!qty || qty < 1) { qty = 1; }
 
-        // D. Update UI Text
-        const subEl = document.getElementById('bill-subtotal');
-        const discEl = document.getElementById('bill-discount');
-        const totEl = document.getElementById('bill-total');
-        
-        if(subEl) subEl.innerText = `₹${subtotal}`;
-        if(discEl) discEl.innerText = `-₹${discountAmount} (${discountPercent * 100}%)`;
-        if(totEl) totEl.innerText = `₹${finalPrice}`;
+            // A. Calculate Discount
+            let discountPercent = 0;
+            if (qty >= 20) discountPercent = 0.30;       // 30% Off
+            else if (qty >= 10) discountPercent = 0.15;  // 15% Off
+            else if (qty >= 5) discountPercent = 0.10;  // 10% Off
 
-        // E. Highlight Badges
-        resetBadges();
-        if (qty >= 20) highlightBadge('badge-20');
-        else if (qty >= 10) highlightBadge('badge-10');
-        else if (qty >= 5)  highlightBadge('badge-5');
+            // B. Calculate Math
+            const subtotal = qty * BASE_RATE;
+            const discountAmount = Math.round(subtotal * discountPercent);
+            const finalPrice = subtotal - discountAmount;
 
-        // F. Generate QR Code
-        const newUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${finalPrice}`;
-        const qrImg = document.getElementById('payment-qr-img');
-        if(qrImg) qrImg.src = newUrl;
-    };
+            // C. Update State
+            currentOrder = { slots: qty, totalPrice: finalPrice };
 
-    // Helper Styles
-    function highlightBadge(id) {
-        const el = document.getElementById(id);
-        if(el) { el.style.background = '#4caf50'; el.style.color = 'white'; el.style.fontWeight = 'bold'; }
-    }
-    function resetBadges() {
-        ['badge-5', 'badge-10', 'badge-20'].forEach(id => {
+            // D. Update UI Text
+            const subEl = document.getElementById('bill-subtotal');
+            const discEl = document.getElementById('bill-discount');
+            const totEl = document.getElementById('bill-total');
+
+            if (subEl) subEl.innerText = `₹${subtotal}`;
+            if (discEl) discEl.innerText = `-₹${discountAmount} (${discountPercent * 100}%)`;
+            if (totEl) totEl.innerText = `₹${finalPrice}`;
+
+            // E. Highlight Badges
+            resetBadges();
+            if (qty >= 20) highlightBadge('badge-20');
+            else if (qty >= 10) highlightBadge('badge-10');
+            else if (qty >= 5) highlightBadge('badge-5');
+
+            // F. Generate QR Code
+            const newUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${finalPrice}`;
+            const qrImg = document.getElementById('payment-qr-img');
+            if (qrImg) qrImg.src = newUrl;
+        };
+
+        // Helper Styles
+        function highlightBadge(id) {
             const el = document.getElementById(id);
-            if(el) { el.style.background = '#eee'; el.style.color = '#999'; el.style.fontWeight = 'normal'; }
-        });
-    }
-
-    // Initialize Modal
-    window.initPricingModal = () => {
-        const input = document.getElementById('slot-quantity');
-        if(input) input.value = 1;
-        calculateTotal(); // Run calculation for 1
-    }
-
-  // --- FUNCTION: Add Nurse Trigger (Smart Check) ---
-  window.openModal = () => { 
-    const extraSlots = currentUserData?.extraSlots || 0;
-    const currentCount = allNurses.length;
-    const totalLimit = FREE_LIMIT + extraSlots;
-    
-    // CHECK IF ALREADY PENDING
-    const isPending = currentUserData?.paymentRequest?.status === 'pending';
-
-    // CASE 1: Payment is Pending (User is waiting)
-    if (isPending) {
-        const payModal = document.getElementById('modal-payment-lock');
-        const formSection = document.getElementById('payment-form-section');
-        const pendingSection = document.getElementById('payment-pending-section');
-        
-        payModal.style.display = 'flex';
-        if(formSection) formSection.style.display = 'none';    // Hide Form
-        if(pendingSection) pendingSection.style.display = 'block'; // Show Message
-        return;
-    }
-
-    // CASE 2: User has space -> Open Add Form
-    if (currentCount < totalLimit) {
-        document.getElementById('addModal').classList.add('active');
-    } 
-    // CASE 3: No space -> Show Payment Form
-    else {
-        const payModal = document.getElementById('modal-payment-lock');
-        const formSection = document.getElementById('payment-form-section');
-        const pendingSection = document.getElementById('payment-pending-section');
-        
-        payModal.style.display = 'flex';
-        if(formSection) formSection.style.display = 'block';   // Show Form
-        if(pendingSection) pendingSection.style.display = 'none'; // Hide Message
-        
-        // Show Cancel button (Renamed from Pay Later)
-        const payLaterBtn = document.getElementById('btn-pay-later');
-        if(payLaterBtn) {
-            payLaterBtn.style.display = 'block';
-            payLaterBtn.innerText = "Cancel (Go Back)";
+            if (el) { el.style.background = '#4caf50'; el.style.color = 'white'; el.style.fontWeight = 'bold'; }
         }
-        
-        if(window.initPricingModal) window.initPricingModal();
-    }
-};
-
-window.closeModal = () => document.getElementById('addModal').classList.remove('active');
-
-// --- FUNCTION: Submit Payment (Switches to Pending View) ---
-window.submitPaymentUTR = async () => {
-    const utr = document.getElementById('inp-utr').value;
-    if(!utr || utr.length < 4) return alert("Please enter valid UTR");
-
-    const btn = document.getElementById('btn-verify-payment');
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-
-    // 1. Save to Database
-    await setDoc(doc(db, "users", currentUser.uid), {
-        paymentRequest: {
-            utr: utr,
-            amount: currentOrder.totalPrice, // Uses calculated price
-            slots: currentOrder.slots,       // Uses calculated slots
-            packId: 'custom', 
-            status: 'pending',
-            timestamp: serverTimestamp()
+        function resetBadges() {
+            ['badge-5', 'badge-10', 'badge-20'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.background = '#eee'; el.style.color = '#999'; el.style.fontWeight = 'normal'; }
+            });
         }
-    }, { merge: true });
 
-    // 2. Switch UI to "Pending" Mode immediately
-    const formSection = document.getElementById('payment-form-section');
-    const pendingSection = document.getElementById('payment-pending-section');
-    
-    if(formSection) formSection.style.display = 'none';
-    if(pendingSection) pendingSection.style.display = 'block';
-};
+        // Initialize Modal
+        window.initPricingModal = () => {
+            const input = document.getElementById('slot-quantity');
+            if (input) input.value = 1;
+            calculateTotal(); // Run calculation for 1
+        }
 
-    // --- FUNCTION: Onboarding Submit ---
-    window.submitOnboarding = async () => {
-        const agencyName = document.getElementById('inp-agency-name').value;
-        const referralCode = document.getElementById('inp-referral-code').value;
-        if(!agencyName) return alert("Enter Agency Name");
+        // --- FUNCTION: Add Nurse Trigger (Smart Check) ---
+        window.openModal = () => {
+            const extraSlots = currentUserData?.extraSlots || 0;
+            const currentCount = allNurses.length;
+            const totalLimit = FREE_LIMIT + extraSlots;
 
-        // USE SETDOC HERE TO CREATE FILE
-        await setDoc(doc(db, "users", currentUser.uid), {
-            agencyName: agencyName,
-            referralBy: referralCode ? referralCode.toUpperCase() : "DIRECT",
-            email: currentUser.email,
-            createdAt: serverTimestamp()
-        }, { merge: true });
-    };
+            // CHECK IF ALREADY PENDING
+            const isPending = currentUserData?.paymentRequest?.status === 'pending';
 
-    // --- FUNCTION: Activate Pay Later (Cancel/Skip) ---
-    window.activatePayLater = () => {
-        isPayLaterMode = true; // Set flag
-        document.getElementById('modal-payment-lock').style.display = 'none';
-        
-        // Only try to load data if user exists
-        if(currentUser) startDataSync(currentUser.uid);
-    };
+            // CASE 1: Payment is Pending (User is waiting)
+            if (isPending) {
+                const payModal = document.getElementById('modal-payment-lock');
+                const formSection = document.getElementById('payment-form-section');
+                const pendingSection = document.getElementById('payment-pending-section');
+
+                payModal.style.display = 'flex';
+                if (formSection) formSection.style.display = 'none';    // Hide Form
+                if (pendingSection) pendingSection.style.display = 'block'; // Show Message
+                return;
+            }
+
+            // CASE 2: User has space -> Open Add Form
+            if (currentCount < totalLimit) {
+                document.getElementById('addModal').classList.add('active');
+            }
+            // CASE 3: No space -> Show Payment Form
+            else {
+                const payModal = document.getElementById('modal-payment-lock');
+                const formSection = document.getElementById('payment-form-section');
+                const pendingSection = document.getElementById('payment-pending-section');
+
+                payModal.style.display = 'flex';
+                if (formSection) formSection.style.display = 'block';   // Show Form
+                if (pendingSection) pendingSection.style.display = 'none'; // Hide Message
+
+                // Show Cancel button (Renamed from Pay Later)
+                const payLaterBtn = document.getElementById('btn-pay-later');
+                if (payLaterBtn) {
+                    payLaterBtn.style.display = 'block';
+                    payLaterBtn.innerText = "Cancel (Go Back)";
+                }
+
+                if (window.initPricingModal) window.initPricingModal();
+            }
+        };
+
+        window.closeModal = () => document.getElementById('addModal').classList.remove('active');
+
+        // --- FUNCTION: Submit Payment (Switches to Pending View) ---
+        window.submitPaymentUTR = async () => {
+            const utr = document.getElementById('inp-utr').value;
+            if (!utr || utr.length < 4) return alert("Please enter valid UTR");
+
+            const btn = document.getElementById('btn-verify-payment');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            // 1. Save to Database
+            await setDoc(doc(db, "users", currentUser.uid), {
+                paymentRequest: {
+                    utr: utr,
+                    amount: currentOrder.totalPrice, // Uses calculated price
+                    slots: currentOrder.slots,       // Uses calculated slots
+                    packId: 'custom',
+                    status: 'pending',
+                    timestamp: serverTimestamp()
+                }
+            }, { merge: true });
+
+            // 2. Switch UI to "Pending" Mode immediately
+            const formSection = document.getElementById('payment-form-section');
+            const pendingSection = document.getElementById('payment-pending-section');
+
+            if (formSection) formSection.style.display = 'none';
+            if (pendingSection) pendingSection.style.display = 'block';
+        };
+
+        // --- FUNCTION: Onboarding Submit ---
+        window.submitOnboarding = async () => {
+            const agencyName = document.getElementById('inp-agency-name').value;
+            const referralCode = document.getElementById('inp-referral-code').value;
+            if (!agencyName) return alert("Enter Agency Name");
+
+            // USE SETDOC HERE TO CREATE FILE
+            await setDoc(doc(db, "users", currentUser.uid), {
+                agencyName: agencyName,
+                referralBy: referralCode ? referralCode.toUpperCase() : "DIRECT",
+                email: currentUser.email,
+                createdAt: serverTimestamp()
+            }, { merge: true });
+        };
+
+        // --- FUNCTION: Activate Pay Later (Cancel/Skip) ---
+        window.activatePayLater = () => {
+            isPayLaterMode = true; // Set flag
+            document.getElementById('modal-payment-lock').style.display = 'none';
+
+            // Only try to load data if user exists
+            if (currentUser) startDataSync(currentUser.uid);
+        };
 
         // ==========================================
         // 👑 SUPER ADMIN LOGIC
@@ -1748,7 +1764,8 @@ window.submitPaymentUTR = async () => {
             }
         }
 
-        // --- UPDATED ADMIN LOADER (Shows Plan & Count) ---
+
+        // --- UPDATED ADMIN LOADER (FIXED) ---
         function loadAdminData() {
             onSnapshot(collection(db, "users"), (snapshot) => {
                 const pendingTable = document.getElementById('admin-pending-table');
@@ -1767,7 +1784,6 @@ window.submitPaymentUTR = async () => {
                     const uid = doc.id;
 
                     // --- 1. PREPARE DISPLAY DATA ---
-                    // Plan Text
                     let planDisplay = '<span style="color:#666; font-size:0.8rem;">Free Tier</span>';
                     if (u.plan === 'unlimited') {
                         planDisplay = '<span style="color:#e65100; font-weight:bold; font-size:0.8rem;">💎 Unlimited</span>';
@@ -1775,7 +1791,6 @@ window.submitPaymentUTR = async () => {
                         planDisplay = `<span style="color:#1565c0; font-weight:bold; font-size:0.8rem;">🎫 ${u.extraSlots} Slots</span>`;
                     }
 
-                    // Nurse Count
                     const count = u.nurseCount || 0;
                     const countDisplay = `<span style="background:#f0f0f0; padding:2px 6px; border-radius:10px; font-size:0.75rem; color:#333;">👥 ${count} Staff</span>`;
 
@@ -1786,19 +1801,35 @@ window.submitPaymentUTR = async () => {
                         if (u.isPaid) referralCounts[u.referralBy].paid += 1;
                     }
 
+                    // --- 3. PENDING TABLE ---
+                    if (u.paymentRequest && u.paymentRequest.status === 'pending' && !u.isPaid) {
+                        hasPending = true;
+                        pendingTable.innerHTML += `
+                <tr style="background: #fff8e1;">
+                    <td>
+                        <b>${u.agencyName}</b><br>
+                        ${planDisplay}
+                    </td>
+                    
                     <td>₹${u.paymentRequest.amount || 199}</td>
+                    
+                    <td>${u.referralBy || '-'}</td>
+                    <td style="font-family:monospace; color:#003366;">${u.paymentRequest.utr}</td>
+                    <td><button onclick="approveUserPayment('${uid}')" class="btn-primary" style="padding:5px 10px; font-size:0.8rem;">Approve ✅</button></td>
+                </tr>`;
+                    }
 
                     // --- 4. ALL USERS TABLE ---
                     allTable.innerHTML += `
-                <tr>
-                    <td>
-                        <div style="font-weight:bold; color:var(--navy);">${u.agencyName || 'Incomplete'}</div>
-                        <div style="margin-top:4px;">${planDisplay} &bull; ${countDisplay}</div>
-                    </td>
-                    <td>${u.email}</td>
-                    <td>${u.referralBy || 'DIRECT'}</td>
-                    <td>${u.isPaid ? '<span style="color:green; font-weight:bold;">PAID</span>' : '<span style="color:red;">LOCKED</span>'}</td>
-                </tr>`;
+            <tr>
+                <td>
+                    <div style="font-weight:bold; color:var(--navy);">${u.agencyName || 'Incomplete'}</div>
+                    <div style="margin-top:4px;">${planDisplay} &bull; ${countDisplay}</div>
+                </td>
+                <td>${u.email}</td>
+                <td>${u.referralBy || 'DIRECT'}</td>
+                <td>${u.isPaid ? '<span style="color:green; font-weight:bold;">PAID</span>' : '<span style="color:red;">LOCKED</span>'}</td>
+            </tr>`;
                 });
 
                 if (!hasPending) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending payments.</td></tr>';
@@ -1807,42 +1838,41 @@ window.submitPaymentUTR = async () => {
                 Object.keys(referralCounts).forEach(code => {
                     const data = referralCounts[code];
                     leaderboardDiv.innerHTML += `
-                <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'};">
-                    <div style="font-size: 1.2rem; font-weight: bold;">${code}</div>
-                    <div style="display:flex; justify-content:space-between; margin-top:10px;">
-                        <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700; color:#138808;">${data.paid}</div><div style="font-size:0.7rem;">SALES</div></div>
-                        <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700;">${data.total}</div><div style="font-size:0.7rem;">LEADS</div></div>
-                    </div>
-                </div>`;
+            <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'};">
+                <div style="font-size: 1.2rem; font-weight: bold;">${code}</div>
+                <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                    <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700; color:#138808;">${data.paid}</div><div style="font-size:0.7rem;">SALES</div></div>
+                    <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700;">${data.total}</div><div style="font-size:0.7rem;">LEADS</div></div>
+                </div>
+            </div>`;
                 });
             });
         }
 
-
         window.approveUserPayment = async (targetUid) => {
             if (!confirm("Confirm payment received?")) return;
-        
+
             try {
                 console.log("Starting Approval for UID:", targetUid);
-        
+
                 // 1. Get the User who just paid (Client)
                 const userRef = doc(db, "users", targetUid);
                 const userSnap = await getDoc(userRef);
-                
+
                 if (!userSnap.exists()) return alert("User not found");
                 const userData = userSnap.data();
-        
+
                 // 2. FIND THE INTERN (RAHUL72)
                 // The client was referred by 'referralBy' (which is "RAHUL72")
                 const referrerName = userData.referralBy;
-        
+
                 if (referrerName && referrerName !== "DIRECT") {
                     console.log("Searching for Intern:", referrerName);
-        
+
                     // FIX: Search 'agencyName' because that is where "RAHUL72" is stored
                     const q = query(collection(db, "users"), where("agencyName", "==", referrerName));
                     const querySnapshot = await getDocs(q);
-        
+
                     if (!querySnapshot.empty) {
                         // Intern Found! Update them.
                         querySnapshot.forEach(async (internDoc) => {
@@ -1856,7 +1886,7 @@ window.submitPaymentUTR = async () => {
                         console.warn("FAILED: Could not find any user named " + referrerName);
                     }
                 }
-        
+
                 // 3. UPDATE THE CLIENT (Unlock them)
                 const slotsToAdd = userData.paymentRequest?.slots || 1;
                 await updateDoc(userRef, {
@@ -1865,16 +1895,16 @@ window.submitPaymentUTR = async () => {
                     "extraSlots": increment(slotsToAdd),
                     "isPaid": true
                 });
-        
+
                 alert(`Approved! Added slots and updated Intern sales.`);
                 // Reload to see the change in the table
                 window.location.reload();
-        
+
             } catch (e) {
                 console.error("Approval Error:", e);
                 alert("Error: " + e.message);
             }
-        }
+        };
 
         window.exportToCSV = () => {
             // ... (Keep existing CSV logic) ...
