@@ -13,16 +13,17 @@ const db = admin.firestore();
 
 // --- CONFIGURATION ---
 const openai = new OpenAI({ 
-    apiKey: process.env.GROQ_API_KEY,
-    baseURL: "https://api.groq.com/openai/v1"
+    apiKey: "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", 
+    baseURL: "https://api.groq.com/openai/v1" 
 });
 
-const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN;
-const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
+// PASTE YOUR META TOKEN HERE
+const WHATSAPP_TOKEN = "EAAMqTZAWNCSUBQTHwiPYAF07ytkuB8M595NGyOgqIH2glXm0ZCZAVYtHNjZAqhxyXSaHD8YHKAEw195teIsLAA9ymxwxQnvs4dcnnUD7E8OzxOkbU62WT0TnwOSWRrC2IlUhFjpUVVWOO4KWLGAr5bgVeidZC7J92P7omzgG0pAItZBavwPyP9KdHtFpo3uwZDZD"; 
+const PHONE_NUMBER_ID = "912741208590042"; 
 const VERIFY_TOKEN = "silver_seva_secret"; 
 
 exports.webhook = functions.https.onRequest(async (req, res) => {
+    // 1. VERIFY TOKEN
     if (req.method === "GET") {
         if (req.query["hub.mode"] === "subscribe" && req.query["hub.verify_token"] === VERIFY_TOKEN) {
             res.status(200).send(req.query["hub.challenge"]);
@@ -30,6 +31,7 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
             res.sendStatus(403);
         }
     } 
+    // 2. HANDLE MESSAGES
     else if (req.method === "POST") {
         try {
             const body = req.body;
@@ -41,11 +43,7 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
                 const msgBody = msgType === "text" ? messageObj.text.body : "";
 
                 // --- 1. IDENTIFY USER TYPE (NURSE OR CLIENT) ---
-                // We search across all users' nurse collections. 
-                // Note: In a real app, you might want a root-level 'nurses' collection for faster lookup.
-                // For now, we assume you put nurses in a root collection named 'nurses' based on your index.html usage.
-                
-                // Let's assume you moved to a root 'nurses' collection for easier lookup:
+                // We check the root 'nurses' collection to see if the sender is staff
                 const nurseQuery = await db.collection('nurses').where('phone', '==', from).get();
                 const isNurse = !nurseQuery.empty;
 
@@ -68,45 +66,65 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
                             lastActive: Date.now()
                         });
 
-                        await sendWhatsApp(from, `✅ Status: AVAILABLE\n📍 Location updated. You will receive booking alerts near you.`);
+                        await sendWhatsApp(from, ✅ Status: AVAILABLE\n📍 Location updated. You will receive booking alerts near you.);
                     } 
                     else if (msgBody.toLowerCase().includes("stop")) {
                         // NURSE GOES OFFLINE
                         await db.collection('nurses').doc(nurseDoc.id).update({ status: "offline" });
-                        await sendWhatsApp(from, `🔴 Status: OFFLINE. Have a good rest!`);
+                        await sendWhatsApp(from, 🔴 Status: OFFLINE. Have a good rest!);
                     }
                     else {
-                        await sendWhatsApp(from, `👋 Namaste ${nurseData.name}.\n\nShare your *Location* attachment to go ONLINE.\nReply STOP to go OFFLINE.`);
+                        await sendWhatsApp(from, 👋 Namaste ${nurseData.name}.\n\nShare your *Location* attachment to go ONLINE.\nReply STOP to go OFFLINE.);
                     }
                 } 
                 else {
-                    // --- CLIENT LOGIC (EXISTING AI) ---
+                    // --- 2. CLIENT LOGIC (UPDATED WITH LOCATION) ---
                     
-                    // 1. Fetch History
+                    // Fetch History & Coords
                     const convoRef = db.collection('conversations').doc(from);
                     const convoDoc = await convoRef.get();
                     let history = convoDoc.exists ? convoDoc.data().history : [];
+                    let clientCoords = convoDoc.exists ? convoDoc.data().coords : null;
 
-                    // 2. Add New User Message
-                    history.push({ role: "user", content: msgBody });
+                    // HANDLE CLIENT INPUT
+                    if (msgType === "location") {
+                        // A. User sent a location pin
+                        clientCoords = {
+                            lat: messageObj.location.latitude,
+                            lng: messageObj.location.longitude
+                        };
+                        
+                        // Trick AI into knowing the user provided location
+                        history.push({ role: "user", content: "I have sent my location pin attachment." });
+                        
+                        // Save coords to DB so we don't lose them
+                        await convoRef.set({ history, coords: clientCoords }, { merge: true });
+                    } 
+                    else if (msgType === "text") {
+                        // B. User sent text
+                        history.push({ role: "user", content: msgBody });
+                    }
+
+                    // Keep History Short
                     if (history.length > 10) history = history.slice(-10);
 
-                    // 3. Ask AI
+                    // Ask AI
                     const aiDecision = await chatWithAI(history);
 
                     if (aiDecision.isBooking) {
-                        // 4. FIND NEAREST NURSE
-                        // Note: If client provided text location, AI gives us text. 
-                        // If client sent a Pin, we'd have lat/lng. 
-                        // For this example, we assume AI gives text, but we try to find ANY available nurse.
-                        
-                        const assignedNurse = await findNearestAvailableNurse();
+                        // --- 3. FIND NEAREST NURSE ---
+                        // Pass client coords (if any) to the finder function
+                        const assignedNurse = await findNearestAvailableNurse(
+                            clientCoords ? clientCoords.lat : null,
+                            clientCoords ? clientCoords.lng : null
+                        );
 
                         if (assignedNurse) {
                             // CREATE BOOKING
                             await db.collection('bookings').add({
                                 clientPhone: from,
                                 ...aiDecision.data,
+                                clientLocation: clientCoords || null, // Save client lat/lng
                                 assignedNurseId: assignedNurse.id,
                                 assignedNurseName: assignedNurse.name,
                                 status: 'assigned',
@@ -117,10 +135,23 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
                             await db.collection('nurses').doc(assignedNurse.id).update({ status: 'busy' });
 
                             // NOTIFY CLIENT
-                            await sendWhatsApp(from, `✅ Booking Confirmed!\n\n👩‍⚕️ Nurse Assigned: ${assignedNurse.name}\n📍 Loc: ${aiDecision.data.location}\n⏰ Time: ${aiDecision.data.time}`);
+                            await sendWhatsApp(from, ✅ Booking Confirmed!\n\n👩‍⚕️ Nurse Assigned: ${assignedNurse.name}\n📍 Loc: ${aiDecision.data.location}\n⏰ Time: ${aiDecision.data.time});
 
-                            // NOTIFY NURSE
-                            await sendWhatsApp(assignedNurse.phone, `🚑 NEW DUTY ASSIGNED!\n\n📍 Go To: ${aiDecision.data.location}\n⏰ Time: ${aiDecision.data.time}\n👤 Patient: ${aiDecision.data.patient_details}\n\nReply with a photo when you reach.`);
+                            // NOTIFY NURSE (Text)
+                            await sendWhatsApp(assignedNurse.phone, 🚑 NEW DUTY ASSIGNED!\n\n👤 Patient: ${aiDecision.data.patient_details}\n⏰ Time: ${aiDecision.data.time});
+                            
+                            // NOTIFY NURSE (Map Bubble)
+                            if (clientCoords) {
+                                await sendWhatsAppLocation(
+                                    assignedNurse.phone, 
+                                    clientCoords.lat, 
+                                    clientCoords.lng, 
+                                    "Patient Location", 
+                                    aiDecision.data.location
+                                );
+                            } else {
+                                await sendWhatsApp(assignedNurse.phone, 📍 Address: ${aiDecision.data.location} (No Map Pin provided));
+                            }
 
                         } else {
                             // NO NURSE AVAILABLE
@@ -131,17 +162,17 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
                                 timestamp: Date.now()
                             });
 
-                            await sendWhatsApp(from, `✅ Booking Received.\n\n⚠️ All nurses are currently busy. We will assign one shortly and notify you.`);
+                            await sendWhatsApp(from, ✅ Booking Received.\n\n⚠️ All nurses are currently busy. We will assign one shortly and notify you.);
                         }
 
-                        // Clear history
+                        // Clear history after booking
                         await convoRef.delete(); 
 
                     } else {
                         // AI asks follow-up
                         await sendWhatsApp(from, aiDecision.message);
                         history.push({ role: "assistant", content: aiDecision.message });
-                        await convoRef.set({ history: history });
+                        await convoRef.set({ history, coords: clientCoords || null });
                     }
                 }
             }
@@ -153,7 +184,7 @@ exports.webhook = functions.https.onRequest(async (req, res) => {
     }
 });
 
-// --- HELPER: FIND NURSE ---
+// --- HELPER: FIND NEAREST AVAILABLE NURSE ---
 async function findNearestAvailableNurse(clientLat = null, clientLng = null) {
     const nursesRef = db.collection('nurses');
     // Get all nurses who are 'available'
@@ -174,7 +205,7 @@ async function findNearestAvailableNurse(clientLat = null, clientLng = null) {
     let minDistance = Infinity;
 
     nurses.forEach(nurse => {
-        if (nurse.currentLocation) {
+        if (nurse.currentLocation && nurse.currentLocation.lat) {
             const dist = getDistanceFromLatLonInKm(
                 clientLat, clientLng, 
                 nurse.currentLocation.lat, nurse.currentLocation.lng
@@ -190,10 +221,37 @@ async function findNearestAvailableNurse(clientLat = null, clientLng = null) {
     return nearestNurse || nurses[0];
 }
 
+// --- HELPER: SEND LOCATION BUBBLE (MAP) ---
+async function sendWhatsAppLocation(to, lat, lng, name, address) {
+    try {
+        await axios({
+            method: "POST",
+            url: https://graph.facebook.com/v17.0/${PHONE_NUMBER_ID}/messages,
+            headers: {
+                "Authorization": Bearer ${WHATSAPP_TOKEN},
+                "Content-Type": "application/json",
+            },
+            data: {
+                messaging_product: "whatsapp",
+                to: to,
+                type: "location",
+                location: {
+                    longitude: lng,
+                    latitude: lat,
+                    name: name,
+                    address: address
+                }
+            },
+        });
+    } catch (e) {
+        console.error("Location Send Error:", e.response ? e.response.data : e);
+    }
+}
+
 // --- MATH: HAVERSINE FORMULA (Distance in KM) ---
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLat = deg2rad(lat2-lat1);
     var dLon = deg2rad(lon2-lon1); 
     var a = 
         Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -207,16 +265,20 @@ function deg2rad(deg) {
     return deg * (Math.PI/180)
 }
 
-// --- EXISTING AI FUNCTION (Unchanged) ---
+// --- SMART AI BRAIN (Unchanged Logic) ---
 async function chatWithAI(history) {
-    // ... (Keep your existing chatWithAI code exactly as it is) ...
-    // JUST COPY PASTE YOUR EXISTING chatWithAI FUNCTION HERE
     try {
         const systemMessage = { 
             role: "system", 
             content: `You are the receptionist for 'Silver Seva'.
             GOAL: Collect 3 things: Location, Time, Patient Details.
-            RULES: Be polite and Indian-style (Namaste). Only ask for missing info.`
+            
+            MEMORY RULES:
+            - Read the entire conversation history provided.
+            - If the user ALREADY said the location (or sent a pin), DO NOT ask for it again.
+            - Only ask for what is MISSING.
+            - If you have Location, Time, and Patient Details, call 'create_booking'.
+            - Be polite and Indian-style (Namaste).`
         };
 
         const response = await openai.chat.completions.create({
@@ -224,7 +286,7 @@ async function chatWithAI(history) {
             messages: [systemMessage, ...history], 
             functions: [{
                 name: "create_booking",
-                description: "Finalize booking",
+                description: "Finalize booking when Location, Time, and Patient Details are ALL known",
                 parameters: {
                     type: "object",
                     properties: {
@@ -252,15 +314,14 @@ async function chatWithAI(history) {
     }
 }
 
-// --- EXISTING SEND WHATSAPP (Unchanged) ---
+// --- SEND TEXT HELPER ---
 async function sendWhatsApp(to, text) {
-    // ... (Keep your existing sendWhatsApp code exactly as it is) ...
     try {
         await axios({
             method: "POST",
-            url: `https://graph.facebook.com/v17.0/${PHONE_NUMBER_ID}/messages`,
+            url: https://graph.facebook.com/v17.0/${PHONE_NUMBER_ID}/messages,
             headers: {
-                "Authorization": `Bearer ${WHATSAPP_TOKEN}`,
+                "Authorization": Bearer ${WHATSAPP_TOKEN},
                 "Content-Type": "application/json",
             },
             data: {
