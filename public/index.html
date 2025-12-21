@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Seva | Care Management</title>
+    <title>Silver Care | Care Management</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,6 +244,120 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
+        /* --- UPDATED CALENDAR & CHECKBOX CSS --- */
+
+/* Payroll Checkbox */
+.paid-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary); /* Makes the tick orange */
+    cursor: pointer;
+}
+
+/* Calendar Header */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    margin-bottom: 15px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cal-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    background: white;
+    cursor: pointer;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.cal-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.current-date-display {
+    text-align: center;
+}
+
+.cal-month { font-weight: 700; color: var(--navy); font-size: 1.1rem; }
+.cal-year { font-size: 0.8rem; color: #888; }
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.cal-day-header {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #aaa;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: #444;
+    border: 1px solid #f4f4f4;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.cal-day:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-color: var(--primary);
+    z-index: 2;
+}
+
+.cal-day.present {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+    font-weight: 700;
+}
+
+.cal-day.absent {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.cal-day.today {
+    border: 2px solid var(--primary);
+}
+
+.cal-day.empty {
+    background: transparent;
+    border: none;
+    pointer-events: none;
+}
 
         .icon-circle {
             width: 45px;
@@ -828,7 +942,7 @@
         <nav style="padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center;">
             <div
                 style="font-family: 'Rozha One', serif; font-size: 1.8rem; color: #003366; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-hands-holding-circle" style="color: #ff9933;"></i> Silver Seva
+                <i class="fa-solid fa-hands-holding-circle" style="color: #ff9933;"></i> Silver Care
             </div>
             <button onclick="showLogin()" class="btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">
                 Member Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
@@ -893,7 +1007,7 @@
             </div>
             <div
                 style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px dashed #eee; font-size: 0.8rem; color: #aaa;">
-                © 2025 Silver Seva Technologies. All rights reserved.
+                © 2025 Silver Care Technologies. All rights reserved.
             </div>
         </footer>
     </div>
@@ -908,7 +1022,7 @@
                 <i class="fa-solid fa-shield-halved"></i> Secure Staff Portal
             </div>
 
-            <h1 class="login-logo" style="font-family: 'Rozha One', serif;">Silver Seva</h1>
+            <h1 class="login-logo" style="font-family: 'Rozha One', serif;">Silver Care</h1>
             <p style="color: #555; font-size: 1rem; margin-bottom: 2.5rem;">
                 Log in to manage staff, payroll, and bookings.
             </p>
@@ -965,7 +1079,7 @@
     <div class="app-container" style="display: none;">
         <nav class="sidebar">
             <div class="logo" onclick="switchTab('dashboard')">
-                <i class="fa-solid fa-hands-holding-circle" style="color: var(--primary);"></i> Silver Seva
+                <i class="fa-solid fa-hands-holding-circle" style="color: var(--primary);"></i> Silver Care
             </div>
 
             <button class="btn-mode" onclick="toggleMode()">
@@ -1175,9 +1289,16 @@
                         <h1>Payroll Calculation</h1>
                         <p>Automated salary based on attendance</p>
                     </div>
-                    <button class="btn-primary" onclick="alert('Exporting PDF...')">
-                        <i class="fa-solid fa-download"></i> Export
-                    </button>
+                    
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <input type="month" id="payroll-month-picker" class="form-input" 
+                               style="width: auto; padding: 8px;" 
+                               onchange="window.calculatePayroll()">
+                               
+                        <button class="btn-primary" onclick="alert('Exporting PDF...')">
+                            <i class="fa-solid fa-download"></i> Export
+                        </button>
+                    </div>
                 </header>
                 <div class="card" style="overflow-x: auto;">
                     <table class="simple-table">
@@ -1241,7 +1362,7 @@
 
     <div id="modal-onboarding" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card" style="text-align: center;">
-            <h2 style="color: var(--navy); margin-bottom: 1rem;">Welcome to Silver Seva!</h2>
+            <h2 style="color: var(--navy); margin-bottom: 1rem;">Welcome to Silver Care!</h2>
             <p style="color: #666; margin-bottom: 2rem;">Please setup your agency profile.</p>
 
             <input type="text" id="inp-agency-name" class="form-input" placeholder="Enter Agency Name (e.g. Happy Care)"
@@ -1370,27 +1491,34 @@
             </div>
     
             <div id="tab-attendance" class="tab-content active">
-    
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
-                    <button onclick="changeMonth(-1)" style="border: none; background: none; cursor: pointer; font-size: 1.2rem; color: var(--navy); padding: 0 10px;">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    
-                    <h4 id="cal-month-year" style="margin: 0; color: var(--navy);">Month Year</h4>
-                    
-                    <button onclick="changeMonth(1)" style="border: none; background: none; cursor: pointer; font-size: 1.2rem; color: var(--navy); padding: 0 10px;">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                <div class="calendar-controls">
+                    <div class="control-group">
+                        <button class="cal-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="current-date-display">
+                            <div class="cal-month" id="cal-month-text">Month</div>
+                            <div style="font-size: 0.65rem; color:#ccc; text-transform:uppercase;">Month</div>
+                        </div>
+                        <button class="cal-btn" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+            
+                    <div class="control-group">
+                        <button class="cal-btn" onclick="changeYear(-1)"><i class="fa-solid fa-backward"></i></button>
+                        <div class="current-date-display">
+                            <div class="cal-month" id="cal-year-text">Year</div>
+                            <div style="font-size: 0.65rem; color:#ccc; text-transform:uppercase;">Year</div>
+                        </div>
+                        <button class="cal-btn" onclick="changeYear(1)"><i class="fa-solid fa-forward"></i></button>
+                    </div>
                 </div>
             
                 <div class="calendar-grid" id="cal-days-container"></div>
             
-                <div style="display:flex; gap:15px; justify-content:center; margin-top:15px; font-size:0.8rem;">
-                    <div style="display:flex; align-items:center; gap:5px;">
-                        <div style="width:10px; height:10px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:50%;"></div> Present
+                <div style="display:flex; gap:15px; justify-content:center; margin-top:20px; font-size:0.8rem;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <div style="width:12px; height:12px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:4px;"></div> Present
                     </div>
-                    <div style="display:flex; align-items:center; gap:5px;">
-                        <div style="width:10px; height:10px; background:#ffebee; border:1px solid #ffcdd2; border-radius:50%;"></div> Absent
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <div style="width:12px; height:12px; background:#ffebee; border:1px solid #ffcdd2; border-radius:4px;"></div> Absent
                     </div>
                 </div>
             </div>
@@ -1455,7 +1583,7 @@
         let currentStream = null;
         let currentNurseId = null;
         let currentCalDate = new Date(); // Tracks the calendar month
-
+        let allPayouts = []; // Stores list of paid months
 
         // Unsubscribe functions
         let unsubscribeUserDoc = null;
@@ -1596,7 +1724,7 @@
             });
         }
 
-        // --- DATA SYNC (Loads Nurses/Logs ONLY after Gatekeeper passes) ---
+        // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
         function startDataSync(uid) {
             // Prevent duplicate listeners
             if (unsubscribeNurses) return;
@@ -1608,7 +1736,10 @@
                 allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderStaffList();
                 populateLoginSelect();
-                calculatePayroll();
+                // Check if the payroll view is active before recalculating to save resources
+                if(document.getElementById('view-payroll').classList.contains('active-view')){
+                     window.calculatePayroll();
+                }
                 document.getElementById('stat-total').innerText = allNurses.length;
             });
 
@@ -1618,7 +1749,11 @@
                 allLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderDashboardLogs();
                 renderAllLogs();
-                calculatePayroll();
+                
+                // Recalculate payroll if new logs come in
+                if(document.getElementById('view-payroll').classList.contains('active-view')){
+                     window.calculatePayroll();
+                }
 
                 // Today's Stats
                 const today = new Date().toDateString();
@@ -1644,6 +1779,19 @@
                         <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
                     </div>`;
                 });
+            });
+
+            // 4. PAYOUTS (New: Needed for the Checkbox)
+            const payoutsRef = collection(db, "users", uid, "payouts");
+            // We don't need to unsubscribe from this strictly, but it helps sync the checkboxes
+            onSnapshot(payoutsRef, (snapshot) => {
+                // Store paid records (e.g., "nurseId_2025-12")
+                allPayouts = snapshot.docs.map(doc => doc.id);
+                
+                // If the user is looking at the payroll screen, update the checkboxes instantly
+                if(document.getElementById('view-payroll').classList.contains('active-view')){
+                    window.calculatePayroll();
+                }
             });
         }
 
@@ -2049,33 +2197,42 @@ window.switchProfileTab = (tab) => {
     document.getElementById(`tab-${tab}`).classList.add('active');
 };
 
-// 3. CHANGE MONTH (Next/Prev)
+
+// CALENDAR LOGIC
 window.changeMonth = (offset) => {
     currentCalDate.setMonth(currentCalDate.getMonth() + offset);
     renderCalendar();
 };
 
-// 4. RENDER CALENDAR
+// NEW: Change Year
+window.changeYear = (offset) => {
+    currentCalDate.setFullYear(currentCalDate.getFullYear() + offset);
+    renderCalendar();
+};
+
 function renderCalendar() {
     const container = document.getElementById('cal-days-container');
-    const header = document.getElementById('cal-month-year');
     
-    // Update Header Text
+    // Update Text
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    header.innerText = `${monthNames[currentCalDate.getMonth()]} ${currentCalDate.getFullYear()}`;
+    document.getElementById('cal-month-text').innerText = monthNames[currentCalDate.getMonth()];
+    document.getElementById('cal-year-text').innerText = currentCalDate.getFullYear();
 
-    // Reset Grid Header
-    container.innerHTML = `<div class="cal-day-header">S</div><div class="cal-day-header">M</div><div class="cal-day-header">T</div><div class="cal-day-header">W</div><div class="cal-day-header">T</div><div class="cal-day-header">F</div><div class="cal-day-header">S</div>`;
+    container.innerHTML = `
+        <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div><div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+    `;
 
     const year = currentCalDate.getFullYear();
     const month = currentCalDate.getMonth();
-    
     const firstDayIndex = new Date(year, month, 1).getDay(); 
     const daysInMonth = new Date(year, month + 1, 0).getDate(); 
     
-    // Get Presence for THIS specific month/year
-    const nurseLogs = allLogs.filter(l => l.nurseId === currentNurseId);
-    const presentDays = nurseLogs
+    // Get Presence Data
+    const presentDays = allLogs
+        .filter(l => l.nurseId === currentNurseId)
         .filter(l => {
             const d = new Date(l.timestamp);
             return d.getMonth() === month && d.getFullYear() === year;
@@ -2083,26 +2240,29 @@ function renderCalendar() {
         .map(l => new Date(l.timestamp).getDate());
 
     const today = new Date();
-    const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+    const isTodayMonth = today.getMonth() === month && today.getFullYear() === year;
 
-    // Render Empty Slots
+    // Empty Slots
     for (let x = 0; x < firstDayIndex; x++) {
-        container.appendChild(document.createElement('div'));
+        const empty = document.createElement('div');
+        empty.classList.add('cal-day', 'empty');
+        container.appendChild(empty);
     }
 
-    // Render Days
+    // Days
     for (let i = 1; i <= daysInMonth; i++) {
         const dayEl = document.createElement('div');
         dayEl.classList.add('cal-day');
         dayEl.innerText = i;
 
-        if (isCurrentMonth && i === today.getDate()) dayEl.classList.add('today');
+        if (isTodayMonth && i === today.getDate()) dayEl.classList.add('today');
 
         if (presentDays.includes(i)) {
             dayEl.classList.add('present');
+            dayEl.title = "Present";
         } else {
+            // Only mark absent if passed
             let checkDate = new Date(year, month, i);
-            // Only mark absent if it's in the past
             if (checkDate < new Date().setHours(0,0,0,0)) {
                 dayEl.classList.add('absent');
             }
@@ -2110,7 +2270,6 @@ function renderCalendar() {
         container.appendChild(dayEl);
     }
 }
-
 // --- DOCUMENT LOCKER LOGIC ---
 async function loadDocuments(nurseId) {
     const list = document.getElementById('doc-list');
@@ -2287,19 +2446,80 @@ if (editForm) {
                 </div>
             </div>`;
         }
-
-        function calculatePayroll() {
+// Function to save the "Paid" status to Firebase
+window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
+    // Unique ID for this payment: "NurseID_MonthYear"
+    const docId = `${nurseId}_${monthSuffix}`;
+    const docRef = doc(db, "users", currentUser.uid, "payouts", docId);
+    
+    if (isChecked) {
+        // Create the record
+        await setDoc(docRef, { 
+            paidAt: serverTimestamp(),
+            nurseId: nurseId,
+            month: monthSuffix
+        });
+    } else {
+        // Delete the record (Uncheck)
+        await deleteDoc(docRef);
+    }
+};
+        window.calculatePayroll = () => {
             const tbody = document.getElementById('payroll-table-body');
+            const picker = document.getElementById('payroll-month-picker');
+            
             tbody.innerHTML = '';
             let totalPayroll = 0;
+        
+            // 1. Get the target Month & Year from the picker
+            let targetDate = picker.value ? new Date(picker.value + "-01") : new Date();
+            
+            // If picker was empty, set it to today
+            if (!picker.value) {
+                const yyyy = targetDate.getFullYear();
+                const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+                picker.value = `${yyyy}-${mm}`;
+            }
+        
+            const tMonth = targetDate.getMonth();
+            const tYear = targetDate.getFullYear();
+            
+            // Generate a unique key for this month (e.g., "2025-12")
+            const monthKeySuffix = `${tYear}-${String(tMonth+1).padStart(2,'0')}`; 
+        
             allNurses.forEach(nurse => {
-                const daysWorked = allLogs.filter(l => l.nurseId === nurse.id).length;
+                // 2. Count days worked in that specific month
+                const daysWorked = allLogs.filter(l => {
+                    const d = new Date(l.timestamp);
+                    return l.nurseId === nurse.id && d.getMonth() === tMonth && d.getFullYear() === tYear;
+                }).length;
+        
                 const salary = daysWorked * (parseInt(nurse.rate) || 0);
                 totalPayroll += salary;
-                tbody.innerHTML += `<tr><td><b>${nurse.name}</b></td><td>₹${nurse.rate}</td><td>${daysWorked}</td><td style="color:var(--primary);">₹${salary}</td><td>Paid</td></tr>`;
+        
+                // 3. CHECK STATUS: Is this nurse paid for this specific month?
+                // We look for a key like: "nurseID_2025-12"
+                const payoutId = `${nurse.id}_${monthKeySuffix}`;
+                const isPaid = allPayouts.includes(payoutId);
+        
+                // 4. Render the Row with the Checkbox
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${nurse.name}</b></td>
+                        <td>₹${nurse.rate}</td>
+                        <td>${daysWorked}</td>
+                        <td style="color:var(--primary); font-weight:bold;">₹${salary}</td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" 
+                                   class="paid-checkbox" 
+                                   style="width: 20px; height: 20px; accent-color: #ff9933; cursor: pointer;"
+                                   ${isPaid ? "checked" : ""} 
+                                   onchange="togglePayout('${nurse.id}', '${monthKeySuffix}', this.checked)">
+                        </td>
+                    </tr>`;
             });
             document.getElementById('stat-payroll-total').innerText = '₹' + totalPayroll;
-        }
+        };
 
         // --- CAMERA & LOCATION ---
         window.startCamera = async () => {
@@ -2413,7 +2633,14 @@ if (editForm) {
             if (nav) nav.classList.add('active');
 
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
-            document.getElementById(`view-${tab}`).classList.add('active-view');
+            const view = document.getElementById(`view-${tab}`);
+            view.classList.add('active-view');
+
+            // 👇 ADD THIS NEW BLOCK 👇
+            // If opening Payroll, run calculation immediately to set default date
+            if (tab === 'payroll') {
+                window.calculatePayroll();
+            }
         };
 
         window.showLogin = () => {
