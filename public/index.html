@@ -932,6 +932,16 @@
 .doc-item { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
 .doc-icon { width: 40px; height: 40px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1565c0; }
 .btn-profile { width: 100%; margin-top: 10px; background: #e3f2fd; color: #1565c0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+/* Add this to your CSS */
+.stat-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
     </style>
 </head>
 
@@ -1139,18 +1149,20 @@
                 </header>
 
                 <div class="stats-grid">
-                    <div class="card stat-card">
+                    <div class="card stat-card" onclick="switchTab('staff')">
                         <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
                         <div class="stat-label">Total Staff</div>
                         <div class="stat-value" id="stat-total">0</div>
                     </div>
-                    <div class="card stat-card">
+
+                    <div class="card stat-card" onclick="showPresentToday()">
                         <div class="icon-circle" style="color: var(--accent);"><i class="fa-solid fa-check-to-slot"></i>
                         </div>
                         <div class="stat-label">Present Today</div>
                         <div class="stat-value" id="stat-present">0</div>
                     </div>
-                    <div class="card stat-card">
+
+                    <div class="card stat-card" onclick="switchTab('payroll')">
                         <div class="icon-circle" style="color: var(--navy);"><i
                                 class="fa-solid fa-indian-rupee-sign"></i></div>
                         <div class="stat-label">Payroll Est.</div>
@@ -1376,36 +1388,30 @@
         </div>
     </div>
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
-        <div class="login-card" style="text-align: center; max-width: 450px; position: relative;">
-
+        <div class="login-card" style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
             <div id="payment-form-section">
                 <div
                     style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-calculator"></i> FLEXI-PLAN
+                    <i class="fa-solid fa-calendar-check"></i> MONTHLY PLAN
                 </div>
 
                 <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Add More Staff</h2>
                 <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">
-                    Enter slots needed. Discount applies automatically!
+                    1 Slot = 1 Nurse Profile (Valid for 30 Days)
                 </p>
 
-                <div
-                    style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
+                <div style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
                     <p style="margin:0 0 8px 0; font-weight:bold; color:#1565c0; font-size:0.9rem;">
                         🔥 Bulk Discounts Available:
                     </p>
-
                     <div style="display:flex; gap:5px; justify-content:space-between;">
-                        <div id="badge-5"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-5" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>5+ Slots</b><br>10% OFF
                         </div>
-                        <div id="badge-10"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-10" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>10+ Slots</b><br>15% OFF
                         </div>
-                        <div id="badge-20"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-20" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>20+ Slots</b><br>30% OFF
                         </div>
                     </div>
@@ -1418,14 +1424,16 @@
                             oninput="calculateTotal()"
                             style="font-size: 1.2rem; font-weight: bold; text-align: center;">
                     </div>
-                    <div style="font-size: 0.8rem; color: #888; margin-top: 5px;">Rate: ₹200 / nurse</div>
+                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px; font-weight: 500;">
+                        Rate: <span style="color: #138808; font-weight: bold;">₹199 per nurse</span> / month
+                    </div>
                 </div>
 
                 <div
                     style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px dashed #ccc; margin-bottom: 1.5rem; text-align: left;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-weight: bold; color: var(--navy);">Total to Pay:</span>
-                        <span id="bill-total" style="font-size: 1.4rem; color: #138808; font-weight: bold;">₹200</span>
+                        <span id="bill-total" style="font-size: 1.4rem; color: #138808; font-weight: bold;">₹199</span>
                     </div>
                 </div>
 
@@ -1799,7 +1807,7 @@
         // 💰 DYNAMIC PRICING ENGINE (Flexi-Plan)
         // ==========================================
 
-        const BASE_RATE = 200;
+        const BASE_RATE = 199;
         const UPI_ID = "8299341343@ptsbi";
         const UPI_NAME = "SilverSeva";
         const FREE_LIMIT = 0;
@@ -1807,7 +1815,7 @@
         // State to hold current calculation
         let currentOrder = {
             slots: 1,
-            totalPrice: 200
+            totalPrice: 199
         };
 
         // 1. CALCULATE PRICE LIVE (Updates Text & QR)
@@ -2000,89 +2008,99 @@
         }
 
 
-        // --- UPDATED ADMIN LOADER (FIXED) ---
-        function loadAdminData() {
-            onSnapshot(collection(db, "users"), (snapshot) => {
-                const pendingTable = document.getElementById('admin-pending-table');
-                const allTable = document.getElementById('admin-all-users');
-                const leaderboardDiv = document.getElementById('admin-leaderboard');
+       // --- UPDATED ADMIN LOADER (FIXED FOR 2nd PAYMENT) ---
+       function loadAdminData() {
+        onSnapshot(collection(db, "users"), (snapshot) => {
+            const pendingTable = document.getElementById('admin-pending-table');
+            const allTable = document.getElementById('admin-all-users');
+            const leaderboardDiv = document.getElementById('admin-leaderboard');
 
-                pendingTable.innerHTML = '';
-                allTable.innerHTML = '';
-                leaderboardDiv.innerHTML = '';
+            pendingTable.innerHTML = '';
+            allTable.innerHTML = '';
+            leaderboardDiv.innerHTML = '';
 
-                let referralCounts = {};
-                let hasPending = false;
+            let referralCounts = {};
+            let hasPending = false;
 
-                snapshot.docs.forEach(doc => {
-                    const u = doc.data();
-                    const uid = doc.id;
+            snapshot.docs.forEach(doc => {
+                const u = doc.data();
+                const uid = doc.id;
 
-                    // --- 1. PREPARE DISPLAY DATA ---
-                    let planDisplay = '<span style="color:#666; font-size:0.8rem;">Free Tier</span>';
-                    if (u.plan === 'unlimited') {
-                        planDisplay = '<span style="color:#e65100; font-weight:bold; font-size:0.8rem;">💎 Unlimited</span>';
-                    } else if (u.extraSlots > 0) {
-                        planDisplay = `<span style="color:#1565c0; font-weight:bold; font-size:0.8rem;">🎫 ${u.extraSlots} Slots</span>`;
-                    }
+                // --- 1. PREPARE DISPLAY DATA ---
+                let planDisplay = '<span style="color:#666; font-size:0.8rem;">Free Tier</span>';
+                if (u.plan === 'unlimited') {
+                    planDisplay = '<span style="color:#e65100; font-weight:bold; font-size:0.8rem;">💎 Unlimited</span>';
+                } else if (u.extraSlots > 0) {
+                    planDisplay = `<span style="color:#1565c0; font-weight:bold; font-size:0.8rem;">🎫 ${u.extraSlots} Slots</span>`;
+                }
 
-                    const count = u.nurseCount || 0;
-                    const countDisplay = `<span style="background:#f0f0f0; padding:2px 6px; border-radius:10px; font-size:0.75rem; color:#333;">👥 ${count} Staff</span>`;
+                const count = u.nurseCount || 0;
+                const countDisplay = `<span style="background:#f0f0f0; padding:2px 6px; border-radius:10px; font-size:0.75rem; color:#333;">👥 ${count} Staff</span>`;
 
-                    // --- 2. LEADERBOARD LOGIC ---
-                    if (u.referralBy && u.referralBy !== "DIRECT") {
-                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                        referralCounts[u.referralBy].total += 1;
-                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                    }
+                // --- 2. LEADERBOARD LOGIC ---
+                if (u.referralBy && u.referralBy !== "DIRECT") {
+                    if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                    referralCounts[u.referralBy].total += 1;
+                    if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                }
 
-                    // --- 3. PENDING TABLE ---
-                    if (u.paymentRequest && u.paymentRequest.status === 'pending' && !u.isPaid) {
-                        hasPending = true;
-                        pendingTable.innerHTML += `
-                <tr style="background: #fff8e1;">
-                    <td>
-                        <b>${u.agencyName}</b><br>
-                        ${planDisplay}
-                    </td>
-                    
-                    <td>₹${u.paymentRequest.amount || 199}</td>
-                    
-                    <td>${u.referralBy || '-'}</td>
-                    <td style="font-family:monospace; color:#003366;">${u.paymentRequest.utr}</td>
-                    <td><button onclick="approveUserPayment('${uid}')" class="btn-primary" style="padding:5px 10px; font-size:0.8rem;">Approve ✅</button></td>
-                </tr>`;
-                    }
-
-                    // --- 4. ALL USERS TABLE ---
-                    allTable.innerHTML += `
-            <tr>
+                // --- 3. PENDING TABLE (FIXED) ---
+                // 🔴 REMOVED "!u.isPaid". Now checks ONLY if status is 'pending'.
+                if (u.paymentRequest && u.paymentRequest.status === 'pending') {
+                    hasPending = true;
+                    pendingTable.innerHTML += `
+            <tr style="background: #fff8e1;">
                 <td>
-                    <div style="font-weight:bold; color:var(--navy);">${u.agencyName || 'Incomplete'}</div>
-                    <div style="margin-top:4px;">${planDisplay} &bull; ${countDisplay}</div>
+                    <b>${u.agencyName}</b><br>
+                    ${planDisplay}
                 </td>
-                <td>${u.email}</td>
-                <td>${u.referralBy || 'DIRECT'}</td>
-                <td>${u.isPaid ? '<span style="color:green; font-weight:bold;">PAID</span>' : '<span style="color:red;">LOCKED</span>'}</td>
+                
+                <td>₹${u.paymentRequest.amount || 199}</td>
+                
+                <td>${u.referralBy || '-'}</td>
+                <td style="font-family:monospace; color:#003366;">${u.paymentRequest.utr}</td>
+                <td><button onclick="approveUserPayment('${uid}')" class="btn-primary" style="padding:5px 10px; font-size:0.8rem;">Approve ✅</button></td>
             </tr>`;
-                });
+                }
 
-                if (!hasPending) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending payments.</td></tr>';
+                // --- 4. ALL USERS TABLE (IMPROVED STATUS) ---
+                let statusHtml = '<span style="color:red;">LOCKED</span>';
+                
+                // Show "PENDING" if they are waiting for approval, even if they paid before
+                if (u.paymentRequest && u.paymentRequest.status === 'pending') {
+                     statusHtml = '<span style="color:#e65100; font-weight:bold;">PENDING VERIFICATION</span>';
+                } else if (u.isPaid) {
+                     statusHtml = '<span style="color:green; font-weight:bold;">PAID</span>';
+                }
 
-                // Render Leaderboard
-                Object.keys(referralCounts).forEach(code => {
-                    const data = referralCounts[code];
-                    leaderboardDiv.innerHTML += `
-            <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'};">
-                <div style="font-size: 1.2rem; font-weight: bold;">${code}</div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px;">
-                    <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700; color:#138808;">${data.paid}</div><div style="font-size:0.7rem;">SALES</div></div>
-                    <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700;">${data.total}</div><div style="font-size:0.7rem;">LEADS</div></div>
-                </div>
-            </div>`;
-                });
+                allTable.innerHTML += `
+        <tr>
+            <td>
+                <div style="font-weight:bold; color:var(--navy);">${u.agencyName || 'Incomplete'}</div>
+                <div style="margin-top:4px;">${planDisplay} &bull; ${countDisplay}</div>
+            </td>
+            <td>${u.email}</td>
+            <td>${u.referralBy || 'DIRECT'}</td>
+            <td>${statusHtml}</td>
+        </tr>`;
             });
-        }
+
+            if (!hasPending) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending payments.</td></tr>';
+
+            // Render Leaderboard
+            Object.keys(referralCounts).forEach(code => {
+                const data = referralCounts[code];
+                leaderboardDiv.innerHTML += `
+        <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'};">
+            <div style="font-size: 1.2rem; font-weight: bold;">${code}</div>
+            <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700; color:#138808;">${data.paid}</div><div style="font-size:0.7rem;">SALES</div></div>
+                <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700;">${data.total}</div><div style="font-size:0.7rem;">LEADS</div></div>
+            </div>
+        </div>`;
+            });
+        });
+    }
 
         window.approveUserPayment = async (targetUid) => {
             if (!confirm("Confirm payment received?")) return;
@@ -2646,6 +2664,25 @@ window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
         window.showLogin = () => {
             document.getElementById('public-landing').style.display = 'none';
             document.getElementById('login-overlay').style.display = 'flex';
+        };
+
+
+        // --- NEW FUNCTION: Show List of Present Nurses ---
+        window.showPresentToday = () => {
+            const today = new Date().toDateString();
+            
+            // 1. Get logs for today
+            const todaysLogs = allLogs.filter(l => new Date(l.timestamp).toDateString() === today);
+            
+            // 2. Get unique names to avoid duplicates
+            const names = [...new Set(todaysLogs.map(l => l.nurseName))];
+
+            // 3. Show Alert with names
+            if (names.length === 0) {
+                alert("📅 No attendance marked today yet.");
+            } else {
+                alert(`✅ Present Today (${names.length}):\n\n• ` + names.join("\n• "));
+            }
         };
     </script>
 </body>
