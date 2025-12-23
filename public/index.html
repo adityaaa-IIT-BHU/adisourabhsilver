@@ -1732,83 +1732,149 @@
             }
         });
 
-        // --- THE GATEKEEPER (Fixed Order & Pay Later) ---
-        // --- THE GATEKEEPER (Fixed Order & Pay Later) ---
-        let isPayLaterMode = false;
+        // --- 🗓️ VALIDITY CHECKER SYSTEM (Step 3) ---
+let expiredNursesList = []; // Stores IDs of nurses who need payment
 
-        function setupGatekeeper(uid) {
-            unsubscribeUserDoc = onSnapshot(doc(db, "users", uid), (docSnap) => {
+async function checkNurseValidity(uid) {
+    const q = collection(db, "users", uid, "nurses");
+    const snapshot = await getDocs(q);
+    
+    expiredNursesList = []; 
+    const now = Date.now();
+    const msPerDay = 24 * 60 * 60 * 1000;
 
-                // 1. SUPER ADMIN BYPASS
-                if (currentUser.email === "supercare655@gmail.com") {
-                    document.getElementById('modal-onboarding').style.display = 'none';
-                    document.getElementById('modal-payment-lock').style.display = 'none';
-                    startDataSync(uid);
-                    return;
-                }
+    snapshot.forEach(docSnap => {
+        const n = docSnap.data();
+        // Give old data a 7-day grace period
+        const expiry = n.validUntil || (now + (7 * msPerDay));
+        
+        if (expiry < now) {
+            expiredNursesList.push({ id: docSnap.id, name: n.name });
+        }
+    });
 
-                // 2. HANDLE NEW USERS
-                if (!docSnap.exists()) {
-                    document.getElementById('modal-onboarding').style.display = 'flex';
-                    return;
-                }
+    if (expiredNursesList.length > 0) {
+        showRenewalModal(expiredNursesList);
+    } else {
+        const lockModal = document.getElementById('modal-payment-lock');
+        if(lockModal) lockModal.style.display = 'none';
+    }
+}
 
-                currentUserData = docSnap.data();
+// --- UPDATED: Renewal Modal with Individual Delete Option ---
+function showRenewalModal(expiredList) {
+    const modal = document.getElementById('modal-payment-lock');
+    const title = document.querySelector('#payment-form-section h2');
+    const desc = document.querySelector('#payment-form-section p');
+    const input = document.getElementById('slot-quantity');
+    const payBtn = document.getElementById('rzp-button');
+    const backBtn = document.getElementById('btn-pay-later');
 
-                // 3. CHECK ONBOARDING
-                if (!currentUserData.agencyName) {
-                    document.getElementById('modal-onboarding').style.display = 'flex';
-                    return;
-                } else {
-                    document.getElementById('modal-onboarding').style.display = 'none';
-                }
+    if(!modal) return;
+    modal.style.display = 'flex';
+    
+    if(title) {
+        title.innerText = "⚠️ Membership Expired";
+        title.style.color = "#d32f2f";
+    }
+    
+    if(desc) {
+        // Create a list of nurses with a "Delete & Stop Paying" button for each
+        let listHtml = `<div style="text-align:left; margin-top:15px; border-top:1px solid #eee; padding-top:10px; max-height:200px; overflow-y:auto;">`;
+        
+        expiredList.forEach(nurse => {
+            listHtml += `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#fff5f5; padding:10px; border-radius:10px; border:1px solid #ffebee;">
+                <div>
+                    <span style="font-size:0.9rem; font-weight:600; color:#333; display:block;">${nurse.name}</span>
+                    <span style="font-size:0.7rem; color:#d32f2f;">Expired</span>
+                </div>
+                <button onclick="window.removeNurseFromLock('${nurse.id}')" 
+                        style="background:#ff4444; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.75rem; font-weight:600; transition:0.2s;">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+            </div>`;
+        });
+        
+        listHtml += `</div>`;
+        
+        desc.innerHTML = `Action required for <b>${expiredList.length} staff member(s)</b>. Pay to renew or delete to continue: ${listHtml}`;
+    }
 
-                // 4. CHECK PAYMENT STATUS
-                const payModal = document.getElementById('modal-payment-lock');
-                const verifyBtn = document.getElementById('btn-verify-payment');
-                const payLaterBtn = document.getElementById('btn-pay-later');
-                const statusText = document.getElementById('payment-status-text');
+    if(input) {
+        input.value = expiredList.length;
+        input.disabled = true; 
+        if(window.calculateTotal) window.calculateTotal(); 
+    }
 
-                // A. User is Paid
-                if (currentUserData.isPaid) {
-                    payModal.style.display = 'none';
-                    startDataSync(uid);
-                    return;
-                }
+    if(payBtn) payBtn.innerText = `Renew ${expiredList.length} Staff (30 Days)`;
+    
+    // Hide back button because renewal/cleanup is mandatory to access dashboard
+    if(backBtn) backBtn.style.display = 'none';
+}
 
-                // B. Payment Pending (Locked)
-                if (currentUserData.paymentRequest && currentUserData.paymentRequest.status === 'pending') {
-                    payModal.style.display = 'flex';
-                    verifyBtn.innerText = "Verification Pending...";
-                    verifyBtn.disabled = true;
-                    statusText.style.display = 'block';
-                    statusText.innerText = "Admin is verifying. Please wait...";
-                    if (payLaterBtn) payLaterBtn.style.display = 'none';
-                    return;
-                }
+// Function to delete staff directly from the Lock Screen
+window.removeNurseFromLock = async (id) => {
+    if (confirm("Delete this staff member permanently? You won't have to pay for them, but their attendance data will be lost.")) {
+        try {
+            // 1. Delete from Firebase
+            await deleteDoc(doc(db, "users", currentUser.uid, "nurses", id));
 
-                // C. Not Paid (Show Gatekeeper)
-                if (!isPayLaterMode) {
-                    payModal.style.display = 'flex';
-                    verifyBtn.innerText = "Verify Payment";
-                    verifyBtn.disabled = false;
-                    statusText.style.display = 'none';
-
-                    // Show "Skip" Button for Login
-                    if (payLaterBtn) {
-                        payLaterBtn.style.display = 'block';
-                        payLaterBtn.innerText = "Skip for now (View Dashboard)";
-                    }
-
-                    if (window.initPricingModal) window.initPricingModal();
-                } else {
-                    // User clicked Skip -> Dashboard visible
-                    payModal.style.display = 'none';
-                    startDataSync(uid);
-                }
+            // 2. Decrement your agency's nurse count
+            await updateDoc(doc(db, "users", currentUser.uid), {
+                nurseCount: increment(-1)
             });
+
+            // 3. Re-scan validity. If list is now empty, it hides the modal!
+            await checkNurseValidity(currentUser.uid);
+            
+        } catch (error) {
+            console.error("Removal Error:", error);
+            alert("Could not remove staff. Please try again.");
+        }
+    }
+};
+       
+// --- THE GATEKEEPER (Step 3: Prepaid Validity Model) ---
+function setupGatekeeper(uid) {
+    unsubscribeUserDoc = onSnapshot(doc(db, "users", uid), (docSnap) => {
+
+        // 1. SUPER ADMIN BYPASS
+        if (currentUser.email === "supercare655@gmail.com") {
+            document.getElementById('modal-onboarding').style.display = 'none';
+            document.getElementById('modal-payment-lock').style.display = 'none';
+            startDataSync(uid);
+            return;
         }
 
+        // 2. HANDLE NEW USERS
+        if (!docSnap.exists()) {
+            document.getElementById('modal-onboarding').style.display = 'flex';
+            return;
+        }
+
+        currentUserData = docSnap.data();
+
+        // 3. CHECK ONBOARDING
+        if (!currentUserData.agencyName) {
+            document.getElementById('modal-onboarding').style.display = 'flex';
+            return;
+        } else {
+            document.getElementById('modal-onboarding').style.display = 'none';
+        }
+
+        // 4. CHECK PREPAID VALIDITY (New Model)
+        // This scans all your nurses. If any are expired, it shows the Lock Screen.
+        // It replaces the old "isPaid" and "Payment Pending" checks.
+        if (typeof checkNurseValidity === 'function') {
+            checkNurseValidity(uid); 
+        }
+        
+        // 5. START DATA SYNC
+        // We load data so the dashboard is ready as soon as they recharge.
+        startDataSync(uid); 
+    });
+}
         // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
         function startDataSync(uid) {
             // Prevent duplicate listeners
@@ -1959,210 +2025,257 @@
             calculateTotal(); // Run calculation for 1
         }
 
-      // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
-      window.openModal = () => {
-        // 1. Get Limits
-        const extraSlots = currentUserData?.extraSlots || 0;
-        const currentCount = allNurses.length;
-        
-        // Use FREE_LIMIT if defined, otherwise 0
-        const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
-        const totalLimit = baseLimit + extraSlots;
+    // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
+window.openModal = (isOnboarding = false) => {
+    // 1. Get Limits
+    const extraSlots = currentUserData?.extraSlots || 0;
+    const currentCount = allNurses.length;
+    
+    // Use FREE_LIMIT if defined, otherwise 0
+    const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
+    const totalLimit = baseLimit + extraSlots;
 
-        console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
+    console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
 
-        // 2. CHECK LIMIT
-        if (currentCount < totalLimit) {
-            // ✅ User has space -> Open Add Form
-            document.getElementById('addModal').classList.add('active');
-        } 
-        else {
-            // ⛔ Limit Reached -> Alert & Show Payment Form
+    // 2. CHECK LIMIT
+    // If we have space AND it is NOT an onboarding force, open the Add Form
+    if (currentCount < totalLimit && !isOnboarding) {
+        // ✅ User has space -> Open Add Form
+        document.getElementById('addModal').classList.add('active');
+    } 
+    else {
+        // ⛔ Limit Reached OR Onboarding Force
+
+        // A. Only Show Alert if NOT Onboarding (Existing Users)
+        if (!isOnboarding) {
             alert(`⚠️ Slot Limit Reached!\n\nYou have used ${currentCount}/${totalLimit} slots. Please purchase more slots to add new staff.`);
-
-            // Reset Payment Form to 1 slot default
-            const input = document.getElementById('slot-quantity');
-            if(input) {
-                input.value = 1;
-                if(window.calculateTotal) window.calculateTotal();
-            }
-
-            // Show Payment Modal
-            document.getElementById('modal-payment-lock').style.display = 'flex';
-
-            // Ensure Cancel button acts as "Go Back"
-            const payLaterBtn = document.getElementById('btn-pay-later');
-            if (payLaterBtn) {
-                payLaterBtn.style.display = 'block';
-                payLaterBtn.innerText = "Cancel (Go Back)";
-            }
         }
-    };
+
+        // B. Reset Payment Form to 1 slot default
+        const input = document.getElementById('slot-quantity');
+        if(input) {
+            input.value = 1;
+            if(window.calculateTotal) window.calculateTotal();
+        }
+
+        // C. Customize Text for New vs Existing Users
+        const title = document.querySelector('#payment-form-section h2');
+        const desc = document.querySelector('#payment-form-section p');
+
+        if (title) {
+            // New User = "Activate Account", Existing = "Add More Staff"
+            title.innerText = isOnboarding ? "Activate Your Account" : "Add More Staff";
+        }
+        if (desc) {
+            desc.innerText = isOnboarding 
+                ? "Purchase your first slot to start managing staff." 
+                : "1 Slot = 1 Nurse Profile (Valid for 30 Days)";
+        }
+
+        // D. Show Payment Modal
+        document.getElementById('modal-payment-lock').style.display = 'flex';
+
+        // E. ✅ ENABLE "GO BACK" for this scenario
+        // Since we are adding NEW slots (not renewing expired ones), users can cancel.
+        const payLaterBtn = document.getElementById('btn-pay-later');
+        if (payLaterBtn) {
+            payLaterBtn.style.display = 'block';
+            payLaterBtn.innerText = isOnboarding ? "Skip for Now" : "Cancel (Go Back)";
+        }
+    }
+};
 
         window.closeModal = () => document.getElementById('addModal').classList.remove('active');
 
-        // --- FUNCTION: Razorpay Payment Trigger ---
-        window.startRazorpayPayment = () => {
-            // 1. Safety Check
-            if (!currentOrder || !currentOrder.totalPrice) {
-                alert("Error: Invalid order details.");
-                return;
+       // --- FUNCTION: Razorpay Payment Trigger (Step 4: Recharge & Slot Logic) ---
+window.startRazorpayPayment = () => {
+    // 1. Safety Check
+    if (!currentOrder || !currentOrder.totalPrice) {
+        alert("Error: Invalid order details.");
+        return;
+    }
+
+    // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
+    // We use currentOrder.totalPrice to ensure the correct amount is charged
+    const amountInPaise = 100;
+
+    const options = {
+        "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
+        "amount": amountInPaise,
+        "currency": "INR",
+        "name": "Silver Care",
+        "description": `Payment for ${currentOrder.slots} Nurse Slot(s)`,
+        "image": "https://silvercareprototype.web.app/icon.png",
+
+        "handler": async function (response) {
+            // --- SUCCESS HANDLER ---
+            console.log("Payment Success:", response.razorpay_payment_id);
+
+            const btn = document.getElementById('rzp-button');
+            if (btn) {
+                btn.innerText = "Processing Activation...";
+                btn.disabled = true;
             }
 
-            // 2. Convert Price to Paise (Razorpay expects 19900 for ₹199)
-            const amountInPaise = 100;
-
-            const options = {
-                "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
-                "amount": amountInPaise,
-                "currency": "INR",
-                "name": "Silver Care",
-                "description": `Purchase of ${currentOrder.slots} Nurse Slots`,
-                "image": "https://silvercareprototype.web.app/icon.png", // Optional Logo
-
-                "handler": async function (response) {
-                    // --- SUCCESS HANDLER (Runs only if payment works) ---
-                    console.log("Payment Success:", response.razorpay_payment_id);
-
-                    const btn = document.getElementById('rzp-button');
-                    if (btn) {
-                        btn.innerText = "Activating Slots...";
-                        btn.disabled = true;
-                    }
-
-                    try {
-                        // A. GET CURRENT USER DATA (To find who referred them)
-                        const userRef = doc(db, "users", currentUser.uid);
-                        const userSnap = await getDoc(userRef);
-                        const userData = userSnap.data();
-                        const referrerCode = userData.referralBy; // e.g. "RAHUL72"
-
-                        // B. INSTANTLY UNLOCK in Firebase
-                        await updateDoc(userRef, {
-                            // Record the transaction details
-                            paymentRequest: {
-                                status: 'approved', // Auto-approved
-                                amount: currentOrder.totalPrice,
-                                method: 'razorpay',
-                                transactionId: response.razorpay_payment_id,
-                                paidAt: serverTimestamp(),
-                                slotsPurchased: currentOrder.slots
-                            },
-                            // Critical: Grant access immediately
-                            isPaid: true,
-                            extraSlots: increment(currentOrder.slots),
-                            lastPaymentId: response.razorpay_payment_id
-                        });
-
-                        // C. INCREMENT INTERN SALE COUNT (Automated Sales Tracking)
-                        if (referrerCode && referrerCode !== "DIRECT") {
-                            // Find Intern by their Agency Name (which acts as the Code)
-                            const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
-                            const internSnap = await getDocs(q);
-
-                            if (!internSnap.empty) {
-                                internSnap.forEach(async (internDoc) => {
-                                    await updateDoc(doc(db, "users", internDoc.id), {
-                                        sales: increment(1), // 🟢 +1 Sale for Intern
-                                        totalRevenue: increment(currentOrder.totalPrice) // Optional: Track revenue
-                                    });
-                                    console.log(`Commission recorded for ${referrerCode}`);
-                                });
-                            }
-                        }
-
-                        // D. Success UI
-                        alert("✅ Payment Successful! Your slots have been activated.");
-                        document.getElementById('modal-payment-lock').style.display = 'none';
-
-                        // Force refresh data
-                        if (currentUser) startDataSync(currentUser.uid);
-
-                    } catch (error) {
-                        console.error("Activation Error:", error);
-                        alert("Payment received but activation failed. Please contact support with ID: " + response.razorpay_payment_id);
-                    }
-                },
-                "prefill": {
-                    "name": currentUser?.displayName || "",
-                    "email": currentUser?.email || "",
-                    "contact": currentUser?.phoneNumber || "" // Auto-fills phone if available
-                },
-                "theme": {
-                    "color": "#ff9933" // Matches your Saffron brand
-                },
-                "modal": {
-                    "ondismiss": function () {
-                        console.log('Payment cancelled by user');
-                    }
-                }
-            };
-
-            // 5. Open Razorpay
-            const rzp1 = new Razorpay(options);
-
-            rzp1.on('payment.failed', function (response) {
-                alert("❌ Payment Failed: " + response.error.description);
-                console.error(response.error);
-            });
-
-            rzp1.open();
-        };
-        // --- UPDATED ONBOARDING (Captures +1 LEAD) ---
-        window.submitOnboarding = async () => {
-            const agencyName = document.getElementById('inp-agency-name').value;
-            let referralCode = document.getElementById('inp-referral-code').value;
-
-            if (!agencyName) return alert("Enter Agency Name");
-
-            // Normalize code to uppercase
-            referralCode = referralCode ? referralCode.toUpperCase().trim() : "DIRECT";
-
             try {
-                // 1. Create/Update the Agency Profile
-                await setDoc(doc(db, "users", currentUser.uid), {
-                    agencyName: agencyName,
-                    referralBy: referralCode,
-                    email: currentUser.email,
-                    createdAt: serverTimestamp(),
-                    leadStatus: 'captured' // Mark so we don't count leads twice
-                }, { merge: true });
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                const userData = userSnap.data();
+                const referrerCode = userData.referralBy;
 
-                // 2. INCREMENT INTERN LEAD COUNT (If code exists)
-                if (referralCode !== "DIRECT") {
-                    // Find the intern who owns this Agency Name/Code
-                    const q = query(collection(db, "users"), where("agencyName", "==", referralCode));
-                    const snapshot = await getDocs(q);
+                // --- A. RENEWAL LOGIC: If payment was triggered by expired staff ---
+                if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
+                    const days30 = 30 * 24 * 60 * 60 * 1000;
+                    
+                    const renewalPromises = expiredNursesList.map(nurse => {
+                        const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
+                        return updateDoc(nurseRef, {
+                            validUntil: Date.now() + days30 
+                        });
+                    });
 
-                    if (!snapshot.empty) {
-                        snapshot.forEach(async (internDoc) => {
+                    await Promise.all(renewalPromises);
+                    expiredNursesList = []; // Clear the list after renewal
+                }
+
+                // --- B. SLOT & PROFILE UPDATE ---
+                await updateDoc(userRef, {
+                    paymentRequest: {
+                        status: 'approved',
+                        amount: currentOrder.totalPrice,
+                        method: 'razorpay',
+                        transactionId: response.razorpay_payment_id,
+                        paidAt: serverTimestamp(),
+                        slotsPurchased: currentOrder.slots
+                    },
+                    isPaid: true,
+                    extraSlots: increment(currentOrder.slots),
+                    lastPaymentId: response.razorpay_payment_id
+                });
+
+                // --- C. INTERN SALES TRACKING ---
+                if (referrerCode && referrerCode !== "DIRECT") {
+                    const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
+                    const internSnap = await getDocs(q);
+
+                    if (!internSnap.empty) {
+                        internSnap.forEach(async (internDoc) => {
                             await updateDoc(doc(db, "users", internDoc.id), {
-                                leads: increment(1) // 🟢 +1 Lead instantly
+                                sales: increment(1),
+                                totalRevenue: increment(currentOrder.totalPrice)
                             });
                         });
                     }
                 }
 
-                // 3. Hide Modal & Refresh
-                document.getElementById('modal-onboarding').style.display = 'none';
-                if (window.checkAdminAccess) window.checkAdminAccess(currentUser);
-                // Trigger Pay Modal immediately if they need slots?
-                // window.openModal(); (Optional: if you want them to pay right away)
+                // --- D. SUCCESS UI ---
+                alert("✅ Success! Your staff validity/slots have been updated.");
+                document.getElementById('modal-payment-lock').style.display = 'none';
 
-            } catch (e) {
-                console.error("Onboarding Error:", e);
-                alert("Error saving profile: " + e.message);
+                // Re-verify validity to ensure the lock screen clears correctly
+                if (typeof checkNurseValidity === 'function') {
+                    checkNurseValidity(currentUser.uid);
+                }
+
+                if (currentUser) startDataSync(currentUser.uid);
+
+            } catch (error) {
+                console.error("Activation Error:", error);
+                alert("Payment received but update failed. ID: " + response.razorpay_payment_id);
             }
-        };
+        },
+        "prefill": {
+            "name": currentUser?.displayName || "",
+            "email": currentUser?.email || "",
+            "contact": currentUser?.phoneNumber || ""
+        },
+        "theme": {
+            "color": "#ff9933"
+        },
+        "modal": {
+            "ondismiss": function () {
+                console.log('Payment cancelled');
+            }
+        }
+    };
 
-        // --- FUNCTION: Activate Pay Later (Cancel/Skip) ---
-        window.activatePayLater = () => {
-            isPayLaterMode = true; // Set flag
-            document.getElementById('modal-payment-lock').style.display = 'none';
+    const rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert("❌ Payment Failed: " + response.error.description);
+    });
+    rzp1.open();
+};
+       // --- UPDATED ONBOARDING (Preserves Lead Logic + Auto-Payment) ---
+window.submitOnboarding = async () => {
+    const agencyName = document.getElementById('inp-agency-name').value;
+    let referralCode = document.getElementById('inp-referral-code').value;
 
-            // Only try to load data if user exists
-            if (currentUser) startDataSync(currentUser.uid);
-        };
+    if (!agencyName) return alert("Enter Agency Name");
+
+    // Normalize code to uppercase
+    referralCode = referralCode ? referralCode.toUpperCase().trim() : "DIRECT";
+
+    try {
+        const btn = document.querySelector('#modal-onboarding .btn-primary');
+        if(btn) btn.innerText = "Setting up...";
+
+        // 1. Create/Update the Agency Profile
+        await setDoc(doc(db, "users", currentUser.uid), {
+            agencyName: agencyName,
+            referralBy: referralCode,
+            email: currentUser.email,
+            createdAt: serverTimestamp(),
+            leadStatus: 'captured', // Mark so we don't count leads twice
+            nurseCount: 0,
+            extraSlots: 0
+        }, { merge: true });
+
+        // 2. INCREMENT INTERN LEAD COUNT (If code exists)
+        if (referralCode !== "DIRECT") {
+            // Find the intern who owns this Agency Name/Code
+            const q = query(collection(db, "users"), where("agencyName", "==", referralCode));
+            const snapshot = await getDocs(q);
+
+            if (!snapshot.empty) {
+                snapshot.forEach(async (internDoc) => {
+                    await updateDoc(doc(db, "users", internDoc.id), {
+                        leads: increment(1) // 🟢 +1 Lead instantly
+                    });
+                });
+            }
+        }
+
+        // 3. Hide Modal & Refresh Admin Access
+        document.getElementById('modal-onboarding').style.display = 'none';
+        if (window.checkAdminAccess) window.checkAdminAccess(currentUser);
+
+        // 4. 👇 TRIGGER PAYMENT SCREEN IMMEDIATELY 👇
+        // Using 'true' ensures the user sees "Activate Your Account" 
+        // without an unnecessary "Limit Reached" alert.
+        setTimeout(() => {
+            if (typeof window.openModal === 'function') {
+                window.openModal(true);
+            }
+        }, 500); 
+
+    } catch (e) {
+        console.error("Onboarding Error:", e);
+        alert("Error saving profile: " + e.message);
+        const btn = document.querySelector('#modal-onboarding .btn-primary');
+        if(btn) btn.innerText = "Continue";
+    }
+};
+
+       // --- FUNCTION: Close Payment Modal (Cancel/Skip) ---
+window.activatePayLater = () => {
+    // 1. Hide the payment modal
+    document.getElementById('modal-payment-lock').style.display = 'none';
+
+    // 2. Ensure dashboard data is synced so the user can see their current staff
+    if (currentUser) {
+        startDataSync(currentUser.uid);
+    }
+};
 
         // ==========================================
         // 👑 SUPER ADMIN LOGIC
@@ -2512,50 +2625,73 @@
             signOut(auth).then(() => window.location.reload());
         };
 
-        function renderStaffList() {
-            const grid = document.getElementById('staff-grid');
-            grid.innerHTML = '';
+        // --- UPDATED VISUALS (Step 2: Show Days Left) ---
+function renderStaffList() {
+    const grid = document.getElementById('staff-grid');
+    grid.innerHTML = '';
 
-            allNurses.forEach(nurse => {
-                const names = nurse.name.split(' ');
-                const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+    const now = Date.now();
+    const msPerDay = 24 * 60 * 60 * 1000;
 
-                // Using flex-direction: column ensures the button stays at the bottom naturally
-                grid.innerHTML += `
-                <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px;">
-                    <div style="flex: 1;">
-                        <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+    allNurses.forEach(nurse => {
+        const names = nurse.name.split(' ');
+        const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+
+        // 🗓️ MATH: Calculate Days Remaining
+        // If 'validUntil' is missing (old data), we give a 7-day grace period from today
+        const expiry = nurse.validUntil || (now + (7 * msPerDay));
+        const daysLeft = Math.ceil((expiry - now) / msPerDay);
+
+        // Color Logic for the Validity Text
+        let statusColor = '#138808'; // Default Green (Safe)
+        let statusText = `${daysLeft} Days Left`;
         
-                        <div class="nurse-header">
-                            <div class="nurse-avatar">${initials}</div>
-                            <div class="nurse-info">
-                                <h3>${nurse.name}</h3>
-                                <p>${nurse.role}</p>
-                            </div>
-                        </div>
-        
-                        <div class="metrics-row">
-                            <div class="metric">
-                                <span class="metric-val">₹${nurse.rate}</span>
-                                <span class="metric-lbl">Daily Rate</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-val" style="color:var(--accent)">Active</span>
-                                <span class="metric-lbl">Status</span>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
-                        style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
-                               border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                        <i class="fa-solid fa-address-card"></i> View Profile
-                    </button>
-                </div>`;
-            });
+        if(daysLeft <= 0) {
+            statusColor = '#d32f2f'; // Red (Expired)
+            statusText = "EXPIRED";
+        } else if (daysLeft <= 5) {
+            statusColor = '#ff9933'; // Orange (Warning: 5 days or less)
+            statusText = `${daysLeft} Days (Renew Soon)`;
         }
+
+        // Render the Card with dynamic status
+        grid.innerHTML += `
+        <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px;">
+            <div style="flex: 1;">
+                <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <div class="nurse-header">
+                    <div class="nurse-avatar">${initials}</div>
+                    <div class="nurse-info">
+                        <h3>${nurse.name}</h3>
+                        <p>${nurse.role}</p>
+                    </div>
+                </div>
+
+                <div class="metrics-row">
+                    <div class="metric">
+                        <span class="metric-val">₹${nurse.rate}</span>
+                        <span class="metric-lbl">Daily Rate</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-val" style="color:${statusColor}; font-size:0.9rem;">
+                            ${statusText}
+                        </span>
+                        <span class="metric-lbl">Validity</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
+                style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
+                       border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                <i class="fa-solid fa-address-card"></i> View Profile
+            </button>
+        </div>`;
+    });
+}
 
         function populateLoginSelect() {
             const sel = document.getElementById('nurse-login-select');
@@ -2721,27 +2857,36 @@
             window.toggleMode();
         };
 
-        // --- UPDATED FORM ACTIONS (With Counter) ---
-        document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('nurseName').value;
-            const phone = document.getElementById('nursePhone').value;
-            const role = document.getElementById('nurseSpec').value;
-            const rate = document.getElementById('nurseRate').value;
+   // --- UPDATED FORM ACTIONS (Step 1: Add 30-Day Validity Stamp) ---
+document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('nurseName').value;
+    const phone = document.getElementById('nursePhone').value;
+    const role = document.getElementById('nurseSpec').value;
+    const rate = document.getElementById('nurseRate').value;
 
-            // 1. Add Nurse to Subcollection
-            await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
-                name, phone, role, rate, timestamp: Date.now()
-            });
+    // 🗓️ NEW: Calculate Expiry Date (Today + 30 Days)
+    const days30 = 30 * 24 * 60 * 60 * 1000;
+    const expiryDate = Date.now() + days30;
 
-            // 2. UPDATE COUNTER (Increment +1)
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                nurseCount: increment(1)
-            });
+    // 1. Add Nurse to Subcollection WITH VALIDITY DATE
+    await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+        name, 
+        phone, 
+        role, 
+        rate, 
+        timestamp: Date.now(),
+        validUntil: expiryDate // 👈 The Key Change: Starts the 30-day timer
+    });
 
-            window.closeModal();
-            e.target.reset();
-        });
+    // 2. UPDATE COUNTER (Increment +1)
+    await updateDoc(doc(db, "users", currentUser.uid), {
+        nurseCount: increment(1)
+    });
+
+    window.closeModal();
+    e.target.reset();
+});
 
         // --- UPDATED REMOVE FUNCTION (With Counter) ---
         window.removeNurse = async (id) => {
