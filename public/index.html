@@ -1348,8 +1348,8 @@
                     </button>
                 </header>
 
-                
-                
+               
+              
 
                 <h3
                     style="color: var(--navy); margin-bottom: 1rem; border-bottom: 2px solid #138808; display:inline-block;">
@@ -1476,7 +1476,6 @@
             </button>
         </div>
     </div>
-
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card"
             style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
@@ -1546,7 +1545,6 @@
 
         </div>
     </div>
-
 
     <div class="modal" id="profileModal">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
@@ -1961,45 +1959,45 @@
             calculateTotal(); // Run calculation for 1
         }
 
-        // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
-        window.openModal = () => {
-            // 1. Get Limits
-            const extraSlots = currentUserData?.extraSlots || 0;
-            const currentCount = allNurses.length;
-            
-            // Use FREE_LIMIT if defined, otherwise 0
-            const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
-            const totalLimit = baseLimit + extraSlots;
+      // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
+      window.openModal = () => {
+        // 1. Get Limits
+        const extraSlots = currentUserData?.extraSlots || 0;
+        const currentCount = allNurses.length;
+        
+        // Use FREE_LIMIT if defined, otherwise 0
+        const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
+        const totalLimit = baseLimit + extraSlots;
 
-            console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
+        console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
 
-            // 2. CHECK LIMIT
-            if (currentCount < totalLimit) {
-                // ✅ User has space -> Open Add Form
-                document.getElementById('addModal').classList.add('active');
-            } 
-            else {
-                // ⛔ Limit Reached -> Alert & Show Payment Form
-                alert(`⚠️ Slot Limit Reached!\n\nYou have used ${currentCount}/${totalLimit} slots. Please purchase more slots to add new staff.`);
+        // 2. CHECK LIMIT
+        if (currentCount < totalLimit) {
+            // ✅ User has space -> Open Add Form
+            document.getElementById('addModal').classList.add('active');
+        } 
+        else {
+            // ⛔ Limit Reached -> Alert & Show Payment Form
+            alert(`⚠️ Slot Limit Reached!\n\nYou have used ${currentCount}/${totalLimit} slots. Please purchase more slots to add new staff.`);
 
-                // Reset Payment Form to 1 slot default
-                const input = document.getElementById('slot-quantity');
-                if(input) {
-                    input.value = 1;
-                    if(window.calculateTotal) window.calculateTotal();
-                }
-
-                // Show Payment Modal
-                document.getElementById('modal-payment-lock').style.display = 'flex';
-
-                // Ensure Cancel button acts as "Go Back"
-                const payLaterBtn = document.getElementById('btn-pay-later');
-                if (payLaterBtn) {
-                    payLaterBtn.style.display = 'block';
-                    payLaterBtn.innerText = "Cancel (Go Back)";
-                }
+            // Reset Payment Form to 1 slot default
+            const input = document.getElementById('slot-quantity');
+            if(input) {
+                input.value = 1;
+                if(window.calculateTotal) window.calculateTotal();
             }
-        };
+
+            // Show Payment Modal
+            document.getElementById('modal-payment-lock').style.display = 'flex';
+
+            // Ensure Cancel button acts as "Go Back"
+            const payLaterBtn = document.getElementById('btn-pay-later');
+            if (payLaterBtn) {
+                payLaterBtn.style.display = 'block';
+                payLaterBtn.innerText = "Cancel (Go Back)";
+            }
+        }
+    };
 
         window.closeModal = () => document.getElementById('addModal').classList.remove('active');
 
@@ -2110,7 +2108,6 @@
 
             rzp1.open();
         };
-
         // --- UPDATED ONBOARDING (Captures +1 LEAD) ---
         window.submitOnboarding = async () => {
             const agencyName = document.getElementById('inp-agency-name').value;
@@ -2192,104 +2189,104 @@
         }
 
 
-        // --- UPDATED ADMIN LOADER (With Visual Slot Tracking) ---
-        function loadAdminData() {
-            onSnapshot(collection(db, "users"), (snapshot) => {
-                const allTable = document.getElementById('admin-all-users');
-                const leaderboardDiv = document.getElementById('admin-leaderboard');
+       // --- UPDATED ADMIN LOADER (With Visual Slot Tracking) ---
+       function loadAdminData() {
+        onSnapshot(collection(db, "users"), (snapshot) => {
+            const allTable = document.getElementById('admin-all-users');
+            const leaderboardDiv = document.getElementById('admin-leaderboard');
+            
+            // Clear existing data
+            allTable.innerHTML = '';
+            leaderboardDiv.innerHTML = '';
+            
+            // Optional: Clear the old 'pending table' if it exists in HTML to avoid confusion
+            const pendingTable = document.getElementById('admin-pending-table');
+            if(pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+
+            let referralCounts = {};
+
+            snapshot.docs.forEach(doc => {
+                const u = doc.data();
                 
-                // Clear existing data
-                allTable.innerHTML = '';
-                leaderboardDiv.innerHTML = '';
+                // --- 1. CALCULATE SLOTS (Used vs Paid) ---
+                const usedSlots = u.nurseCount || 0;
+                const paidSlots = u.extraSlots || 0; 
                 
-                // Optional: Clear the old 'pending table' if it exists in HTML to avoid confusion
-                const pendingTable = document.getElementById('admin-pending-table');
-                if(pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+                // Calculate Percentage for the bar (cap at 100%)
+                let percentage = 0;
+                if(paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-                let referralCounts = {};
+                // Determine Bar Color (Green = Space Available, Orange = Full)
+                const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808'; 
 
-                snapshot.docs.forEach(doc => {
-                    const u = doc.data();
-                    
-                    // --- 1. CALCULATE SLOTS (Used vs Paid) ---
-                    const usedSlots = u.nurseCount || 0;
-                    const paidSlots = u.extraSlots || 0; 
-                    
-                    // Calculate Percentage for the bar (cap at 100%)
-                    let percentage = 0;
-                    if(paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
-
-                    // Determine Bar Color (Green = Space Available, Orange = Full)
-                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808'; 
-
-                    // Create the Display String
-                    let slotDisplay = '';
-                    if (u.plan === 'unlimited') {
-                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
-                    } else {
-                        slotDisplay = `
-                            <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
-                                ${usedSlots} / ${paidSlots} Slots Used
-                            </div>
-                            <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
-                                <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
-                            </div>
-                        `;
-                    }
-
-                    // --- 2. LEADERBOARD AGGREGATION ---
-                    if (u.referralBy && u.referralBy !== "DIRECT") {
-                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                        referralCounts[u.referralBy].total += 1;
-                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                    }
-
-                    // --- 3. STATUS BADGE ---
-                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
-                    
-                    if (u.isPaid) {
-                         statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
-                    }
-
-                    // --- 4. RENDER ROW ---
-                    allTable.innerHTML += `
-                    <tr style="border-bottom:1px solid #f0f0f0;">
-                        <td style="padding:15px 10px;">
-                            <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
-                            <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
-                        </td>
-                        <td style="padding:15px 10px;">
-                            ${slotDisplay}
-                        </td>
-                        <td style="padding:15px 10px; font-weight:500; color:#555;">
-                            ${u.referralBy || 'DIRECT'}
-                        </td>
-                        <td style="padding:15px 10px;">
-                            ${statusHtml}
-                        </td>
-                    </tr>`;
-                });
-
-                // --- 5. RENDER LEADERBOARD ---
-                Object.keys(referralCounts).forEach(code => {
-                    const data = referralCounts[code];
-                    leaderboardDiv.innerHTML += `
-                    <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
-                        <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
-                        <div style="display:flex; gap:10px; margin-top:12px;">
-                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                                <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
-                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
-                            </div>
-                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                                <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
-                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
-                            </div>
+                // Create the Display String
+                let slotDisplay = '';
+                if (u.plan === 'unlimited') {
+                    slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
+                } else {
+                    slotDisplay = `
+                        <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
+                            ${usedSlots} / ${paidSlots} Slots Used
                         </div>
-                    </div>`;
-                });
+                        <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
+                            <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
+                        </div>
+                    `;
+                }
+
+                // --- 2. LEADERBOARD AGGREGATION ---
+                if (u.referralBy && u.referralBy !== "DIRECT") {
+                    if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                    referralCounts[u.referralBy].total += 1;
+                    if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                }
+
+                // --- 3. STATUS BADGE ---
+                let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+                
+                if (u.isPaid) {
+                     statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
+                }
+
+                // --- 4. RENDER ROW ---
+                allTable.innerHTML += `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                    <td style="padding:15px 10px;">
+                        <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
+                        <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+                    </td>
+                    <td style="padding:15px 10px;">
+                        ${slotDisplay}
+                    </td>
+                    <td style="padding:15px 10px; font-weight:500; color:#555;">
+                        ${u.referralBy || 'DIRECT'}
+                    </td>
+                    <td style="padding:15px 10px;">
+                        ${statusHtml}
+                    </td>
+                </tr>`;
             });
-        }
+
+            // --- 5. RENDER LEADERBOARD ---
+            Object.keys(referralCounts).forEach(code => {
+                const data = referralCounts[code];
+                leaderboardDiv.innerHTML += `
+                <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
+                    <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
+                    <div style="display:flex; gap:10px; margin-top:12px;">
+                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                            <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
+                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                        </div>
+                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                            <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
+                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+        });
+    }
 
 
 
