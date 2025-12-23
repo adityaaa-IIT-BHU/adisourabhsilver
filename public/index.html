@@ -244,120 +244,130 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
+
         /* --- UPDATED CALENDAR & CHECKBOX CSS --- */
 
-/* Payroll Checkbox */
-.paid-checkbox {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--primary); /* Makes the tick orange */
-    cursor: pointer;
-}
+        /* Payroll Checkbox */
+        .paid-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            /* Makes the tick orange */
+            cursor: pointer;
+        }
 
-/* Calendar Header */
-.calendar-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    margin-bottom: 15px;
-}
+        /* Calendar Header */
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 15px;
+        }
 
-.control-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.cal-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    background: white;
-    cursor: pointer;
-    color: var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
+        .cal-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            background: white;
+            cursor: pointer;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
 
-.cal-btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
+        .cal-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
 
-.current-date-display {
-    text-align: center;
-}
+        .current-date-display {
+            text-align: center;
+        }
 
-.cal-month { font-weight: 700; color: var(--navy); font-size: 1.1rem; }
-.cal-year { font-size: 0.8rem; color: #888; }
+        .cal-month {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 1.1rem;
+        }
 
-/* Calendar Grid */
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-}
+        .cal-year {
+            font-size: 0.8rem;
+            color: #888;
+        }
 
-.cal-day-header {
-    text-align: center;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #aaa;
-    text-transform: uppercase;
-    padding-bottom: 5px;
-}
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
 
-.cal-day {
-    aspect-ratio: 1;
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    color: #444;
-    border: 1px solid #f4f4f4;
-    font-weight: 500;
-    transition: all 0.2s;
-}
+        .cal-day-header {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            padding-bottom: 5px;
+        }
 
-.cal-day:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-color: var(--primary);
-    z-index: 2;
-}
+        .cal-day {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            color: #444;
+            border: 1px solid #f4f4f4;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
 
-.cal-day.present {
-    background: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
-    font-weight: 700;
-}
+        .cal-day:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+            z-index: 2;
+        }
 
-.cal-day.absent {
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
-}
+        .cal-day.present {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            font-weight: 700;
+        }
 
-.cal-day.today {
-    border: 2px solid var(--primary);
-}
+        .cal-day.absent {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
 
-.cal-day.empty {
-    background: transparent;
-    border: none;
-    pointer-events: none;
-}
+        .cal-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        .cal-day.empty {
+            background: transparent;
+            border: none;
+            pointer-events: none;
+        }
 
         .icon-circle {
             width: 45px;
@@ -913,35 +923,130 @@
                 opacity: 1;
             }
         }
+
         /* --- Profile Modal Styles --- */
-.profile-tabs { display: flex; background: #f5f5f5; border-radius: 10px; padding: 4px; margin-bottom: 1.5rem; }
-.tab-btn { flex: 1; border: none; background: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #666; transition: 0.3s; }
-.tab-btn.active { background: white; color: var(--navy); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+        .profile-tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
 
-/* Calendar */
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; }
-.cal-day-header { text-align: center; font-size: 0.75rem; color: #888; padding-bottom: 5px; }
-.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.9rem; background: #f9f9f9; color: #ccc; }
-.cal-day.present { background: #e8f5e9; color: #2e7d32; font-weight: bold; border: 1px solid #c8e6c9; }
-.cal-day.absent { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-.cal-day.today { border: 2px solid var(--primary); }
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: 0.3s;
+        }
 
-/* Document Locker */
-.doc-item { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-.doc-icon { width: 40px; height: 40px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #1565c0; }
-.btn-profile { width: 100%; margin-top: 10px; background: #e3f2fd; color: #1565c0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .tab-btn.active {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-/* Add this to your CSS */
-.stat-card {
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.stat-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-}
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Calendar */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .cal-day-header {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #888;
+            padding-bottom: 5px;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: #f9f9f9;
+            color: #ccc;
+        }
+
+        .cal-day.present {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+            border: 1px solid #c8e6c9;
+        }
+
+        .cal-day.absent {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .cal-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        /* Document Locker */
+        .doc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .doc-icon {
+            width: 40px;
+            height: 40px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1565c0;
+        }
+
+        .btn-profile {
+            width: 100%;
+            margin-top: 10px;
+            background: #e3f2fd;
+            color: #1565c0;
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Add this to your CSS */
+        .stat-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
     </style>
 </head>
 
@@ -1243,28 +1348,8 @@
                     </button>
                 </header>
 
-                <h3
-                    style="color: var(--navy); margin-bottom: 1rem; border-bottom: 2px solid #ff9933; display:inline-block;">
-                    🔔 Pending Payments (Verify UTR)
-                </h3>
-                <div class="card" style="margin-bottom: 2rem; overflow-x: auto; border: 2px solid #ff9933;">
-                    <table class="simple-table">
-                        <thead>
-                            <tr>
-                                <th>Agency Name</th>
-                                <th>Amount</th>
-                                <th>Referral Code</th>
-                                <th>UTR Number</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-pending-table">
-                            <tr>
-                                <td colspan="5" style="text-align:center;">Waiting for data...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
+                
 
                 <h3
                     style="color: var(--navy); margin-bottom: 1rem; border-bottom: 2px solid #138808; display:inline-block;">
@@ -1306,12 +1391,11 @@
                         <h1>Payroll Calculation</h1>
                         <p>Automated salary based on attendance</p>
                     </div>
-                    
+
                     <div style="display:flex; gap:10px; align-items:center;">
-                        <input type="month" id="payroll-month-picker" class="form-input" 
-                               style="width: auto; padding: 8px;" 
-                               onchange="window.calculatePayroll()">
-                               
+                        <input type="month" id="payroll-month-picker" class="form-input"
+                            style="width: auto; padding: 8px;" onchange="window.calculatePayroll()">
+
                         <button class="btn-primary" onclick="alert('Exporting PDF...')">
                             <i class="fa-solid fa-download"></i> Export
                         </button>
@@ -1392,12 +1476,15 @@
             </button>
         </div>
     </div>
+
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
-        <div class="login-card" style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
+        <div class="login-card"
+            style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
+
             <div id="payment-form-section">
                 <div
                     style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-calendar-check"></i> MONTHLY PLAN
+                    <i class="fa-solid fa-bolt"></i> INSTANT ACTIVATION
                 </div>
 
                 <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Add More Staff</h2>
@@ -1405,18 +1492,22 @@
                     1 Slot = 1 Nurse Profile (Valid for 30 Days)
                 </p>
 
-                <div style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
+                <div
+                    style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
                     <p style="margin:0 0 8px 0; font-weight:bold; color:#1565c0; font-size:0.9rem;">
                         🔥 Bulk Discounts Available:
                     </p>
                     <div style="display:flex; gap:5px; justify-content:space-between;">
-                        <div id="badge-5" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-5"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>5+ Slots</b><br>10% OFF
                         </div>
-                        <div id="badge-10" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-10"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>10+ Slots</b><br>15% OFF
                         </div>
-                        <div id="badge-20" style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
+                        <div id="badge-20"
+                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
                             <b>20+ Slots</b><br>30% OFF
                         </div>
                     </div>
@@ -1426,7 +1517,7 @@
                     <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Number of Nurses:</label>
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
                         <input type="number" id="slot-quantity" class="form-input" value="1" min="1" max="100"
-                            oninput="calculateTotal()"
+                            oninput="window.calculateTotal()"
                             style="font-size: 1.2rem; font-weight: bold; text-align: center;">
                     </div>
                     <div style="font-size: 0.8rem; color: #666; margin-top: 5px; font-weight: 500;">
@@ -1442,78 +1533,50 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 1rem;">
-                    <img id="payment-qr-img" src=""
-                        style="width: 120px; height: 120px; border-radius: 8px; border: 2px solid #eee;">
-                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">Scan via UPI</div>
-                </div>
-
-                <input type="text" id="inp-utr" class="form-input" placeholder="Enter 12-digit UTR"
-                    style="margin-bottom: 1rem;">
-
-                <button id="btn-verify-payment" onclick="submitPaymentUTR()" class="btn-primary"
+                <button id="rzp-button" onclick="window.startRazorpayPayment()" class="btn-primary"
                     style="width: 100%; margin-bottom: 10px;">
-                    Verify Payment
+                    Pay & Activate Instantly <i class="fa-solid fa-credit-card"></i>
                 </button>
 
-                <button id="btn-pay-later" onclick="activatePayLater()"
+                <button id="btn-pay-later" onclick="window.activatePayLater()"
                     style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">
                     Cancel (Go Back)
-                </button>
-            </div>
-
-            <div id="payment-pending-section" style="display: none; padding: 1rem;">
-                <i class="fa-solid fa-clock-rotate-left"
-                    style="font-size: 3.5rem; color: #ff9933; margin-bottom: 1.5rem;"></i>
-
-                <h2 style="color: var(--navy); margin-bottom: 1rem;">Verification in Progress</h2>
-
-                <p style="color: #555; font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-                    Thank you! We have received your UTR. <br>
-                    Admin is verifying the transaction.
-                </p>
-
-                <div
-                    style="background: #fff8e1; border: 1px solid #ffe0b2; padding: 15px; border-radius: 8px; color: #e65100; font-size: 0.9rem; margin-bottom: 2rem;">
-                    <strong>Estimated Wait:</strong><br>
-                    Usually 1-2 hours (Max 24 Hours)
-                </div>
-
-                <button onclick="activatePayLater()" class="btn-primary"
-                    style="width: 100%; background-color: #78909c;">
-                    Okay, I'll wait
                 </button>
             </div>
 
         </div>
     </div>
 
+
     <div class="modal" id="profileModal">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
-            <button class="close-modal" onclick="document.getElementById('profileModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
-            
+            <button class="close-modal" onclick="document.getElementById('profileModal').classList.remove('active')"><i
+                    class="fa-solid fa-xmark"></i></button>
+
             <div style="text-align:center; margin-bottom:1.5rem;">
                 <h2 id="p-name" style="color:var(--navy);">Nurse Name</h2>
                 <p id="p-role" style="color:#666; font-size:0.9rem;">Role</p>
             </div>
-    
+
             <div class="profile-tabs">
                 <button class="tab-btn active" onclick="switchProfileTab('attendance')">Attendance</button>
                 <button class="tab-btn" onclick="switchProfileTab('docs')">Documents</button>
                 <button class="tab-btn" onclick="switchProfileTab('edit')">Edit Info</button>
             </div>
-    
+
             <div id="tab-attendance" class="tab-content active">
                 <div class="calendar-controls">
                     <div class="control-group">
-                        <button class="cal-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="cal-btn" onclick="changeMonth(-1)"><i
+                                class="fa-solid fa-chevron-left"></i></button>
                         <div class="current-date-display">
                             <div class="cal-month" id="cal-month-text">Month</div>
                             <div style="font-size: 0.65rem; color:#ccc; text-transform:uppercase;">Month</div>
                         </div>
-                        <button class="cal-btn" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button class="cal-btn" onclick="changeMonth(1)"><i
+                                class="fa-solid fa-chevron-right"></i></button>
                     </div>
-            
+
                     <div class="control-group">
                         <button class="cal-btn" onclick="changeYear(-1)"><i class="fa-solid fa-backward"></i></button>
                         <div class="current-date-display">
@@ -1523,40 +1586,51 @@
                         <button class="cal-btn" onclick="changeYear(1)"><i class="fa-solid fa-forward"></i></button>
                     </div>
                 </div>
-            
+
                 <div class="calendar-grid" id="cal-days-container"></div>
-            
+
                 <div style="display:flex; gap:15px; justify-content:center; margin-top:20px; font-size:0.8rem;">
                     <div style="display:flex; align-items:center; gap:6px;">
-                        <div style="width:12px; height:12px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:4px;"></div> Present
+                        <div
+                            style="width:12px; height:12px; background:#e8f5e9; border:1px solid #c8e6c9; border-radius:4px;">
+                        </div> Present
                     </div>
                     <div style="display:flex; align-items:center; gap:6px;">
-                        <div style="width:12px; height:12px; background:#ffebee; border:1px solid #ffcdd2; border-radius:4px;"></div> Absent
+                        <div
+                            style="width:12px; height:12px; background:#ffebee; border:1px solid #ffcdd2; border-radius:4px;">
+                        </div> Absent
                     </div>
                 </div>
             </div>
-    
+
             <div id="tab-docs" class="tab-content">
-                <div style="border:2px dashed #ddd; padding:1.5rem; text-align:center; border-radius:12px; cursor:pointer; margin-bottom:15px;" onclick="document.getElementById('doc-upload').click()">
+                <div style="border:2px dashed #ddd; padding:1.5rem; text-align:center; border-radius:12px; cursor:pointer; margin-bottom:15px;"
+                    onclick="document.getElementById('doc-upload').click()">
                     <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.5rem; color:var(--primary);"></i>
                     <p style="font-size:0.8rem; color:#666;">Upload ID/Certificate</p>
                     <input type="file" id="doc-upload" hidden accept="image/*,.pdf">
                 </div>
                 <div id="doc-list"></div>
             </div>
-    
+
             <div id="tab-edit" class="tab-content">
                 <form id="editNurseForm">
                     <input type="hidden" id="edit-id">
-                    <div class="form-group"><label>Full Name</label><input type="text" id="edit-name" class="form-input"></div>
-                    <div class="form-group"><label>Phone</label><input type="text" id="edit-phone" class="form-input"></div>
-                    <div class="form-group"><label>Rate (₹)</label><input type="number" id="edit-rate" class="form-input"></div>
-                    <div class="form-group"><label>Role</label><input type="text" id="edit-role" class="form-input"></div>
-                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update Profile</button>
+                    <div class="form-group"><label>Full Name</label><input type="text" id="edit-name"
+                            class="form-input"></div>
+                    <div class="form-group"><label>Phone</label><input type="text" id="edit-phone" class="form-input">
+                    </div>
+                    <div class="form-group"><label>Rate (₹)</label><input type="number" id="edit-rate"
+                            class="form-input"></div>
+                    <div class="form-group"><label>Role</label><input type="text" id="edit-role" class="form-input">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update
+                        Profile</button>
                 </form>
             </div>
         </div>
     </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script type="module">
         // 1. IMPORTS (VERIFIED & CLEAN)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -1750,8 +1824,8 @@
                 renderStaffList();
                 populateLoginSelect();
                 // Check if the payroll view is active before recalculating to save resources
-                if(document.getElementById('view-payroll').classList.contains('active-view')){
-                     window.calculatePayroll();
+                if (document.getElementById('view-payroll').classList.contains('active-view')) {
+                    window.calculatePayroll();
                 }
                 document.getElementById('stat-total').innerText = allNurses.length;
             });
@@ -1762,10 +1836,10 @@
                 allLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderDashboardLogs();
                 renderAllLogs();
-                
+
                 // Recalculate payroll if new logs come in
-                if(document.getElementById('view-payroll').classList.contains('active-view')){
-                     window.calculatePayroll();
+                if (document.getElementById('view-payroll').classList.contains('active-view')) {
+                    window.calculatePayroll();
                 }
 
                 // Today's Stats
@@ -1800,9 +1874,9 @@
             onSnapshot(payoutsRef, (snapshot) => {
                 // Store paid records (e.g., "nurseId_2025-12")
                 allPayouts = snapshot.docs.map(doc => doc.id);
-                
+
                 // If the user is looking at the payroll screen, update the checkboxes instantly
-                if(document.getElementById('view-payroll').classList.contains('active-view')){
+                if (document.getElementById('view-payroll').classList.contains('active-view')) {
                     window.calculatePayroll();
                 }
             });
@@ -1887,96 +1961,201 @@
             calculateTotal(); // Run calculation for 1
         }
 
-        // --- FUNCTION: Add Nurse Trigger (Smart Check) ---
+        // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
         window.openModal = () => {
+            // 1. Get Limits
             const extraSlots = currentUserData?.extraSlots || 0;
             const currentCount = allNurses.length;
-            const totalLimit = FREE_LIMIT + extraSlots;
+            
+            // Use FREE_LIMIT if defined, otherwise 0
+            const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
+            const totalLimit = baseLimit + extraSlots;
 
-            // CHECK IF ALREADY PENDING
-            const isPending = currentUserData?.paymentRequest?.status === 'pending';
+            console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
 
-            // CASE 1: Payment is Pending (User is waiting)
-            if (isPending) {
-                const payModal = document.getElementById('modal-payment-lock');
-                const formSection = document.getElementById('payment-form-section');
-                const pendingSection = document.getElementById('payment-pending-section');
-
-                payModal.style.display = 'flex';
-                if (formSection) formSection.style.display = 'none';    // Hide Form
-                if (pendingSection) pendingSection.style.display = 'block'; // Show Message
-                return;
-            }
-
-            // CASE 2: User has space -> Open Add Form
+            // 2. CHECK LIMIT
             if (currentCount < totalLimit) {
+                // ✅ User has space -> Open Add Form
                 document.getElementById('addModal').classList.add('active');
-            }
-            // CASE 3: No space -> Show Payment Form
+            } 
             else {
-                const payModal = document.getElementById('modal-payment-lock');
-                const formSection = document.getElementById('payment-form-section');
-                const pendingSection = document.getElementById('payment-pending-section');
+                // ⛔ Limit Reached -> Alert & Show Payment Form
+                alert(`⚠️ Slot Limit Reached!\n\nYou have used ${currentCount}/${totalLimit} slots. Please purchase more slots to add new staff.`);
 
-                payModal.style.display = 'flex';
-                if (formSection) formSection.style.display = 'block';   // Show Form
-                if (pendingSection) pendingSection.style.display = 'none'; // Hide Message
+                // Reset Payment Form to 1 slot default
+                const input = document.getElementById('slot-quantity');
+                if(input) {
+                    input.value = 1;
+                    if(window.calculateTotal) window.calculateTotal();
+                }
 
-                // Show Cancel button (Renamed from Pay Later)
+                // Show Payment Modal
+                document.getElementById('modal-payment-lock').style.display = 'flex';
+
+                // Ensure Cancel button acts as "Go Back"
                 const payLaterBtn = document.getElementById('btn-pay-later');
                 if (payLaterBtn) {
                     payLaterBtn.style.display = 'block';
                     payLaterBtn.innerText = "Cancel (Go Back)";
                 }
-
-                if (window.initPricingModal) window.initPricingModal();
             }
         };
 
         window.closeModal = () => document.getElementById('addModal').classList.remove('active');
 
-        // --- FUNCTION: Submit Payment (Switches to Pending View) ---
-        window.submitPaymentUTR = async () => {
-            const utr = document.getElementById('inp-utr').value;
-            if (!utr || utr.length < 4) return alert("Please enter valid UTR");
+        // --- FUNCTION: Razorpay Payment Trigger ---
+        window.startRazorpayPayment = () => {
+            // 1. Safety Check
+            if (!currentOrder || !currentOrder.totalPrice) {
+                alert("Error: Invalid order details.");
+                return;
+            }
 
-            const btn = document.getElementById('btn-verify-payment');
-            btn.innerText = "Sending...";
-            btn.disabled = true;
+            // 2. Convert Price to Paise (Razorpay expects 19900 for ₹199)
+            const amountInPaise = 100;
 
-            // 1. Save to Database
-            await setDoc(doc(db, "users", currentUser.uid), {
-                paymentRequest: {
-                    utr: utr,
-                    amount: currentOrder.totalPrice, // Uses calculated price
-                    slots: currentOrder.slots,       // Uses calculated slots
-                    packId: 'custom',
-                    status: 'pending',
-                    timestamp: serverTimestamp()
+            const options = {
+                "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
+                "amount": amountInPaise,
+                "currency": "INR",
+                "name": "Silver Care",
+                "description": `Purchase of ${currentOrder.slots} Nurse Slots`,
+                "image": "https://silvercareprototype.web.app/icon.png", // Optional Logo
+
+                "handler": async function (response) {
+                    // --- SUCCESS HANDLER (Runs only if payment works) ---
+                    console.log("Payment Success:", response.razorpay_payment_id);
+
+                    const btn = document.getElementById('rzp-button');
+                    if (btn) {
+                        btn.innerText = "Activating Slots...";
+                        btn.disabled = true;
+                    }
+
+                    try {
+                        // A. GET CURRENT USER DATA (To find who referred them)
+                        const userRef = doc(db, "users", currentUser.uid);
+                        const userSnap = await getDoc(userRef);
+                        const userData = userSnap.data();
+                        const referrerCode = userData.referralBy; // e.g. "RAHUL72"
+
+                        // B. INSTANTLY UNLOCK in Firebase
+                        await updateDoc(userRef, {
+                            // Record the transaction details
+                            paymentRequest: {
+                                status: 'approved', // Auto-approved
+                                amount: currentOrder.totalPrice,
+                                method: 'razorpay',
+                                transactionId: response.razorpay_payment_id,
+                                paidAt: serverTimestamp(),
+                                slotsPurchased: currentOrder.slots
+                            },
+                            // Critical: Grant access immediately
+                            isPaid: true,
+                            extraSlots: increment(currentOrder.slots),
+                            lastPaymentId: response.razorpay_payment_id
+                        });
+
+                        // C. INCREMENT INTERN SALE COUNT (Automated Sales Tracking)
+                        if (referrerCode && referrerCode !== "DIRECT") {
+                            // Find Intern by their Agency Name (which acts as the Code)
+                            const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
+                            const internSnap = await getDocs(q);
+
+                            if (!internSnap.empty) {
+                                internSnap.forEach(async (internDoc) => {
+                                    await updateDoc(doc(db, "users", internDoc.id), {
+                                        sales: increment(1), // 🟢 +1 Sale for Intern
+                                        totalRevenue: increment(currentOrder.totalPrice) // Optional: Track revenue
+                                    });
+                                    console.log(`Commission recorded for ${referrerCode}`);
+                                });
+                            }
+                        }
+
+                        // D. Success UI
+                        alert("✅ Payment Successful! Your slots have been activated.");
+                        document.getElementById('modal-payment-lock').style.display = 'none';
+
+                        // Force refresh data
+                        if (currentUser) startDataSync(currentUser.uid);
+
+                    } catch (error) {
+                        console.error("Activation Error:", error);
+                        alert("Payment received but activation failed. Please contact support with ID: " + response.razorpay_payment_id);
+                    }
+                },
+                "prefill": {
+                    "name": currentUser?.displayName || "",
+                    "email": currentUser?.email || "",
+                    "contact": currentUser?.phoneNumber || "" // Auto-fills phone if available
+                },
+                "theme": {
+                    "color": "#ff9933" // Matches your Saffron brand
+                },
+                "modal": {
+                    "ondismiss": function () {
+                        console.log('Payment cancelled by user');
+                    }
                 }
-            }, { merge: true });
+            };
 
-            // 2. Switch UI to "Pending" Mode immediately
-            const formSection = document.getElementById('payment-form-section');
-            const pendingSection = document.getElementById('payment-pending-section');
+            // 5. Open Razorpay
+            const rzp1 = new Razorpay(options);
 
-            if (formSection) formSection.style.display = 'none';
-            if (pendingSection) pendingSection.style.display = 'block';
+            rzp1.on('payment.failed', function (response) {
+                alert("❌ Payment Failed: " + response.error.description);
+                console.error(response.error);
+            });
+
+            rzp1.open();
         };
 
-        // --- FUNCTION: Onboarding Submit ---
+        // --- UPDATED ONBOARDING (Captures +1 LEAD) ---
         window.submitOnboarding = async () => {
             const agencyName = document.getElementById('inp-agency-name').value;
-            const referralCode = document.getElementById('inp-referral-code').value;
+            let referralCode = document.getElementById('inp-referral-code').value;
+
             if (!agencyName) return alert("Enter Agency Name");
 
-            // USE SETDOC HERE TO CREATE FILE
-            await setDoc(doc(db, "users", currentUser.uid), {
-                agencyName: agencyName,
-                referralBy: referralCode ? referralCode.toUpperCase() : "DIRECT",
-                email: currentUser.email,
-                createdAt: serverTimestamp()
-            }, { merge: true });
+            // Normalize code to uppercase
+            referralCode = referralCode ? referralCode.toUpperCase().trim() : "DIRECT";
+
+            try {
+                // 1. Create/Update the Agency Profile
+                await setDoc(doc(db, "users", currentUser.uid), {
+                    agencyName: agencyName,
+                    referralBy: referralCode,
+                    email: currentUser.email,
+                    createdAt: serverTimestamp(),
+                    leadStatus: 'captured' // Mark so we don't count leads twice
+                }, { merge: true });
+
+                // 2. INCREMENT INTERN LEAD COUNT (If code exists)
+                if (referralCode !== "DIRECT") {
+                    // Find the intern who owns this Agency Name/Code
+                    const q = query(collection(db, "users"), where("agencyName", "==", referralCode));
+                    const snapshot = await getDocs(q);
+
+                    if (!snapshot.empty) {
+                        snapshot.forEach(async (internDoc) => {
+                            await updateDoc(doc(db, "users", internDoc.id), {
+                                leads: increment(1) // 🟢 +1 Lead instantly
+                            });
+                        });
+                    }
+                }
+
+                // 3. Hide Modal & Refresh
+                document.getElementById('modal-onboarding').style.display = 'none';
+                if (window.checkAdminAccess) window.checkAdminAccess(currentUser);
+                // Trigger Pay Modal immediately if they need slots?
+                // window.openModal(); (Optional: if you want them to pay right away)
+
+            } catch (e) {
+                console.error("Onboarding Error:", e);
+                alert("Error saving profile: " + e.message);
+            }
         };
 
         // --- FUNCTION: Activate Pay Later (Cancel/Skip) ---
@@ -2013,304 +2192,254 @@
         }
 
 
-       // --- UPDATED ADMIN LOADER (FIXED FOR 2nd PAYMENT) ---
-       function loadAdminData() {
-        onSnapshot(collection(db, "users"), (snapshot) => {
-            const pendingTable = document.getElementById('admin-pending-table');
-            const allTable = document.getElementById('admin-all-users');
-            const leaderboardDiv = document.getElementById('admin-leaderboard');
-
-            pendingTable.innerHTML = '';
-            allTable.innerHTML = '';
-            leaderboardDiv.innerHTML = '';
-
-            let referralCounts = {};
-            let hasPending = false;
-
-            snapshot.docs.forEach(doc => {
-                const u = doc.data();
-                const uid = doc.id;
-
-                // --- 1. PREPARE DISPLAY DATA ---
-                let planDisplay = '<span style="color:#666; font-size:0.8rem;">Free Tier</span>';
-                if (u.plan === 'unlimited') {
-                    planDisplay = '<span style="color:#e65100; font-weight:bold; font-size:0.8rem;">💎 Unlimited</span>';
-                } else if (u.extraSlots > 0) {
-                    planDisplay = `<span style="color:#1565c0; font-weight:bold; font-size:0.8rem;">🎫 ${u.extraSlots} Slots</span>`;
-                }
-
-                const count = u.nurseCount || 0;
-                const countDisplay = `<span style="background:#f0f0f0; padding:2px 6px; border-radius:10px; font-size:0.75rem; color:#333;">👥 ${count} Staff</span>`;
-
-                // --- 2. LEADERBOARD LOGIC ---
-                if (u.referralBy && u.referralBy !== "DIRECT") {
-                    if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                    referralCounts[u.referralBy].total += 1;
-                    if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                }
-
-                // --- 3. PENDING TABLE (FIXED) ---
-                // 🔴 REMOVED "!u.isPaid". Now checks ONLY if status is 'pending'.
-                if (u.paymentRequest && u.paymentRequest.status === 'pending') {
-                    hasPending = true;
-                    pendingTable.innerHTML += `
-            <tr style="background: #fff8e1;">
-                <td>
-                    <b>${u.agencyName}</b><br>
-                    ${planDisplay}
-                </td>
+        // --- UPDATED ADMIN LOADER (With Visual Slot Tracking) ---
+        function loadAdminData() {
+            onSnapshot(collection(db, "users"), (snapshot) => {
+                const allTable = document.getElementById('admin-all-users');
+                const leaderboardDiv = document.getElementById('admin-leaderboard');
                 
-                <td>₹${u.paymentRequest.amount || 199}</td>
+                // Clear existing data
+                allTable.innerHTML = '';
+                leaderboardDiv.innerHTML = '';
                 
-                <td>${u.referralBy || '-'}</td>
-                <td style="font-family:monospace; color:#003366;">${u.paymentRequest.utr}</td>
-                <td><button onclick="approveUserPayment('${uid}')" class="btn-primary" style="padding:5px 10px; font-size:0.8rem;">Approve ✅</button></td>
-            </tr>`;
-                }
+                // Optional: Clear the old 'pending table' if it exists in HTML to avoid confusion
+                const pendingTable = document.getElementById('admin-pending-table');
+                if(pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
 
-                // --- 4. ALL USERS TABLE (IMPROVED STATUS) ---
-                let statusHtml = '<span style="color:red;">LOCKED</span>';
-                
-                // Show "PENDING" if they are waiting for approval, even if they paid before
-                if (u.paymentRequest && u.paymentRequest.status === 'pending') {
-                     statusHtml = '<span style="color:#e65100; font-weight:bold;">PENDING VERIFICATION</span>';
-                } else if (u.isPaid) {
-                     statusHtml = '<span style="color:green; font-weight:bold;">PAID</span>';
-                }
+                let referralCounts = {};
 
-                allTable.innerHTML += `
-        <tr>
-            <td>
-                <div style="font-weight:bold; color:var(--navy);">${u.agencyName || 'Incomplete'}</div>
-                <div style="margin-top:4px;">${planDisplay} &bull; ${countDisplay}</div>
-            </td>
-            <td>${u.email}</td>
-            <td>${u.referralBy || 'DIRECT'}</td>
-            <td>${statusHtml}</td>
-        </tr>`;
-            });
+                snapshot.docs.forEach(doc => {
+                    const u = doc.data();
+                    
+                    // --- 1. CALCULATE SLOTS (Used vs Paid) ---
+                    const usedSlots = u.nurseCount || 0;
+                    const paidSlots = u.extraSlots || 0; 
+                    
+                    // Calculate Percentage for the bar (cap at 100%)
+                    let percentage = 0;
+                    if(paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-            if (!hasPending) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending payments.</td></tr>';
+                    // Determine Bar Color (Green = Space Available, Orange = Full)
+                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808'; 
 
-            // Render Leaderboard
-            Object.keys(referralCounts).forEach(code => {
-                const data = referralCounts[code];
-                leaderboardDiv.innerHTML += `
-        <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'};">
-            <div style="font-size: 1.2rem; font-weight: bold;">${code}</div>
-            <div style="display:flex; justify-content:space-between; margin-top:10px;">
-                <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700; color:#138808;">${data.paid}</div><div style="font-size:0.7rem;">SALES</div></div>
-                <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:700;">${data.total}</div><div style="font-size:0.7rem;">LEADS</div></div>
-            </div>
-        </div>`;
-            });
-        });
-    }
-
-        window.approveUserPayment = async (targetUid) => {
-            if (!confirm("Confirm payment received?")) return;
-
-            try {
-                console.log("Starting Approval for UID:", targetUid);
-
-                // 1. Get the User who just paid (Client)
-                const userRef = doc(db, "users", targetUid);
-                const userSnap = await getDoc(userRef);
-
-                if (!userSnap.exists()) return alert("User not found");
-                const userData = userSnap.data();
-
-                // 2. FIND THE INTERN (RAHUL72)
-                // The client was referred by 'referralBy' (which is "RAHUL72")
-                const referrerName = userData.referralBy;
-
-                if (referrerName && referrerName !== "DIRECT") {
-                    console.log("Searching for Intern:", referrerName);
-
-                    // FIX: Search 'agencyName' because that is where "RAHUL72" is stored
-                    const q = query(collection(db, "users"), where("agencyName", "==", referrerName));
-                    const querySnapshot = await getDocs(q);
-
-                    if (!querySnapshot.empty) {
-                        // Intern Found! Update them.
-                        querySnapshot.forEach(async (internDoc) => {
-                            const internRef = doc(db, "users", internDoc.id);
-                            await updateDoc(internRef, {
-                                sales: increment(1) // <--- THIS INCREMENTS THE 0 to 1
-                            });
-                            console.log("SUCCESS: Intern sales updated.");
-                        });
+                    // Create the Display String
+                    let slotDisplay = '';
+                    if (u.plan === 'unlimited') {
+                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
                     } else {
-                        console.warn("FAILED: Could not find any user named " + referrerName);
+                        slotDisplay = `
+                            <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
+                                ${usedSlots} / ${paidSlots} Slots Used
+                            </div>
+                            <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
+                                <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
+                            </div>
+                        `;
                     }
-                }
 
-                // 3. UPDATE THE CLIENT (Unlock them)
-                const slotsToAdd = userData.paymentRequest?.slots || 1;
-                await updateDoc(userRef, {
-                    "paymentRequest.status": "approved",
-                    "paymentRequest.approvedAt": serverTimestamp(),
-                    "extraSlots": increment(slotsToAdd),
-                    "isPaid": true
+                    // --- 2. LEADERBOARD AGGREGATION ---
+                    if (u.referralBy && u.referralBy !== "DIRECT") {
+                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                        referralCounts[u.referralBy].total += 1;
+                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                    }
+
+                    // --- 3. STATUS BADGE ---
+                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+                    
+                    if (u.isPaid) {
+                         statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
+                    }
+
+                    // --- 4. RENDER ROW ---
+                    allTable.innerHTML += `
+                    <tr style="border-bottom:1px solid #f0f0f0;">
+                        <td style="padding:15px 10px;">
+                            <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
+                            <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+                        </td>
+                        <td style="padding:15px 10px;">
+                            ${slotDisplay}
+                        </td>
+                        <td style="padding:15px 10px; font-weight:500; color:#555;">
+                            ${u.referralBy || 'DIRECT'}
+                        </td>
+                        <td style="padding:15px 10px;">
+                            ${statusHtml}
+                        </td>
+                    </tr>`;
                 });
 
-                alert(`Approved! Added slots and updated Intern sales.`);
-                // Reload to see the change in the table
-                window.location.reload();
+                // --- 5. RENDER LEADERBOARD ---
+                Object.keys(referralCounts).forEach(code => {
+                    const data = referralCounts[code];
+                    leaderboardDiv.innerHTML += `
+                    <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
+                        <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
+                        <div style="display:flex; gap:10px; margin-top:12px;">
+                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                                <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
+                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                            </div>
+                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                                <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
+                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            });
+        }
 
-            } catch (e) {
-                console.error("Approval Error:", e);
-                alert("Error: " + e.message);
-            }
-        };
+
 
         window.exportToCSV = () => {
             // ... (Keep existing CSV logic) ...
             alert("Exporting CSV..."); // Placeholder for brevity
         }
         // ==========================================
-// 👤 PROFILE MODAL LOGIC (NEW)
-// ==========================================
+        // 👤 PROFILE MODAL LOGIC (NEW)
+        // ==========================================
 
-// ==========================================
-// 👤 PROFILE, TABS & CALENDAR LOGIC
-// ==========================================
+        // ==========================================
+        // 👤 PROFILE, TABS & CALENDAR LOGIC
+        // ==========================================
 
-// 1. OPEN PROFILE
-window.openProfile = async (id) => {
-    currentNurseId = id;
-    const nurse = allNurses.find(n => n.id === id);
-    if (!nurse) return;
+        // 1. OPEN PROFILE
+        window.openProfile = async (id) => {
+            currentNurseId = id;
+            const nurse = allNurses.find(n => n.id === id);
+            if (!nurse) return;
 
-    // Fill Info
-    document.getElementById('p-name').innerText = nurse.name;
-    document.getElementById('p-role').innerText = nurse.role;
-    
-    // Fill Edit Form
-    document.getElementById('edit-id').value = nurse.id;
-    document.getElementById('edit-name').value = nurse.name;
-    document.getElementById('edit-phone').value = nurse.phone;
-    document.getElementById('edit-rate').value = nurse.rate;
-    document.getElementById('edit-role').value = nurse.role;
+            // Fill Info
+            document.getElementById('p-name').innerText = nurse.name;
+            document.getElementById('p-role').innerText = nurse.role;
 
-    // RESET Calendar to Today & Render
-    currentCalDate = new Date(); 
-    renderCalendar(); 
+            // Fill Edit Form
+            document.getElementById('edit-id').value = nurse.id;
+            document.getElementById('edit-name').value = nurse.name;
+            document.getElementById('edit-phone').value = nurse.phone;
+            document.getElementById('edit-rate').value = nurse.rate;
+            document.getElementById('edit-role').value = nurse.role;
 
-    // Load Docs
-    loadDocuments(id);
-    
-    // Show Modal & Switch to first tab
-    document.getElementById('profileModal').classList.add('active');
-    window.switchProfileTab('attendance');
-};
+            // RESET Calendar to Today & Render
+            currentCalDate = new Date();
+            renderCalendar();
 
-// 2. SWITCH TABS (Keep this!)
-window.switchProfileTab = (tab) => {
-    // Reset buttons and content
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    
-    // Activate clicked tab
-    // Note: We search for the button that has the onclick handler for this specific tab
-    const btn = Array.from(document.querySelectorAll('.tab-btn'))
-                     .find(b => b.getAttribute('onclick').includes(tab));
-    
-    if(btn) btn.classList.add('active');
-    document.getElementById(`tab-${tab}`).classList.add('active');
-};
+            // Load Docs
+            loadDocuments(id);
+
+            // Show Modal & Switch to first tab
+            document.getElementById('profileModal').classList.add('active');
+            window.switchProfileTab('attendance');
+        };
+
+        // 2. SWITCH TABS (Keep this!)
+        window.switchProfileTab = (tab) => {
+            // Reset buttons and content
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            // Activate clicked tab
+            // Note: We search for the button that has the onclick handler for this specific tab
+            const btn = Array.from(document.querySelectorAll('.tab-btn'))
+                .find(b => b.getAttribute('onclick').includes(tab));
+
+            if (btn) btn.classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        };
 
 
-// CALENDAR LOGIC
-window.changeMonth = (offset) => {
-    currentCalDate.setMonth(currentCalDate.getMonth() + offset);
-    renderCalendar();
-};
+        // CALENDAR LOGIC
+        window.changeMonth = (offset) => {
+            currentCalDate.setMonth(currentCalDate.getMonth() + offset);
+            renderCalendar();
+        };
 
-// NEW: Change Year
-window.changeYear = (offset) => {
-    currentCalDate.setFullYear(currentCalDate.getFullYear() + offset);
-    renderCalendar();
-};
+        // NEW: Change Year
+        window.changeYear = (offset) => {
+            currentCalDate.setFullYear(currentCalDate.getFullYear() + offset);
+            renderCalendar();
+        };
 
-function renderCalendar() {
-    const container = document.getElementById('cal-days-container');
-    
-    // Update Text
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    document.getElementById('cal-month-text').innerText = monthNames[currentCalDate.getMonth()];
-    document.getElementById('cal-year-text').innerText = currentCalDate.getFullYear();
+        function renderCalendar() {
+            const container = document.getElementById('cal-days-container');
 
-    container.innerHTML = `
+            // Update Text
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('cal-month-text').innerText = monthNames[currentCalDate.getMonth()];
+            document.getElementById('cal-year-text').innerText = currentCalDate.getFullYear();
+
+            container.innerHTML = `
         <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div>
         <div class="cal-day-header">Tue</div><div class="cal-day-header">Wed</div>
         <div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div>
         <div class="cal-day-header">Sat</div>
     `;
 
-    const year = currentCalDate.getFullYear();
-    const month = currentCalDate.getMonth();
-    const firstDayIndex = new Date(year, month, 1).getDay(); 
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); 
-    
-    // Get Presence Data
-    const presentDays = allLogs
-        .filter(l => l.nurseId === currentNurseId)
-        .filter(l => {
-            const d = new Date(l.timestamp);
-            return d.getMonth() === month && d.getFullYear() === year;
-        })
-        .map(l => new Date(l.timestamp).getDate());
+            const year = currentCalDate.getFullYear();
+            const month = currentCalDate.getMonth();
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    const today = new Date();
-    const isTodayMonth = today.getMonth() === month && today.getFullYear() === year;
+            // Get Presence Data
+            const presentDays = allLogs
+                .filter(l => l.nurseId === currentNurseId)
+                .filter(l => {
+                    const d = new Date(l.timestamp);
+                    return d.getMonth() === month && d.getFullYear() === year;
+                })
+                .map(l => new Date(l.timestamp).getDate());
 
-    // Empty Slots
-    for (let x = 0; x < firstDayIndex; x++) {
-        const empty = document.createElement('div');
-        empty.classList.add('cal-day', 'empty');
-        container.appendChild(empty);
-    }
+            const today = new Date();
+            const isTodayMonth = today.getMonth() === month && today.getFullYear() === year;
 
-    // Days
-    for (let i = 1; i <= daysInMonth; i++) {
-        const dayEl = document.createElement('div');
-        dayEl.classList.add('cal-day');
-        dayEl.innerText = i;
+            // Empty Slots
+            for (let x = 0; x < firstDayIndex; x++) {
+                const empty = document.createElement('div');
+                empty.classList.add('cal-day', 'empty');
+                container.appendChild(empty);
+            }
 
-        if (isTodayMonth && i === today.getDate()) dayEl.classList.add('today');
+            // Days
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.classList.add('cal-day');
+                dayEl.innerText = i;
 
-        if (presentDays.includes(i)) {
-            dayEl.classList.add('present');
-            dayEl.title = "Present";
-        } else {
-            // Only mark absent if passed
-            let checkDate = new Date(year, month, i);
-            if (checkDate < new Date().setHours(0,0,0,0)) {
-                dayEl.classList.add('absent');
+                if (isTodayMonth && i === today.getDate()) dayEl.classList.add('today');
+
+                if (presentDays.includes(i)) {
+                    dayEl.classList.add('present');
+                    dayEl.title = "Present";
+                } else {
+                    // Only mark absent if passed
+                    let checkDate = new Date(year, month, i);
+                    if (checkDate < new Date().setHours(0, 0, 0, 0)) {
+                        dayEl.classList.add('absent');
+                    }
+                }
+                container.appendChild(dayEl);
             }
         }
-        container.appendChild(dayEl);
-    }
-}
-// --- DOCUMENT LOCKER LOGIC ---
-async function loadDocuments(nurseId) {
-    const list = document.getElementById('doc-list');
-    list.innerHTML = '<p style="color:#999; text-align:center;">Loading...</p>';
-    
-    // Fetch Docs from Subcollection
-    const q = query(collection(db, "users", currentUser.uid, "nurses", nurseId, "documents"), orderBy("uploadedAt", "desc"));
-    const snapshot = await getDocs(q);
-    
-    list.innerHTML = '';
-    if (snapshot.empty) { 
-        list.innerHTML = '<p style="color:#999; text-align:center; font-size:0.8rem; margin-top:10px;">No documents yet.</p>'; 
-        return; 
-    }
+        // --- DOCUMENT LOCKER LOGIC ---
+        async function loadDocuments(nurseId) {
+            const list = document.getElementById('doc-list');
+            list.innerHTML = '<p style="color:#999; text-align:center;">Loading...</p>';
 
-    snapshot.forEach(docSnap => {
-        const d = docSnap.data();
-        list.innerHTML += `
+            // Fetch Docs from Subcollection
+            const q = query(collection(db, "users", currentUser.uid, "nurses", nurseId, "documents"), orderBy("uploadedAt", "desc"));
+            const snapshot = await getDocs(q);
+
+            list.innerHTML = '';
+            if (snapshot.empty) {
+                list.innerHTML = '<p style="color:#999; text-align:center; font-size:0.8rem; margin-top:10px;">No documents yet.</p>';
+                return;
+            }
+
+            snapshot.forEach(docSnap => {
+                const d = docSnap.data();
+                list.innerHTML += `
         <div class="doc-item">
             <div class="doc-icon"><i class="fa-solid fa-file-contract"></i></div>
             <div style="flex:1; overflow:hidden;">
@@ -2320,57 +2449,57 @@ async function loadDocuments(nurseId) {
             <a href="${d.data}" download="${d.name}" style="color:var(--primary); margin-right:15px;"><i class="fa-solid fa-download"></i></a>
             <button onclick="window.deleteDoc('${docSnap.id}')" style="color:#ff4444; background:none; border:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
         </div>`;
-    });
-}
-
-// Upload Listener
-const uploadInput = document.getElementById('doc-upload');
-if (uploadInput) {
-    uploadInput.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file || !currentNurseId) return;
-
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-            const base64 = event.target.result;
-            await addDoc(collection(db, "users", currentUser.uid, "nurses", currentNurseId, "documents"), {
-                name: file.name,
-                data: base64,
-                uploadedAt: Date.now()
             });
-            loadDocuments(currentNurseId); // Refresh UI
+        }
+
+        // Upload Listener
+        const uploadInput = document.getElementById('doc-upload');
+        if (uploadInput) {
+            uploadInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file || !currentNurseId) return;
+
+                const reader = new FileReader();
+                reader.onload = async (event) => {
+                    const base64 = event.target.result;
+                    await addDoc(collection(db, "users", currentUser.uid, "nurses", currentNurseId, "documents"), {
+                        name: file.name,
+                        data: base64,
+                        uploadedAt: Date.now()
+                    });
+                    loadDocuments(currentNurseId); // Refresh UI
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        window.deleteDoc = async (docId) => {
+            if (confirm('Delete this document permanently?')) {
+                await deleteDoc(doc(db, "users", currentUser.uid, "nurses", currentNurseId, "documents", docId));
+                loadDocuments(currentNurseId);
+            }
         };
-        reader.readAsDataURL(file);
-    });
-}
 
-window.deleteDoc = async (docId) => {
-    if (confirm('Delete this document permanently?')) {
-        await deleteDoc(doc(db, "users", currentUser.uid, "nurses", currentNurseId, "documents", docId));
-        loadDocuments(currentNurseId);
-    }
-};
+        // --- EDIT PROFILE SUBMIT ---
+        const editForm = document.getElementById('editNurseForm');
+        if (editForm) {
+            editForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('edit-id').value;
 
-// --- EDIT PROFILE SUBMIT ---
-const editForm = document.getElementById('editNurseForm');
-if (editForm) {
-    editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = document.getElementById('edit-id').value;
-        
-        await updateDoc(doc(db, "users", currentUser.uid, "nurses", id), {
-            name: document.getElementById('edit-name').value,
-            phone: document.getElementById('edit-phone').value,
-            rate: document.getElementById('edit-rate').value,
-            role: document.getElementById('edit-role').value
-        });
-        
-        alert('Profile Updated Successfully!');
-        // Update Modal Title instantly
-        document.getElementById('p-name').innerText = document.getElementById('edit-name').value;
-        document.getElementById('p-role').innerText = document.getElementById('edit-role').value;
-    });
-}
+                await updateDoc(doc(db, "users", currentUser.uid, "nurses", id), {
+                    name: document.getElementById('edit-name').value,
+                    phone: document.getElementById('edit-phone').value,
+                    rate: document.getElementById('edit-rate').value,
+                    role: document.getElementById('edit-role').value
+                });
+
+                alert('Profile Updated Successfully!');
+                // Update Modal Title instantly
+                document.getElementById('p-name').innerText = document.getElementById('edit-name').value;
+                document.getElementById('p-role').innerText = document.getElementById('edit-role').value;
+            });
+        }
 
         // ==========================================
         // 🛠️ HELPER FUNCTIONS (Render, Camera, Etc)
@@ -2389,11 +2518,11 @@ if (editForm) {
         function renderStaffList() {
             const grid = document.getElementById('staff-grid');
             grid.innerHTML = '';
-            
+
             allNurses.forEach(nurse => {
                 const names = nurse.name.split(' ');
                 const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
-                
+
                 // Using flex-direction: column ensures the button stays at the bottom naturally
                 grid.innerHTML += `
                 <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px;">
@@ -2469,62 +2598,62 @@ if (editForm) {
                 </div>
             </div>`;
         }
-// Function to save the "Paid" status to Firebase
-window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
-    // Unique ID for this payment: "NurseID_MonthYear"
-    const docId = `${nurseId}_${monthSuffix}`;
-    const docRef = doc(db, "users", currentUser.uid, "payouts", docId);
-    
-    if (isChecked) {
-        // Create the record
-        await setDoc(docRef, { 
-            paidAt: serverTimestamp(),
-            nurseId: nurseId,
-            month: monthSuffix
-        });
-    } else {
-        // Delete the record (Uncheck)
-        await deleteDoc(docRef);
-    }
-};
+        // Function to save the "Paid" status to Firebase
+        window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
+            // Unique ID for this payment: "NurseID_MonthYear"
+            const docId = `${nurseId}_${monthSuffix}`;
+            const docRef = doc(db, "users", currentUser.uid, "payouts", docId);
+
+            if (isChecked) {
+                // Create the record
+                await setDoc(docRef, {
+                    paidAt: serverTimestamp(),
+                    nurseId: nurseId,
+                    month: monthSuffix
+                });
+            } else {
+                // Delete the record (Uncheck)
+                await deleteDoc(docRef);
+            }
+        };
         window.calculatePayroll = () => {
             const tbody = document.getElementById('payroll-table-body');
             const picker = document.getElementById('payroll-month-picker');
-            
+
             tbody.innerHTML = '';
             let totalPayroll = 0;
-        
+
             // 1. Get the target Month & Year from the picker
             let targetDate = picker.value ? new Date(picker.value + "-01") : new Date();
-            
+
             // If picker was empty, set it to today
             if (!picker.value) {
                 const yyyy = targetDate.getFullYear();
                 const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
                 picker.value = `${yyyy}-${mm}`;
             }
-        
+
             const tMonth = targetDate.getMonth();
             const tYear = targetDate.getFullYear();
-            
+
             // Generate a unique key for this month (e.g., "2025-12")
-            const monthKeySuffix = `${tYear}-${String(tMonth+1).padStart(2,'0')}`; 
-        
+            const monthKeySuffix = `${tYear}-${String(tMonth + 1).padStart(2, '0')}`;
+
             allNurses.forEach(nurse => {
                 // 2. Count days worked in that specific month
                 const daysWorked = allLogs.filter(l => {
                     const d = new Date(l.timestamp);
                     return l.nurseId === nurse.id && d.getMonth() === tMonth && d.getFullYear() === tYear;
                 }).length;
-        
+
                 const salary = daysWorked * (parseInt(nurse.rate) || 0);
                 totalPayroll += salary;
-        
+
                 // 3. CHECK STATUS: Is this nurse paid for this specific month?
                 // We look for a key like: "nurseID_2025-12"
                 const payoutId = `${nurse.id}_${monthKeySuffix}`;
                 const isPaid = allPayouts.includes(payoutId);
-        
+
                 // 4. Render the Row with the Checkbox
                 tbody.innerHTML += `
                     <tr>
@@ -2675,10 +2804,10 @@ window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
         // --- NEW FUNCTION: Show List of Present Nurses ---
         window.showPresentToday = () => {
             const today = new Date().toDateString();
-            
+
             // 1. Get logs for today
             const todaysLogs = allLogs.filter(l => new Date(l.timestamp).toDateString() === today);
-            
+
             // 2. Get unique names to avoid duplicates
             const names = [...new Set(todaysLogs.map(l => l.nurseName))];
 
