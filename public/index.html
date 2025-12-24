@@ -1047,6 +1047,26 @@
             transform: translateY(-5px);
             border-color: var(--primary);
         }
+        /* --- WAR ROOM STYLES --- */
+.war-room-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+.war-card {
+    background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #ccc; position: relative; overflow: hidden; transition: 0.3s;
+}
+.war-card.status-assigned { border-left-color: #ff9933; }
+.war-card.status-nurse_arrived { border-left-color: #2196F3; }
+.war-card.status-in_progress { border-left-color: #138808; background: #f1f8e9; }
+.war-header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+.war-timer { font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.2rem; color: #138808; background: #fff; padding: 2px 8px; border-radius: 4px; border: 1px solid #c8e6c9; }
+.war-body { padding: 1rem; }
+.war-step { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; color: #555; }
+.war-step.active { color: #ff9933; font-weight: bold; animation: pulseText 1.5s infinite; }
+@keyframes pulseText { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+.client-pill { background: #e3f2fd; color: #0d47a1; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; text-decoration: none; }
     </style>
 </head>
 
@@ -1213,6 +1233,9 @@
                 <li class="nav-item" id="nav-staff" onclick="switchTab('staff')">
                     <i class="fa-solid fa-user-nurse"></i> Karmachari (Staff)
                 </li>
+                <li class="nav-item" id="nav-war-room" onclick="switchTab('war-room')">
+                    <i class="fa-solid fa-tower-broadcast" style="color: #d32f2f;"></i> War Room
+                </li>
                 <li class="nav-item" id="nav-logs" onclick="switchTab('logs')">
                     <i class="fa-solid fa-clipboard-list"></i> Daily Logs
                 </li>
@@ -1282,6 +1305,27 @@
 
                 <h2 style="font-family: 'Rozha One'; color: var(--navy); margin-bottom: 1.5rem;">Recent Activity</h2>
                 <div class="nurse-grid" id="dashboard-grid">
+                </div>
+            </div>
+
+            <div id="view-war-room" class="view-section">
+                <header>
+                    <div class="page-title">
+                        <h1><span class="namaste-icon" style="color:#d32f2f;">🔴</span> Live War Room</h1>
+                        <p>Real-time deployment tracking & timer</p>
+                    </div>
+                    <div style="font-size:0.9rem; color:#666;">
+                        <i class="fa-solid fa-circle" style="color:#ff9933;"></i> En Route &nbsp;
+                        <i class="fa-solid fa-circle" style="color:#138808;"></i> On Duty
+                    </div>
+                </header>
+
+                <div id="war-room-grid" class="war-room-container">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-satellite-dish" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No Active Deployments</h3>
+                        <p>Waiting for bookings via WhatsApp...</p>
+                    </div>
                 </div>
             </div>
 
@@ -2932,6 +2976,8 @@ document.getElementById('addNurseForm').addEventListener('submit', async (e) => 
 
             // 👇 ADD THIS NEW BLOCK 👇
             // If opening Payroll, run calculation immediately to set default date
+            if (tab === 'war-room') window.loadWarRoom();
+
             if (tab === 'payroll') {
                 window.calculatePayroll();
             }
@@ -2960,6 +3006,117 @@ document.getElementById('addNurseForm').addEventListener('submit', async (e) => 
                 alert(`✅ Present Today (${names.length}):\n\n• ` + names.join("\n• "));
             }
         };
+               // --- WAR ROOM LOGIC (Updated with Expiry Gatekeeper) ---
+let warRoomInterval = null;
+let unsubscribeWarRoom = null; // 👈 Added to prevent memory leaks
+
+// Trigger this when switching to 'war-room' tab
+window.loadWarRoom = () => {
+    // 1. GATEKEEPER CHECK: Don't show live data if staff are expired
+    if (expiredNursesList.length > 0) {
+        showRenewalModal(expiredNursesList);
+        return;
+    }
+
+    // Stop any existing timer and listener to prevent duplicates
+    if (warRoomInterval) clearInterval(warRoomInterval);
+    if (unsubscribeWarRoom) unsubscribeWarRoom();
+
+    // 2. QUERY: Listen to GLOBAL 'bookings' collection
+    const q = query(
+        collection(db, "bookings"), 
+        where("status", "in", ["assigned", "nurse_arrived", "in_progress"]),
+        orderBy("timestamp", "desc")
+    );
+
+    unsubscribeWarRoom = onSnapshot(q, (snapshot) => {
+        const grid = document.getElementById('war-room-grid');
+        if (!grid) return;
+        
+        grid.innerHTML = '';
+
+        if (snapshot.empty) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-mug-hot" style="font-size: 3rem; margin-bottom: 1rem; color:#ccc;"></i>
+                    <h3>All Quiet</h3><p>No active nurses on the field right now.</p>
+                </div>`;
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const b = doc.data();
+            const status = b.status;
+
+            // TIMELINE STATES
+            const s1 = status === 'assigned' ? 'active' : 'done';
+            const s2 = status === 'nurse_arrived' ? 'active' : (status === 'in_progress' ? 'done' : '');
+            const s3 = status === 'in_progress' ? 'active' : '';
+
+            // TIMER LOGIC
+            let timerHtml = '<span style="color:#999; font-size:0.8rem;">Ready...</span>';
+            if (status === 'in_progress' && b.startedAt) {
+                timerHtml = `<div class="war-timer" data-start="${b.startedAt}">00h 00m 00s</div>`;
+            }
+
+            // MAP LINK
+            const mapLink = b.clientLocation
+                ? `https://www.google.com/maps?q=${b.clientLocation.lat},${b.clientLocation.lng}`
+                : '#';
+
+            grid.innerHTML += `
+                <div class="war-card status-${status}">
+                    <div class="war-header">
+                        <div>
+                            <h3 style="margin:0; color:var(--navy); font-size:1.1rem;">${b.assignedNurseName}</h3>
+                            <span style="font-size:0.75rem; color:#666;">${b.assignedNursePhone}</span>
+                        </div>
+                        ${timerHtml}
+                    </div>
+                    <div class="war-body">
+                        <div style="margin-bottom:15px;">
+                            <div style="font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#444;">Patient/Client:</div>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <a href="tel:${b.clientPhone}" class="client-pill">
+                                    <i class="fa-solid fa-phone"></i> Call
+                                </a>
+                                <a href="${mapLink}" target="_blank" class="client-pill">
+                                    <i class="fa-solid fa-location-arrow"></i> Map
+                                </a>
+                                <span class="client-pill" style="background:#f0f0f0; color:#333;">
+                                    <i class="fa-solid fa-clock"></i> ${new Date(b.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div style="background:#f9f9f9; padding:12px; border-radius:10px; border:1px solid #eee;">
+                            <div class="war-step ${s1}"><i class="fa-solid fa-circle-check"></i> Dispatched</div>
+                            <div class="war-step ${s2}"><i class="fa-solid fa-truck-fast"></i> At Location</div>
+                            <div class="war-step ${s3}"><i class="fa-solid fa-heart-pulse"></i> <b>On Duty</b></div>
+                        </div>
+                    </div>
+                </div>`;
+        });
+
+        // START LIVE CLOCK
+        if (warRoomInterval) clearInterval(warRoomInterval);
+        warRoomInterval = setInterval(updateWarTimers, 1000);
+    });
+};
+
+function updateWarTimers() {
+    document.querySelectorAll('.war-timer').forEach(el => {
+        const start = parseInt(el.getAttribute('data-start'));
+        if (!start) return;
+        const diff = Date.now() - start;
+
+        const hrs = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        el.innerText = `${hrs}h ${mins}m ${secs}s`;
+    });
+}
     </script>
 </body>
 
