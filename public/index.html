@@ -381,23 +381,31 @@
             font-size: 1.2rem;
         }
 
-        /* --- Nurse Grid --- */
-        .nurse-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
+      /* Add/Update this in your <style> block */
 
-        .nurse-card {
-            position: relative;
-            border-top: 4px solid transparent;
-            transition: 0.3s;
-        }
+.nurse-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+}
 
-        .nurse-card:hover {
-            border-top: 4px solid var(--accent);
-            transform: translateY(-3px);
-        }
+.nurse-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* Soft shadow */
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nurse-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
 
         .delete-btn {
             position: absolute;
@@ -415,23 +423,22 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #eee;
         }
 
         .nurse-avatar {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: var(--navy);
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            color: var(--navy);
-            font-weight: 700;
-            position: relative;
-            border: 2px solid white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .status-dot {
@@ -1411,9 +1418,7 @@
                 <i class="fa-solid fa-hands-holding-circle" style="color: var(--primary);"></i> Silver Care
             </div>
 
-            <button class="btn-mode" onclick="toggleMode()">
-                <i class="fa-solid fa-mobile-screen"></i> Switch to <span id="mode-text">Nurse App</span>
-            </button>
+
 
             <ul class="nav-menu" id="admin-menu">
                 <li class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')">
@@ -1561,13 +1566,120 @@
             </div>
 
             <div id="view-staff" class="view-section">
-                <header>
+                <header style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
                     <div class="page-title">
                         <h1>Staff Directory</h1>
                         <p>Manage all registered employees</p>
                     </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn-primary" onclick="toggleManageMode()" 
+                            style="background: white; color: var(--navy); border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <i class="fa-solid fa-list-check"></i> Manage
+                        </button>
+                        
+                        <button class="btn-primary" onclick="window.exportToCSV()" 
+                            style="box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4);">
+                            <i class="fa-solid fa-download"></i> Export
+                        </button>
+                    </div>
                 </header>
-                <div class="nurse-grid" id="staff-grid"></div>
+            
+                <div id="bulk-action-bar" style="display: none; background: #ffebee; padding: 12px 20px; border-radius: 12px; align-items: center; justify-content: space-between; border: 1px solid #ffcdd2; margin-bottom: 2rem; animation: fadeIn 0.3s ease;">
+                    <div style="color: #c62828; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-circle-check"></i> 
+                        <span id="selected-count">0</span> Staff Selected
+                    </div>
+                    <button onclick="bulkDelete()" style="background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);">
+                        Delete Selected <i class="fa-solid fa-trash" style="margin-left: 5px;"></i>
+                    </button>
+                </div>
+            
+                <div class="nurse-grid" id="staff-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;"></div>
+            </div>
+            
+            <div class="modal" id="replaceModal">
+                <div class="modal-content">
+                    <button class="close-modal" onclick="document.getElementById('replaceModal').classList.remove('active')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    
+                    <h2 style="margin-bottom: 0.5rem; font-family: 'Rozha One'; color: var(--navy);">Replace Staff</h2>
+                    
+                    <p id="replace-message" style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; background: #f9f9f9; padding: 10px; border-radius: 8px; border-left: 4px solid var(--primary);">
+                        Loading details...
+                    </p>
+                    
+                    <form id="replaceNurseForm">
+                        <input type="hidden" id="replace-old-id">
+                        
+                        <div class="form-group">
+                            <label>New Staff Name</label>
+                            <input type="text" class="form-input" id="repName" required placeholder="Ex. Priya Singh">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>WhatsApp Number</label>
+                            <input type="tel" class="form-input" id="repPhone" required placeholder="919876543210">
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="form-group">
+                                <label>Role</label>
+                                <input type="text" class="form-input" id="repRole" required placeholder="Nurse">
+                            </div>
+                            <div class="form-group">
+                                <label>Rate (₹)</label>
+                                <input type="number" class="form-input" id="repRate" required placeholder="800">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                            Confirm Swap <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="modal" id="replaceModal">
+                <div class="modal-content">
+                    <button class="close-modal" onclick="document.getElementById('replaceModal').classList.remove('active')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    
+                    <h2 style="margin-bottom: 0.5rem; font-family: 'Rozha One'; color: var(--navy);">Replace Staff</h2>
+                    
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6;">
+                        </p>
+                    
+                    <form id="replaceNurseForm">
+                        <input type="hidden" id="replace-old-id">
+                        
+                        <div class="form-group">
+                            <label>New Staff Name</label>
+                            <input type="text" class="form-input" id="repName" required placeholder="New Name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>New WhatsApp Number</label>
+                            <input type="tel" class="form-input" id="repPhone" required placeholder="919876543210">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Role</label>
+                            <input type="text" class="form-input" id="repRole" required placeholder="Ex. Nurse">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Daily Rate (₹)</label>
+                            <input type="number" class="form-input" id="repRate" required placeholder="Ex. 800">
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%; background: var(--navy);">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement
+                        </button>
+                    </form>
+                </div>
             </div>
 
             <div id="view-super-admin" class="view-section">
@@ -1878,6 +1990,7 @@
         let currentUser = null;
         let currentUserData = null; // Stores user profile (payment status, etc.)
         let allNurses = [];
+        let allAgencies = []; // 👈 Add this new variable
         let allLogs = [];
         let currentStream = null;
         let currentNurseId = null;
@@ -2497,111 +2610,191 @@
         }
 
 
-        // --- UPDATED ADMIN LOADER (With Visual Slot Tracking) ---
-        function loadAdminData() {
-            onSnapshot(collection(db, "users"), (snapshot) => {
-                const allTable = document.getElementById('admin-all-users');
-                const leaderboardDiv = document.getElementById('admin-leaderboard');
+       // --- UPDATED ADMIN LOADER (With Visual Slot Tracking & CSV Data Capture) ---
+function loadAdminData() {
+    onSnapshot(collection(db, "users"), (snapshot) => {
+        const allTable = document.getElementById('admin-all-users');
+        const leaderboardDiv = document.getElementById('admin-leaderboard');
 
-                // Clear existing data
-                allTable.innerHTML = '';
-                leaderboardDiv.innerHTML = '';
+        // ✅ CRITICAL CHANGE: Save data to global variable for CSV Export
+        allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                // Optional: Clear the old 'pending table' if it exists in HTML to avoid confusion
-                const pendingTable = document.getElementById('admin-pending-table');
-                if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+        // Clear existing data
+        allTable.innerHTML = '';
+        leaderboardDiv.innerHTML = '';
 
-                let referralCounts = {};
+        // Optional: Clear the old 'pending table' if it exists in HTML
+        const pendingTable = document.getElementById('admin-pending-table');
+        if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
 
-                snapshot.docs.forEach(doc => {
-                    const u = doc.data();
+        let referralCounts = {};
 
-                    // --- 1. CALCULATE SLOTS (Used vs Paid) ---
-                    const usedSlots = u.nurseCount || 0;
-                    const paidSlots = u.extraSlots || 0;
+        snapshot.docs.forEach(doc => {
+            const u = doc.data();
 
-                    // Calculate Percentage for the bar (cap at 100%)
-                    let percentage = 0;
-                    if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
+            // --- 1. CALCULATE SLOTS (Used vs Paid) ---
+            const usedSlots = u.nurseCount || 0;
+            const paidSlots = u.extraSlots || 0;
 
-                    // Determine Bar Color (Green = Space Available, Orange = Full)
-                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
+            // Calculate Percentage for the bar (cap at 100%)
+            let percentage = 0;
+            if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-                    // Create the Display String
-                    let slotDisplay = '';
-                    if (u.plan === 'unlimited') {
-                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
-                    } else {
-                        slotDisplay = `
-                        <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
-                            ${usedSlots} / ${paidSlots} Slots Used
-                        </div>
-                        <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
-                            <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
-                        </div>
-                    `;
-                    }
+            // Determine Bar Color (Green = Space Available, Orange = Full)
+            const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
 
-                    // --- 2. LEADERBOARD AGGREGATION ---
-                    if (u.referralBy && u.referralBy !== "DIRECT") {
-                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                        referralCounts[u.referralBy].total += 1;
-                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                    }
+            // Create the Display String
+            let slotDisplay = '';
+            if (u.plan === 'unlimited') {
+                slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
+            } else {
+                slotDisplay = `
+                <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
+                    ${usedSlots} / ${paidSlots} Slots Used
+                </div>
+                <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
+                    <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
+                </div>
+            `;
+            }
 
-                    // --- 3. STATUS BADGE ---
-                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+            // --- 2. LEADERBOARD AGGREGATION ---
+            if (u.referralBy && u.referralBy !== "DIRECT") {
+                if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                referralCounts[u.referralBy].total += 1;
+                if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+            }
 
-                    if (u.isPaid) {
-                        statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
-                    }
+            // --- 3. STATUS BADGE ---
+            let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
 
-                    // --- 4. RENDER ROW ---
-                    allTable.innerHTML += `
-                <tr style="border-bottom:1px solid #f0f0f0;">
-                    <td style="padding:15px 10px;">
-                        <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
-                        <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
-                    </td>
-                    <td style="padding:15px 10px;">
-                        ${slotDisplay}
-                    </td>
-                    <td style="padding:15px 10px; font-weight:500; color:#555;">
-                        ${u.referralBy || 'DIRECT'}
-                    </td>
-                    <td style="padding:15px 10px;">
-                        ${statusHtml}
-                    </td>
-                </tr>`;
-                });
+            if (u.isPaid) {
+                statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
+            }
 
-                // --- 5. RENDER LEADERBOARD ---
-                Object.keys(referralCounts).forEach(code => {
-                    const data = referralCounts[code];
-                    leaderboardDiv.innerHTML += `
-                <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
-                    <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
-                    <div style="display:flex; gap:10px; margin-top:12px;">
-                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                            <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
-                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
-                        </div>
-                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                            <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
-                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
-                        </div>
-                    </div>
-                </div>`;
-                });
-            });
+            // --- 4. RENDER ROW ---
+            allTable.innerHTML += `
+        <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:15px 10px;">
+                <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
+                <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+            </td>
+            <td style="padding:15px 10px;">
+                ${slotDisplay}
+            </td>
+            <td style="padding:15px 10px; font-weight:500; color:#555;">
+                ${u.referralBy || 'DIRECT'}
+            </td>
+            <td style="padding:15px 10px;">
+                ${statusHtml}
+            </td>
+        </tr>`;
+        });
+
+        // --- 5. RENDER LEADERBOARD ---
+        Object.keys(referralCounts).forEach(code => {
+            const data = referralCounts[code];
+            leaderboardDiv.innerHTML += `
+        <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
+            <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
+            <div style="display:flex; gap:10px; margin-top:12px;">
+                <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                    <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
+                    <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                </div>
+                <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                    <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
+                    <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
+                </div>
+            </div>
+        </div>`;
+        });
+    });
+}
+
+
+window.exportToCSV = () => {
+    // 1. Check if it is the Super Admin
+    if (currentUser && currentUser.email === "supercare655@gmail.com") {
+        
+        if (!allAgencies || allAgencies.length === 0) {
+            alert("No agency data found to export.");
+            return;
         }
 
+        // 2. Prepare Agency Data
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Agency Name,Email,Referral Code,Used Slots,Paid Slots,Status,Total Revenue (INR)\n";
 
+        allAgencies.forEach(agency => {
+            const safeName = (agency.agencyName || "Unknown").replace(/,/g, " ");
+            const status = agency.isPaid ? "PAID ACTIVE" : "LOCKED";
+            
+            // ✅ NEW MATH LOGIC:
+            // If they are paid, Revenue = Total Slots * 199. Otherwise 0.
+            const revenue = agency.isPaid ? (agency.extraSlots * 199) : 0;
 
-        window.exportToCSV = () => {
-            // ... (Keep existing CSV logic) ...
-            alert("Exporting CSV..."); // Placeholder for brevity
-        }
+            const row = [
+                safeName,
+                agency.email,
+                agency.referralBy || "DIRECT",
+                agency.nurseCount || 0,
+                agency.extraSlots || 0,
+                status,
+                revenue // 👈 Shows calculated amount (e.g., 1990)
+            ];
+            csvContent += row.join(",") + "\n";
+        });
+
+        // 3. Download File
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `SuperAdmin_Report_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        return; 
+    }
+
+    // --- NORMAL USER EXPORT (Kept same as before) ---
+    if (!allNurses || allNurses.length === 0) {
+        alert("No staff data to export.");
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Name,Phone,Role,Daily Rate (INR),Status,Validity Expires\n";
+
+    allNurses.forEach(nurse => {
+        const now = Date.now();
+        const days30 = 30 * 24 * 60 * 60 * 1000;
+        const expiry = nurse.validUntil || (now + (7 * days30)); 
+        const isExpired = expiry < now;
+        
+        const status = isExpired ? "Expired" : "Active";
+        const expiryDate = new Date(expiry).toLocaleDateString();
+        const safeName = nurse.name.replace(/,/g, " ");
+
+        const row = [
+            safeName,
+            nurse.phone,
+            nurse.role,
+            nurse.rate,
+            status,
+            expiryDate
+        ];
+        csvContent += row.join(",") + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `SilverCare_Staff_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+};
         // ==========================================
         // 👤 PROFILE MODAL LOGIC (NEW)
         // ==========================================
@@ -2820,44 +3013,69 @@
             signOut(auth).then(() => window.location.reload());
         };
 
-        // --- UPDATED VISUALS (Step 2: Show Days Left) ---
-        function renderStaffList() {
-            const grid = document.getElementById('staff-grid');
-            grid.innerHTML = '';
+       // Global State for Bulk Actions
+let isManageMode = false;
+let selectedNurses = new Set();
 
-            const now = Date.now();
-            const msPerDay = 24 * 60 * 60 * 1000;
+// --- UPDATED VISUALS (Step 2: Show Days Left + Manage Mode + Replace) ---
+function renderStaffList() {
+    const grid = document.getElementById('staff-grid');
+    grid.innerHTML = '';
 
-            allNurses.forEach(nurse => {
-                const names = nurse.name.split(' ');
-                const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+    const now = Date.now();
+    const msPerDay = 24 * 60 * 60 * 1000;
 
-                // 🗓️ MATH: Calculate Days Remaining
-                // If 'validUntil' is missing (old data), we give a 7-day grace period from today
-                const expiry = nurse.validUntil || (now + (7 * msPerDay));
-                const daysLeft = Math.ceil((expiry - now) / msPerDay);
+    allNurses.forEach(nurse => {
+        // Initials Logic
+        const names = nurse.name.split(' ');
+        const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
 
-                // Color Logic for the Validity Text
-                let statusColor = '#138808'; // Default Green (Safe)
-                let statusText = `${daysLeft} Days Left`;
+        // 🗓️ MATH: Calculate Days Remaining
+        // If 'validUntil' is missing (old data), give 7-day grace period
+        const expiry = nurse.validUntil || (now + (7 * msPerDay));
+        const daysLeft = Math.ceil((expiry - now) / msPerDay);
 
-                if (daysLeft <= 0) {
-                    statusColor = '#d32f2f'; // Red (Expired)
-                    statusText = "EXPIRED";
-                } else if (daysLeft <= 5) {
-                    statusColor = '#ff9933'; // Orange (Warning: 5 days or less)
-                    statusText = `${daysLeft} Days (Renew Soon)`;
-                }
+        // Color Logic for the Validity Text
+        let statusColor = '#138808'; // Default Green (Safe)
+        let statusText = `${daysLeft} Days Left`;
 
-                // Render the Card with dynamic status
-                grid.innerHTML += `
-        <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px;">
+        if (daysLeft <= 0) {
+            statusColor = '#d32f2f'; // Red (Expired)
+            statusText = "EXPIRED";
+        } else if (daysLeft <= 5) {
+            statusColor = '#ff9933'; // Orange (Warning)
+            statusText = `${daysLeft} Days (Renew Soon)`;
+        }
+
+        // CHECKBOX VISIBILITY LOGIC
+        const checkDisplay = isManageMode ? 'flex' : 'none';
+        const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
+
+        // Render the Card
+        grid.innerHTML += `
+        <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
+            
+            <div style="display: ${checkDisplay}; position: absolute; top: 10px; left: 10px; z-index: 10;">
+                <input type="checkbox" style="width: 20px; height: 20px; accent-color: #d32f2f; cursor: pointer;" 
+                    ${isChecked} onchange="toggleSelection('${nurse.id}')">
+            </div>
+
             <div style="flex: 1;">
-                <button class="btn-icon delete-btn" onclick="window.removeNurse('${nurse.id}')">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                <div style="position: absolute; top: 1rem; right: 1rem; display: flex; gap: 8px;">
+                     <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
+                        title="Replace Staff (Transfer Validity)"
+                        style="background: #e3f2fd; color: #1565c0; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition:0.2s;">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </button>
+                    
+                    <button class="delete-btn" onclick="window.removeNurse('${nurse.id}')"
+                        title="Delete Permanently"
+                        style="position: static; opacity: 1; background: #ffebee; color: #c62828; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition:0.2s;">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
 
-                <div class="nurse-header">
+                <div class="nurse-header" style="margin-top: 15px;">
                     <div class="nurse-avatar">${initials}</div>
                     <div class="nurse-info">
                         <h3>${nurse.name}</h3>
@@ -2885,8 +3103,8 @@
                 <i class="fa-solid fa-address-card"></i> View Profile
             </button>
         </div>`;
-            });
-        }
+    });
+}
 
         function populateLoginSelect() {
             const sel = document.getElementById('nurse-login-select');
@@ -3268,6 +3486,124 @@
                 el.innerText = `${hrs}h ${mins}m ${secs}s`;
             });
         }
+        // --- 1. MANAGE MODE TOGGLE ---
+window.toggleManageMode = () => {
+    isManageMode = !isManageMode;
+    selectedNurses.clear(); // Clear selections when toggling
+    updateBulkUI();
+    renderStaffList();
+};
+
+window.toggleSelection = (id) => {
+    if (selectedNurses.has(id)) selectedNurses.delete(id);
+    else selectedNurses.add(id);
+    updateBulkUI();
+};
+
+function updateBulkUI() {
+    const bar = document.getElementById('bulk-action-bar');
+    const countSpan = document.getElementById('selected-count');
+    
+    if (isManageMode && selectedNurses.size > 0) {
+        bar.style.display = 'flex';
+        countSpan.innerText = selectedNurses.size;
+    } else {
+        bar.style.display = 'none';
+    }
+}
+
+// --- 2. BULK DELETE LOGIC ---
+window.bulkDelete = async () => {
+    if (!confirm(`Delete ${selectedNurses.size} staff members permanently?`)) return;
+
+    try {
+        const batchPromises = Array.from(selectedNurses).map(id => 
+            deleteDoc(doc(db, "users", currentUser.uid, "nurses", id))
+        );
+        
+        await Promise.all(batchPromises);
+
+        // Update Counter
+        await updateDoc(doc(db, "users", currentUser.uid), {
+            nurseCount: increment(-selectedNurses.size)
+        });
+
+        alert("Selected staff deleted.");
+        window.toggleManageMode(); // Exit manage mode
+
+    } catch (e) {
+        console.error(e);
+        alert("Error deleting: " + e.message);
+    }
+};
+
+// --- 3. REPLACE STAFF LOGIC (The Swap) ---
+window.openReplaceModal = (id, name, validUntil) => {
+    // 1. Set the hidden ID
+    const hiddenInput = document.getElementById('replace-old-id');
+    if (hiddenInput) hiddenInput.value = id;
+
+    // 2. Calculate Days Remaining
+    const now = Date.now();
+    const msPerDay = 24 * 60 * 60 * 1000;
+    // Handle case where validUntil might be undefined (legacy data)
+    const targetDate = validUntil || (now + (7 * msPerDay)); 
+    const daysLeft = Math.ceil((targetDate - now) / msPerDay);
+    
+    // 3. Build the Message HTML
+    const displayHtml = `
+        You are replacing <b style="color:var(--navy);">${name}</b>.<br>
+        <span style="display:inline-block; margin-top:8px; color:#1565c0; background:#e3f2fd; padding:4px 8px; border-radius:4px; font-weight:600; font-size:0.85rem;">
+            <i class="fa-solid fa-clock-rotate-left"></i> The new staff member will inherit <u>${daysLeft} Days</u> of validity.
+        </span>
+    `;
+    
+    // 4. ✅ SAFE UPDATE: Targets the correct ID 'replace-message'
+    const msgBox = document.getElementById('replace-message');
+    if (msgBox) {
+        msgBox.innerHTML = displayHtml;
+        document.getElementById('replaceModal').classList.add('active');
+    } else {
+        console.error("Error: Could not find element #replace-message. Please check your HTML.");
+    }
+};
+
+document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const oldId = document.getElementById('replace-old-id').value;
+    const btn = e.target.querySelector('button');
+    btn.innerText = "Swapping...";
+
+    try {
+        // 1. Get Old Data (Specifically Validity)
+        const oldDocRef = doc(db, "users", currentUser.uid, "nurses", oldId);
+        const oldSnap = await getDoc(oldDocRef);
+        const oldData = oldSnap.data();
+
+        // 2. Add New Nurse (Inherit Validity)
+        await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+            name: document.getElementById('repName').value,
+            phone: document.getElementById('repPhone').value,
+            role: document.getElementById('repRole').value,
+            rate: document.getElementById('repRate').value,
+            timestamp: Date.now(),
+            validUntil: oldData.validUntil // 👈 CRITICAL: Keeps the same expiry date!
+        });
+
+        // 3. Delete Old Nurse
+        await deleteDoc(oldDocRef);
+        
+        // Note: We don't need to touch 'nurseCount' because +1 and -1 cancels out!
+
+        alert("Staff Replaced Successfully!");
+        document.getElementById('replaceModal').classList.remove('active');
+        e.target.reset();
+    } catch (error) {
+        alert("Error: " + error.message);
+    } finally {
+        btn.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement';
+    }
+});
     </script>
 </body>
 
