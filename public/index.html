@@ -214,6 +214,48 @@
             margin-bottom: 3rem;
         }
 
+        /* TOAST STYLES */
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid #4caf50;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            transform: translateX(0);
+            transition: 0.3s;
+        }
+
+        .toast.error {
+            border-left-color: #d32f2f;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        .toast-msg {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+        }
+
         .card {
             background: var(--bg-panel);
             border-radius: 16px;
@@ -381,31 +423,32 @@
             font-size: 1.2rem;
         }
 
-      /* Add/Update this in your <style> block */
+        /* Add/Update this in your <style> block */
 
-.nurse-grid {
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-    gap: 1.5rem;
-    padding-bottom: 2rem;
-}
+        .nurse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            padding-bottom: 2rem;
+        }
 
-.nurse-card {
-    background: white;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* Soft shadow */
-    border: 1px solid rgba(0,0,0,0.04);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex; 
-    flex-direction: column;
-    justify-content: space-between;
-}
+        .nurse-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            /* Soft shadow */
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-.nurse-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
+        .nurse-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
 
         .delete-btn {
             position: absolute;
@@ -1148,6 +1191,15 @@
             margin-top: 10px;
             text-decoration: none;
         }
+        /* Plan Selector Styles */
+.plan-option.active {
+    border-color: var(--primary) !important;
+    background: #fff5e6 !important;
+    color: var(--primary);
+}
+.plan-option:hover {
+    background: #f9f9f9;
+}
     </style>
 </head>
 
@@ -1180,25 +1232,31 @@
         <div
             style="flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem;">
             <div style="max-width: 800px;">
-                <span style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
+                <span
+                    style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
                     <i class="fa-solid fa-layer-group"></i> INDIA'S #1 AGENCY SOFTWARE
                 </span>
-                
-                <h1 style="font-family: 'Rozha One', serif; font-size: 3.5rem; color: #003366; margin: 1.5rem 0; line-height: 1.2;">
+
+                <h1
+                    style="font-family: 'Rozha One', serif; font-size: 3.5rem; color: #003366; margin: 1.5rem 0; line-height: 1.2;">
                     The Operating System for <br><span style="color: #ff9933;">Nursing Agencies</span>
                 </h1>
-                
-                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2.5rem; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;">
-                    Silver Care empowers nursing bureaus to automate staff attendance, streamline payroll, and manage client bookings in real-time. 
+
+                <p
+                    style="font-size: 1.1rem; color: #666; margin-bottom: 2.5rem; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Silver Care empowers nursing bureaus to automate staff attendance, streamline payroll, and manage
+                    client bookings in real-time.
                     Stop using paper; start scaling your agency.
                 </p>
-                
+
                 <div style="display: flex; gap: 15px; justify-content: center;">
-                    <button onclick="showLogin()" class="btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 30px;">
+                    <button onclick="showLogin()" class="btn-primary"
+                        style="padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 30px;">
                         Agency Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
                     </button>
-                    
-                    <button onclick="window.location.href='#contact'" style="background:white; border:2px solid #003366; color:#003366; padding:1rem 2rem; border-radius:30px; font-weight:600; cursor:pointer; transition: 0.3s;">
+
+                    <button onclick="window.location.href='#contact'"
+                        style="background:white; border:2px solid #003366; color:#003366; padding:1rem 2rem; border-radius:30px; font-weight:600; cursor:pointer; transition: 0.3s;">
                         Contact Sales
                     </button>
                 </div>
@@ -1206,55 +1264,72 @@
         </div>
         <div id="services" style="padding: 4rem 2rem; text-align: center; background: white;">
             <h2 style="color: #003366; font-family: 'Rozha One', serif; margin-bottom: 3rem;">Platform Features</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
-                
-                <div style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
-                    <div style="width: 50px; height: 50px; background: #fff3e0; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
+
+                <div
+                    style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
+                    <div
+                        style="width: 50px; height: 50px; background: #fff3e0; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
                         <i class="fa-solid fa-users-viewfinder" style="font-size: 1.5rem; color: #ff9933;"></i>
                     </div>
                     <h3 style="color: #003366; margin-bottom: 10px; font-weight: 700;">Staff Verification</h3>
-                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Digitize your staff records with Aadhaar verification and document lockers. Keep your agency compliant and organized.</p>
+                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Digitize your staff records with
+                        Aadhaar verification and document lockers. Keep your agency compliant and organized.</p>
                 </div>
-        
-                <div style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
-                    <div style="width: 50px; height: 50px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+
+                <div
+                    style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
+                    <div
+                        style="width: 50px; height: 50px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
                         <i class="fa-solid fa-location-dot" style="font-size: 1.5rem; color: #138808;"></i>
                     </div>
                     <h3 style="color: #003366; margin-bottom: 10px; font-weight: 700;">GPS Attendance</h3>
-                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Real-time geolocation tracking for nurse check-ins. Eliminate fake attendance and billing disputes instantly.</p>
+                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Real-time geolocation tracking for
+                        nurse check-ins. Eliminate fake attendance and billing disputes instantly.</p>
                 </div>
-        
-                <div style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
-                    <div style="width: 50px; height: 50px; background: #e3f2fd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+
+                <div
+                    style="padding: 2.5rem; border: 1px solid #eee; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); text-align: left;">
+                    <div
+                        style="width: 50px; height: 50px; background: #e3f2fd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
                         <i class="fa-solid fa-file-invoice-dollar" style="font-size: 1.5rem; color: #1565c0;"></i>
                     </div>
                     <h3 style="color: #003366; margin-bottom: 10px; font-weight: 700;">Automated Payroll</h3>
-                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Calculate daily wages, overtime, and agency commissions with one click. Export reports for hassle-free payments.</p>
+                    <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">Calculate daily wages, overtime, and
+                        agency commissions with one click. Export reports for hassle-free payments.</p>
                 </div>
-        
+
             </div>
         </div>
 
         <div id="about" style="padding: 5rem 2rem; background: #fffdf5; text-align: center;">
             <div style="max-width: 900px; margin: 0 auto;">
-                <span style="color: #ff9933; font-weight: 600; letter-spacing: 1px; font-size: 0.9rem;">OUR MISSION</span>
-                <h2 style="color: #003366; font-family: 'Rozha One', serif; margin: 10px 0 2rem 0; font-size: 2.5rem;">Digitizing India's Healthcare Workforce</h2>
-                
+                <span style="color: #ff9933; font-weight: 600; letter-spacing: 1px; font-size: 0.9rem;">OUR
+                    MISSION</span>
+                <h2 style="color: #003366; font-family: 'Rozha One', serif; margin: 10px 0 2rem 0; font-size: 2.5rem;">
+                    Digitizing India's Healthcare Workforce</h2>
+
                 <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 2rem;">
-                    Silver Care is a technology partner for nursing bureaus and hospitals. We recognized that agency owners spend too much time on paperwork 
-                    and not enough on patient care. Our platform provides the digital infrastructure to manage staff efficiently, transparently, and professionally.
+                    Silver Care is a technology partner for nursing bureaus and hospitals. We recognized that agency
+                    owners spend too much time on paperwork
+                    and not enough on patient care. Our platform provides the digital infrastructure to manage staff
+                    efficiently, transparently, and professionally.
                 </p>
-        
+
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 3rem;">
-                    <div style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div
+                        style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                         <h3 style="color: #138808; font-size: 2rem; font-weight: 700; margin-bottom: 5px;">50+</h3>
                         <p style="color: #666; font-size: 0.9rem;">Agencies Onboarded</p>
                     </div>
-                    <div style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div
+                        style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                         <h3 style="color: #ff9933; font-size: 2rem; font-weight: 700; margin-bottom: 5px;">10k+</h3>
                         <p style="color: #666; font-size: 0.9rem;">Shifts Tracked</p>
                     </div>
-                    <div style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div
+                        style="flex: 1; min-width: 200px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                         <h3 style="color: #003366; font-size: 2rem; font-weight: 700; margin-bottom: 5px;">100%</h3>
                         <p style="color: #666; font-size: 0.9rem;">Cloud Secure</p>
                     </div>
@@ -1264,30 +1339,42 @@
 
         <div id="contact" style="padding: 5rem 2rem; background: white; text-align: center;">
             <div style="max-width: 1000px; margin: 0 auto;">
-                <h2 style="color: #003366; font-family: 'Rozha One', serif; margin-bottom: 3rem; font-size: 2.5rem;">Get In Touch</h2>
-                
+                <h2 style="color: #003366; font-family: 'Rozha One', serif; margin-bottom: 3rem; font-size: 2.5rem;">Get
+                    In Touch</h2>
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    
-                    <div style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                        <div style="width: 60px; height: 60px; background: #e3f2fd; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+
+                    <div
+                        style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                        <div
+                            style="width: 60px; height: 60px; background: #e3f2fd; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                             <i class="fa-solid fa-phone" style="font-size: 1.5rem; color: #1565c0;"></i>
                         </div>
                         <h3 style="color: #333; margin-bottom: 10px; font-weight: 600;">Call Us Anytime</h3>
-                        <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">Available 24/7 for emergencies.</p>
-                        <a href="tel:+918299341343" style="color: #1565c0; font-weight: 700; text-decoration: none; font-size: 1.1rem;">+91 82993 41343</a>
+                        <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">Available 24/7 for emergencies.
+                        </p>
+                        <a href="tel:+918299341343"
+                            style="color: #1565c0; font-weight: 700; text-decoration: none; font-size: 1.1rem;">+91
+                            82993 41343</a>
                     </div>
-        
-                    <div style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                        <div style="width: 60px; height: 60px; background: #fff3e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+
+                    <div
+                        style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                        <div
+                            style="width: 60px; height: 60px; background: #fff3e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                             <i class="fa-solid fa-envelope" style="font-size: 1.5rem; color: #e65100;"></i>
                         </div>
                         <h3 style="color: #333; margin-bottom: 10px; font-weight: 600;">Email Us</h3>
-                        <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">For corporate or bulk bookings.</p>
-                        <a href="mailto:silvercare242@gmail.com" style="color: #e65100; font-weight: 700; text-decoration: none; font-size: 1.1rem;">silvercare242@gmail.com</a>
+                        <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">For corporate or bulk bookings.
+                        </p>
+                        <a href="mailto:silvercare242@gmail.com"
+                            style="color: #e65100; font-weight: 700; text-decoration: none; font-size: 1.1rem;">silvercare242@gmail.com</a>
                     </div>
-        
-                    <div style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                        <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+
+                    <div
+                        style="padding: 2rem; border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                        <div
+                            style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                             <i class="fa-solid fa-location-dot" style="font-size: 1.5rem; color: #2e7d32;"></i>
                         </div>
                         <h3 style="color: #333; margin-bottom: 10px; font-weight: 600;">Visit Our Office</h3>
@@ -1295,12 +1382,12 @@
                             Varanasi, Uttar Pradesh<br>India
                         </p>
                     </div>
-        
+
                 </div>
             </div>
         </div>
 
-       
+
 
 
         <footer style="background: white; padding: 3rem; border-top: 1px solid #eee; margin-top: auto;">
@@ -1566,63 +1653,70 @@
             </div>
 
             <div id="view-staff" class="view-section">
-                <header style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <header
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
                     <div class="page-title">
                         <h1>Staff Directory</h1>
                         <p>Manage all registered employees</p>
                     </div>
-                    
+
                     <div style="display: flex; gap: 12px;">
-                        <button class="btn-primary" onclick="toggleManageMode()" 
+                        <button class="btn-primary" onclick="toggleManageMode()"
                             style="background: white; color: var(--navy); border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                             <i class="fa-solid fa-list-check"></i> Manage
                         </button>
-                        
-                        <button class="btn-primary" onclick="window.exportToCSV()" 
+
+                        <button class="btn-primary" onclick="window.exportToCSV()"
                             style="box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4);">
                             <i class="fa-solid fa-download"></i> Export
                         </button>
                     </div>
                 </header>
-            
-                <div id="bulk-action-bar" style="display: none; background: #ffebee; padding: 12px 20px; border-radius: 12px; align-items: center; justify-content: space-between; border: 1px solid #ffcdd2; margin-bottom: 2rem; animation: fadeIn 0.3s ease;">
+
+                <div id="bulk-action-bar"
+                    style="display: none; background: #ffebee; padding: 12px 20px; border-radius: 12px; align-items: center; justify-content: space-between; border: 1px solid #ffcdd2; margin-bottom: 2rem; animation: fadeIn 0.3s ease;">
                     <div style="color: #c62828; font-weight: 700; display: flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-circle-check"></i> 
+                        <i class="fa-solid fa-circle-check"></i>
                         <span id="selected-count">0</span> Staff Selected
                     </div>
-                    <button onclick="bulkDelete()" style="background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);">
+                    <button onclick="bulkDelete()"
+                        style="background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);">
                         Delete Selected <i class="fa-solid fa-trash" style="margin-left: 5px;"></i>
                     </button>
                 </div>
-            
-                <div class="nurse-grid" id="staff-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;"></div>
+
+                <div class="nurse-grid" id="staff-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                </div>
             </div>
-            
+
             <div class="modal" id="replaceModal">
                 <div class="modal-content">
-                    <button class="close-modal" onclick="document.getElementById('replaceModal').classList.remove('active')">
+                    <button class="close-modal"
+                        onclick="document.getElementById('replaceModal').classList.remove('active')">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    
+
                     <h2 style="margin-bottom: 0.5rem; font-family: 'Rozha One'; color: var(--navy);">Replace Staff</h2>
-                    
-                    <p id="replace-message" style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; background: #f9f9f9; padding: 10px; border-radius: 8px; border-left: 4px solid var(--primary);">
+
+                    <p id="replace-message"
+                        style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; background: #f9f9f9; padding: 10px; border-radius: 8px; border-left: 4px solid var(--primary);">
                         Loading details...
                     </p>
-                    
+
                     <form id="replaceNurseForm">
                         <input type="hidden" id="replace-old-id">
-                        
+
                         <div class="form-group">
                             <label>New Staff Name</label>
                             <input type="text" class="form-input" id="repName" required placeholder="Ex. Priya Singh">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>WhatsApp Number</label>
                             <input type="tel" class="form-input" id="repPhone" required placeholder="919876543210">
                         </div>
-                        
+
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                             <div class="form-group">
                                 <label>Role</label>
@@ -1633,48 +1727,49 @@
                                 <input type="number" class="form-input" id="repRate" required placeholder="800">
                             </div>
                         </div>
-                        
+
                         <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
                             Confirm Swap <i class="fa-solid fa-arrow-right-arrow-left"></i>
                         </button>
                     </form>
                 </div>
             </div>
-            
+
             <div class="modal" id="replaceModal">
                 <div class="modal-content">
-                    <button class="close-modal" onclick="document.getElementById('replaceModal').classList.remove('active')">
+                    <button class="close-modal"
+                        onclick="document.getElementById('replaceModal').classList.remove('active')">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    
+
                     <h2 style="margin-bottom: 0.5rem; font-family: 'Rozha One'; color: var(--navy);">Replace Staff</h2>
-                    
+
                     <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6;">
-                        </p>
-                    
+                    </p>
+
                     <form id="replaceNurseForm">
                         <input type="hidden" id="replace-old-id">
-                        
+
                         <div class="form-group">
                             <label>New Staff Name</label>
                             <input type="text" class="form-input" id="repName" required placeholder="New Name">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>New WhatsApp Number</label>
                             <input type="tel" class="form-input" id="repPhone" required placeholder="919876543210">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Role</label>
                             <input type="text" class="form-input" id="repRole" required placeholder="Ex. Nurse">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Daily Rate (₹)</label>
                             <input type="number" class="form-input" id="repRate" required placeholder="Ex. 800">
                         </div>
-                        
+
                         <button type="submit" class="btn-primary" style="width: 100%; background: var(--navy);">
                             <i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement
                         </button>
@@ -1766,32 +1861,65 @@
         </main>
     </div>
 
+   
     <div class="modal" id="addModal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; scrollbar-width: thin;">
             <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h2 style="margin-bottom: 1.5rem; font-family: 'Rozha One'; color: var(--navy);">New Staff Entry</h2>
+            <h2 style="margin-bottom: 1rem; font-family: 'Rozha One'; color: var(--navy);">New Staff Entry</h2>
+            
             <form id="addNurseForm">
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #eee;">
+                    <label style="font-weight: 600; color: var(--navy); margin-bottom: 10px; display: block; font-size: 0.9rem;">Select Validity Plan:</label>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <label style="flex: 1; cursor: pointer; position: relative;">
+                            <input type="radio" name="staffPlan" value="monthly" checked onchange="updateCreditDisplay()" style="position: absolute; opacity: 0; width:0; height:0;">
+                            <div id="opt-monthly" class="plan-option active" style="padding: 12px; border: 2px solid var(--primary); border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="font-weight: bold; color: var(--navy); font-size: 0.95rem;">Monthly</div>
+                                <div style="font-size: 0.75rem; color: #666;">30 Days</div>
+                            </div>
+                        </label>
+    
+                        <label style="flex: 1; cursor: pointer; position: relative;">
+                            <input type="radio" name="staffPlan" value="daily" onchange="updateCreditDisplay()" style="position: absolute; opacity: 0; width:0; height:0;">
+                            <div id="opt-daily" class="plan-option" style="padding: 12px; border: 2px solid transparent; border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="font-weight: bold; color: var(--navy); font-size: 0.95rem;">Daily Pass</div>
+                                <div style="font-size: 0.75rem; color: #666;">24 Hours</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px; background: #fff; padding: 8px 12px; border-radius: 6px; border: 1px dashed #ddd;">
+                        <span id="credit-status-text" style="font-size: 0.8rem; font-weight: 600; color: #666;">Checking credits...</span>
+                        
+                        <button type="button" onclick="openPaymentFromForm()" style="background: var(--navy); color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            <i class="fa-solid fa-cart-plus"></i> Buy More
+                        </button>
+                    </div>
+                </div>
+    
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" class="form-input" id="nurseName" required placeholder="Ex. Anjali Gupta">
                 </div>
-
+    
                 <div class="form-group">
                     <label>WhatsApp Number (Active)</label>
                     <input type="tel" class="form-input" id="nursePhone" required
                         placeholder="919876543210 (No spaces or +)">
-                    <p style="font-size: 0.7rem; color: #888;">Must match their WhatsApp number exactly.</p>
+                    <p style="font-size: 0.7rem; color: #888; margin-top: 4px;">Must match their WhatsApp number exactly.</p>
                 </div>
-
+    
                 <div class="form-group">
                     <label>Role</label>
                     <input type="text" class="form-input" id="nurseSpec" required placeholder="Ex. Senior Sister">
                 </div>
+                
                 <div class="form-group">
                     <label>Daily Rate (₹)</label>
                     <input type="number" class="form-input" id="nurseRate" required placeholder="Ex. 800">
                 </div>
-
+    
                 <div class="form-group">
                     <label>Document Locker (Aadhaar/ID)</label>
                     <input type="file" id="nurseDoc" style="display: none;" accept="image/*,.pdf"
@@ -1801,11 +1929,11 @@
                         <span id="doc-text">Upload ID Card</span>
                     </div>
                 </div>
+                
                 <button type="submit" class="btn-primary" style="width: 100%;">Save Entry</button>
             </form>
         </div>
     </div>
-
     <div id="modal-onboarding" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card" style="text-align: center;">
             <h2 style="color: var(--navy); margin-bottom: 1rem;">Welcome to Silver Care!</h2>
@@ -1824,51 +1952,61 @@
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card"
             style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
-
+    
             <div id="payment-form-section">
                 <div
                     style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
                     <i class="fa-solid fa-bolt"></i> INSTANT ACTIVATION
                 </div>
-
-                <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Add More Staff</h2>
-                <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">
-                    1 Slot = 1 Nurse Profile (Valid for 30 Days)
+    
+                <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Select Plan</h2>
+    
+                <div style="background: #f0f0f0; padding: 5px; border-radius: 12px; display: flex; gap: 5px; margin-bottom: 1.5rem; border: 1px solid #ddd;">
+                    <button id="plan-monthly" onclick="switchPlan('monthly')" 
+                        style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: white; color: var(--navy); font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s;">
+                        Monthly (30 Days)
+                    </button>
+                    <button id="plan-daily" onclick="switchPlan('daily')" 
+                        style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: #666; font-weight: 600; cursor: pointer; transition: 0.2s;">
+                        Daily (24 Hours)
+                    </button>
+                </div>
+    
+                <p id="plan-desc" style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; background: #fff; padding: 10px; border-radius: 8px; border: 1px dashed #ccc;">
+                    Best for regular staff. Valid for 30 days.
                 </p>
-
-            
-
+    
                 <div style="margin-bottom: 1.5rem; text-align: left;">
-                    <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Number of Nurses:</label>
+                    <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Quantity:</label>
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
                         <input type="number" id="slot-quantity" class="form-input" value="1" min="1" max="100"
                             oninput="window.calculateTotal()"
                             style="font-size: 1.2rem; font-weight: bold; text-align: center;">
                     </div>
                     <div style="font-size: 0.8rem; color: #666; margin-top: 5px; font-weight: 500;">
-                        Rate: <span style="color: #138808; font-weight: bold;">₹199 per nurse</span> / month
+                        Rate: <span id="plan-rate" style="color: #138808; font-weight: bold;">₹199 per slot</span>
                     </div>
                 </div>
-
+    
                 <div
-                    style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px dashed #ccc; margin-bottom: 1.5rem; text-align: left;">
+                    style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 1.5rem; text-align: left;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-weight: bold; color: var(--navy);">Total to Pay:</span>
                         <span id="bill-total" style="font-size: 1.4rem; color: #138808; font-weight: bold;">₹199</span>
                     </div>
                 </div>
-
+    
                 <button id="rzp-button" onclick="window.startRazorpayPayment()" class="btn-primary"
                     style="width: 100%; margin-bottom: 10px;">
-                    Pay & Activate Instantly <i class="fa-solid fa-credit-card"></i>
+                    Pay & Activate <i class="fa-solid fa-credit-card"></i>
                 </button>
-
+    
                 <button id="btn-pay-later" onclick="window.activatePayLater()"
                     style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">
                     Cancel (Go Back)
                 </button>
             </div>
-
+    
         </div>
     </div>
 
@@ -1953,6 +2091,34 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="modal" id="confirmModal" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 400px; text-align: center; border-top: 5px solid #d32f2f;">
+            <div
+                style="width: 60px; height: 60px; background: #ffebee; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.8rem; color: #d32f2f;"></i>
+            </div>
+
+            <h2 id="confirm-title" style="color: var(--navy); margin-bottom: 0.5rem;">Are you sure?</h2>
+            <p id="confirm-msg" style="color: #666; font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6;">
+                Warning text goes here.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <button onclick="closeConfirmModal()"
+                    style="background: white; border: 1px solid #ccc; color: #555; padding: 12px; border-radius: 30px; font-weight: 600; cursor: pointer;">
+                    Cancel
+                </button>
+                <button id="confirm-btn-yes"
+                    style="background: #d32f2f; border: none; color: white; padding: 12px; border-radius: 30px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);">
+                    Yes, Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 10001; display: flex; flex-direction: column; gap: 10px;">
     </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script type="module">
@@ -2273,47 +2439,95 @@
             });
         }
 
-        // ==========================================
-        // 💰 DYNAMIC PRICING ENGINE (Flexi-Plan)
-        // ==========================================
+       // ==========================================
+// 💰 PRICING & PLAN LOGIC (Copy This Block)
+// ==========================================
 
-        const BASE_RATE = 199;
-        const UPI_ID = "8299341343@ptsbi";
-        const UPI_NAME = "SilverSeva";
-        const FREE_LIMIT = 0;
+// 1. CONFIGURATION
+const MONTHLY_RATE = 199;
+const DAILY_RATE = 10;
+let currentPlan = 'monthly'; // Default setting
 
-        // State to hold current calculation
-        let currentOrder = {
-            slots: 1,
-            totalPrice: 199
-        };
+// Initialize the order object so it's never undefined
+let currentOrder = { 
+    slots: 1, 
+    totalPrice: 199, 
+    type: 'monthly' 
+};
 
-        // 1. CALCULATE PRICE LIVE (Updates Text & QR)
-        window.calculateTotal = () => {
-            const input = document.getElementById('slot-quantity');
-            if (!input) return; // Safety check if modal HTML isn't loaded
+// 2. THE MISSING FUNCTION: Switch Plan Logic
+window.switchPlan = (plan) => {
+    currentPlan = plan;
+    
+    // Get Elements
+    const btnMonthly = document.getElementById('plan-monthly');
+    const btnDaily = document.getElementById('plan-daily');
+    const desc = document.getElementById('plan-desc');
+    const rateTxt = document.getElementById('plan-rate');
 
-            let qty = parseInt(input.value);
+    // Update UI Styles
+    if (plan === 'monthly') {
+        // Active: Monthly
+        btnMonthly.style.background = 'white';
+        btnMonthly.style.color = 'var(--navy)';
+        btnMonthly.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+        
+        // Inactive: Daily
+        btnDaily.style.background = 'transparent';
+        btnDaily.style.color = '#666';
+        btnDaily.style.boxShadow = 'none';
 
-            // Safety: Minimum 1
-            if (!qty || qty < 1) { qty = 1; }
+        // Text Updates
+        if(desc) desc.innerText = "Best for regular staff. Valid for 30 days.";
+        if(rateTxt) rateTxt.innerHTML = `<span style="color:#138808; font-weight:bold;">₹${MONTHLY_RATE} per slot</span>`;
+        
+    } else {
+        // Active: Daily
+        btnDaily.style.background = 'white';
+        btnDaily.style.color = '#d32f2f'; // Red highlight
+        btnDaily.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
 
-            // A. Calculate Simple Math (No Discounts)
-            const finalPrice = qty * BASE_RATE;
+        // Inactive: Monthly
+        btnMonthly.style.background = 'transparent';
+        btnMonthly.style.color = '#666';
+        btnMonthly.style.boxShadow = 'none';
 
-            // B. Update State
-            currentOrder = { slots: qty, totalPrice: finalPrice };
+        // Text Updates
+        if(desc) desc.innerText = "For temporary/unscattered needs. Valid for 24 hours.";
+        if(rateTxt) rateTxt.innerHTML = `<span style="color:#d32f2f; font-weight:bold;">₹${DAILY_RATE} per pass</span>`;
+    }
 
-            // C. Update UI Text
-            // We only update the Total. Subtotal/Discount elements are ignored/removed.
-            const totEl = document.getElementById('bill-total');
-            if (totEl) totEl.innerText = `₹${finalPrice}`;
+    // Recalculate Price Immediately
+    window.calculateTotal();
+};
 
-            // D. Generate QR Code
-            const newUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${finalPrice}`;
-            const qrImg = document.getElementById('payment-qr-img');
-            if (qrImg) qrImg.src = newUrl;
-        };
+// 3. UPDATED CALCULATOR
+window.calculateTotal = () => {
+    const input = document.getElementById('slot-quantity');
+    if (!input) return;
+
+    let qty = parseInt(input.value) || 1;
+    if (qty < 1) qty = 1;
+
+    // Use Rate based on the selected plan
+    const rate = currentPlan === 'monthly' ? MONTHLY_RATE : DAILY_RATE;
+    const finalPrice = qty * rate;
+
+    // Update Global Order State (Critical for Payment)
+    currentOrder = { 
+        slots: qty, 
+        totalPrice: finalPrice, 
+        type: currentPlan // Stores 'monthly' or 'daily'
+    };
+
+    // Update Totals on Screen
+    const billTotal = document.getElementById('bill-total');
+    if(billTotal) billTotal.innerText = `₹${finalPrice}`;
+    
+    // Update Button Text
+    const btn = document.getElementById('rzp-button');
+    if(btn) btn.innerText = `Pay ₹${finalPrice} & Activate`;
+};
 
         // Helper Styles
         function highlightBadge(id) {
@@ -2334,185 +2548,258 @@
             calculateTotal(); // Run calculation for 1
         }
 
-        // --- FUNCTION: Add Nurse Trigger (Smart Limit Check) ---
-        window.openModal = (isOnboarding = false) => {
-            // 1. Get Limits
-            const extraSlots = currentUserData?.extraSlots || 0;
-            const currentCount = allNurses.length;
+        // --- 1. UI HELPER: Updates the Green/Red Credit Text in Modal ---
+window.updateCreditDisplay = () => {
+    // A. Find out which plan is currently selected (Monthly or Daily)
+    const radios = document.getElementsByName('staffPlan');
+    let plan = 'monthly';
+    for (const r of radios) { if (r.checked) plan = r.value; }
+    
+    // B. Update the Visual Selection (Orange Border)
+    const optMonthly = document.getElementById('opt-monthly');
+    const optDaily = document.getElementById('opt-daily');
+    
+    if (plan === 'monthly') {
+        optMonthly.className = 'plan-option active';
+        optDaily.className = 'plan-option';
+    } else {
+        optMonthly.className = 'plan-option';
+        optDaily.className = 'plan-option active';
+    }
 
-            // Use FREE_LIMIT if defined, otherwise 0
-            const baseLimit = (typeof FREE_LIMIT !== 'undefined') ? FREE_LIMIT : 0;
-            const totalLimit = baseLimit + extraSlots;
+    // C. Calculate Available Credits
+    const statusTxt = document.getElementById('credit-status-text');
+    
+    // Monthly Math: (Total Paid Slots) - (Active Monthly Nurses)
+    const extraSlots = currentUserData?.extraSlots || 0;
+    // We filter so we don't count "Daily" nurses against your "Monthly" limit
+    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length; 
+    const monthlyLeft = Math.max(0, extraSlots - usedSlots);
+    
+    // Daily Math: Just read the pass count
+    const dailyPasses = currentUserData?.dailyPasses || 0;
 
-            console.log(`Checking Limit: Used ${currentCount} / Limit ${totalLimit}`);
+    // D. Update the Text based on choice
+    if (plan === 'monthly') {
+        if (monthlyLeft > 0) {
+            statusTxt.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#138808;"></i> Available Slots: <b>${monthlyLeft}</b>`;
+            statusTxt.style.color = '#138808';
+            statusTxt.style.background = '#e8f5e9';
+            statusTxt.style.borderColor = '#c8e6c9';
+        } else {
+            statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> Limit Reached. Purchase more slots.`;
+            statusTxt.style.color = '#d32f2f';
+            statusTxt.style.background = '#ffebee';
+            statusTxt.style.borderColor = '#ffcdd2';
+        }
+    } else {
+        if (dailyPasses > 0) {
+            statusTxt.innerHTML = `<i class="fa-solid fa-ticket" style="color:#138808;"></i> Daily Passes: <b>${dailyPasses}</b>`;
+            statusTxt.style.color = '#138808';
+            statusTxt.style.background = '#e8f5e9';
+            statusTxt.style.borderColor = '#c8e6c9';
+        } else {
+            statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> No Passes. Purchase Required (₹10).`;
+            statusTxt.style.color = '#d32f2f';
+            statusTxt.style.background = '#ffebee';
+            statusTxt.style.borderColor = '#ffcdd2';
+        }
+    }
+};
+// --- SMART TRIGGER: Handles New vs. Existing Users ---
+window.openModal = (isOnboarding = false) => {
+    // 1. Check if User is Active (Has paid at least once)
+    const isPaidUser = currentUserData?.isPaid === true;
+    
+    // Fallback: If 'isPaid' is missing but they have history (legacy users)
+    const hasHistory = (currentUserData?.extraSlots > 0) || 
+                       (currentUserData?.dailyPasses > 0) || 
+                       (allNurses.length > 0);
 
-            // 2. CHECK LIMIT
-            // If we have space AND it is NOT an onboarding force, open the Add Form
-            if (currentCount < totalLimit && !isOnboarding) {
-                // ✅ User has space -> Open Add Form
-                document.getElementById('addModal').classList.add('active');
-            }
-            else {
-                // ⛔ Limit Reached OR Onboarding Force
+    const isActiveAccount = isPaidUser || hasHistory;
 
-                // A. Only Show Alert if NOT Onboarding (Existing Users)
-                if (!isOnboarding) {
-                    alert(`⚠️ Slot Limit Reached!\n\nYou have used ${currentCount}/${totalLimit} slots. Please purchase more slots to add new staff.`);
-                }
+    // 2. LOGIC: New User vs Existing
+    if (!isActiveAccount || isOnboarding) {
+        // 🛑 CASE A: NEW USER (Not Active)
+        // Don't show the form. Go straight to Payment/Activation.
+        
+        document.getElementById('addModal').classList.remove('active'); // Ensure form is closed
+        document.getElementById('modal-payment-lock').style.display = 'flex';
+        
+        // Update Title for Context
+        const payTitle = document.querySelector('#payment-form-section h2');
+        if(payTitle) payTitle.innerText = "Activate Account";
 
-                // B. Reset Payment Form to 1 slot default
-                const input = document.getElementById('slot-quantity');
-                if (input) {
-                    input.value = 1;
-                    if (window.calculateTotal) window.calculateTotal();
-                }
+        // Default to Monthly for first purchase
+        if(window.switchPlan) window.switchPlan('monthly');
+        
+        return; // Stop here
+    }
 
-                // C. Customize Text for New vs Existing Users
-                const title = document.querySelector('#payment-form-section h2');
-                const desc = document.querySelector('#payment-form-section p');
+    // ✅ CASE B: EXISTING USER (Active)
+    // Show the Add Form (They can see 'Buy More' inside if they have 0 credits)
+    document.getElementById('addModal').classList.add('active');
+    
+    // 3. Auto-Select the Plan they have credits for
+    const extraSlots = currentUserData?.extraSlots || 0;
+    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
+    const monthlyLeft = Math.max(0, extraSlots - usedSlots);
+    const dailyPasses = currentUserData?.dailyPasses || 0;
+    
+    const monthlyRadio = document.querySelector('input[value="monthly"]');
+    const dailyRadio = document.querySelector('input[value="daily"]');
+    
+    if (monthlyLeft > 0) {
+        if(monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
+    } else if (dailyPasses > 0) {
+        if(dailyRadio) { dailyRadio.checked = true; dailyRadio.click(); }
+    } else {
+        // If 0 credits, default to Monthly
+        if(monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
+    }
 
-                if (title) {
-                    // New User = "Activate Account", Existing = "Add More Staff"
-                    title.innerText = isOnboarding ? "Activate Your Account" : "Add More Staff";
-                }
-                if (desc) {
-                    desc.innerText = isOnboarding
-                        ? "Purchase your first slot to start managing staff."
-                        : "1 Slot = 1 Nurse Profile (Valid for 30 Days)";
-                }
-
-                // D. Show Payment Modal
-                document.getElementById('modal-payment-lock').style.display = 'flex';
-
-                // E. ✅ ENABLE "GO BACK" for this scenario
-                // Since we are adding NEW slots (not renewing expired ones), users can cancel.
-                const payLaterBtn = document.getElementById('btn-pay-later');
-                if (payLaterBtn) {
-                    payLaterBtn.style.display = 'block';
-                    payLaterBtn.innerText = isOnboarding ? "Skip for Now" : "Cancel (Go Back)";
-                }
-            }
-        };
-
+    // Refresh the Green/Red text
+    if (typeof window.updateCreditDisplay === 'function') {
+        window.updateCreditDisplay();
+    }
+};
         window.closeModal = () => document.getElementById('addModal').classList.remove('active');
 
-        // --- FUNCTION: Razorpay Payment Trigger (Step 4: Recharge & Slot Logic) ---
-        window.startRazorpayPayment = () => {
-            // 1. Safety Check
-            if (!currentOrder || !currentOrder.totalPrice) {
-                alert("Error: Invalid order details.");
-                return;
+        // --- FUNCTION: Razorpay Payment Trigger (Updated for Hybrid Model) ---
+window.startRazorpayPayment = () => {
+    // 1. Safety Check
+    if (!currentOrder || !currentOrder.totalPrice) {
+        alert("Error: Invalid order details. Please refresh and try again.");
+        return;
+    }
+
+    // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
+    // ✅ FIX: Use the actual calculated price
+    const amountInPaise = 100;
+    
+    const options = {
+        "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
+        "amount": amountInPaise,
+        "currency": "INR",
+        "name": "Silver Care",
+        // ✅ FIX: Dynamic Description
+        "description": `Payment for ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'}`,
+        "image": "https://silvercareprototype.web.app/icon.png",
+
+        "handler": async function (response) {
+            // --- SUCCESS HANDLER ---
+            console.log("Payment Success:", response.razorpay_payment_id);
+
+            const btn = document.getElementById('rzp-button');
+            if (btn) {
+                btn.innerText = "Activating Credits...";
+                btn.disabled = true;
             }
 
-            // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
-            // We use currentOrder.totalPrice to ensure the correct amount is charged
-            const amountInPaise = Math.round(currentOrder.totalPrice * 100);
-            const options = {
-                "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
-                "amount": amountInPaise,
-                "currency": "INR",
-                "name": "Silver Care",
-                "description": `Payment for ${currentOrder.slots} Nurse Slot(s)`,
-                "image": "https://silvercareprototype.web.app/icon.png",
+            try {
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                const userData = userSnap.data();
+                const referrerCode = userData.referralBy;
 
-                "handler": async function (response) {
-                    // --- SUCCESS HANDLER ---
-                    console.log("Payment Success:", response.razorpay_payment_id);
+                // --- A. CREDIT UPDATE (The Core Fix) ---
+                if (currentOrder.type === 'daily') {
+                    // 🟠 BUYING DAILY PASSES
+                    await updateDoc(userRef, {
+                        paymentRequest: {
+                            status: 'approved',
+                            amount: currentOrder.totalPrice,
+                            method: 'razorpay',
+                            transactionId: response.razorpay_payment_id,
+                            paidAt: serverTimestamp(),
+                            type: 'daily',
+                            quantity: currentOrder.slots
+                        },
+                        dailyPasses: increment(currentOrder.slots), // 👈 Adds Daily Passes
+                        lastPaymentId: response.razorpay_payment_id
+                    });
+                } else {
+                    // 🔵 BUYING MONTHLY SLOTS (Standard)
+                    await updateDoc(userRef, {
+                        paymentRequest: {
+                            status: 'approved',
+                            amount: currentOrder.totalPrice,
+                            method: 'razorpay',
+                            transactionId: response.razorpay_payment_id,
+                            paidAt: serverTimestamp(),
+                            type: 'monthly',
+                            slotsPurchased: currentOrder.slots
+                        },
+                        isPaid: true,
+                        extraSlots: increment(currentOrder.slots), // 👈 Adds Monthly Slots
+                        lastPaymentId: response.razorpay_payment_id
+                    });
 
-                    const btn = document.getElementById('rzp-button');
-                    if (btn) {
-                        btn.innerText = "Processing Activation...";
-                        btn.disabled = true;
-                    }
-
-                    try {
-                        const userRef = doc(db, "users", currentUser.uid);
-                        const userSnap = await getDoc(userRef);
-                        const userData = userSnap.data();
-                        const referrerCode = userData.referralBy;
-
-                        // --- A. RENEWAL LOGIC: If payment was triggered by expired staff ---
-                        if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
-                            const days30 = 30 * 24 * 60 * 60 * 1000;
-
-                            const renewalPromises = expiredNursesList.map(nurse => {
-                                const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
-                                return updateDoc(nurseRef, {
-                                    validUntil: Date.now() + days30
-                                });
-                            });
-
-                            await Promise.all(renewalPromises);
-                            expiredNursesList = []; // Clear the list after renewal
-                        }
-
-                        // --- B. SLOT & PROFILE UPDATE ---
-                        await updateDoc(userRef, {
-                            paymentRequest: {
-                                status: 'approved',
-                                amount: currentOrder.totalPrice,
-                                method: 'razorpay',
-                                transactionId: response.razorpay_payment_id,
-                                paidAt: serverTimestamp(),
-                                slotsPurchased: currentOrder.slots
-                            },
-                            isPaid: true,
-                            extraSlots: increment(currentOrder.slots),
-                            lastPaymentId: response.razorpay_payment_id
+                    // Legacy Renewal Logic (Only for Monthly)
+                    if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
+                        const days30 = 30 * 24 * 60 * 60 * 1000;
+                        const renewalPromises = expiredNursesList.map(nurse => {
+                            const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
+                            return updateDoc(nurseRef, { validUntil: Date.now() + days30 });
                         });
-
-                        // --- C. INTERN SALES TRACKING ---
-                        if (referrerCode && referrerCode !== "DIRECT") {
-                            const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
-                            const internSnap = await getDocs(q);
-
-                            if (!internSnap.empty) {
-                                internSnap.forEach(async (internDoc) => {
-                                    await updateDoc(doc(db, "users", internDoc.id), {
-                                        sales: increment(1),
-                                        totalRevenue: increment(currentOrder.totalPrice)
-                                    });
-                                });
-                            }
-                        }
-
-                        // --- D. SUCCESS UI ---
-                        alert("✅ Success! Your staff validity/slots have been updated.");
-                        document.getElementById('modal-payment-lock').style.display = 'none';
-
-                        // Re-verify validity to ensure the lock screen clears correctly
-                        if (typeof checkNurseValidity === 'function') {
-                            checkNurseValidity(currentUser.uid);
-                        }
-
-                        if (currentUser) startDataSync(currentUser.uid);
-
-                    } catch (error) {
-                        console.error("Activation Error:", error);
-                        alert("Payment received but update failed. ID: " + response.razorpay_payment_id);
-                    }
-                },
-                "prefill": {
-                    "name": currentUser?.displayName || "",
-                    "email": currentUser?.email || "",
-                    "contact": currentUser?.phoneNumber || ""
-                },
-                "theme": {
-                    "color": "#ff9933"
-                },
-                "modal": {
-                    "ondismiss": function () {
-                        console.log('Payment cancelled');
+                        await Promise.all(renewalPromises);
+                        expiredNursesList = [];
                     }
                 }
-            };
 
-            const rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response) {
-                alert("❌ Payment Failed: " + response.error.description);
-            });
-            rzp1.open();
-        };
+                // --- B. INTERN SALES TRACKING ---
+                if (referrerCode && referrerCode !== "DIRECT") {
+                    const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
+                    const internSnap = await getDocs(q);
+
+                    if (!internSnap.empty) {
+                        internSnap.forEach(async (internDoc) => {
+                            await updateDoc(doc(db, "users", internDoc.id), {
+                                sales: increment(1),
+                                totalRevenue: increment(currentOrder.totalPrice)
+                            });
+                        });
+                    }
+                }
+
+                // --- C. SUCCESS UI ---
+                alert(`✅ Payment Successful! ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'} added.`);
+                document.getElementById('modal-payment-lock').style.display = 'none';
+
+                // Refresh the Add Modal Credits Display immediately
+                if (typeof window.updateCreditDisplay === 'function') {
+                    window.updateCreditDisplay();
+                }
+
+                // Reload data
+                if (currentUser) startDataSync(currentUser.uid);
+
+            } catch (error) {
+                console.error("Activation Error:", error);
+                alert("Payment received but update failed. ID: " + response.razorpay_payment_id);
+            }
+        },
+        "prefill": {
+            "name": currentUser?.displayName || "",
+            "email": currentUser?.email || "",
+            "contact": currentUser?.phoneNumber || ""
+        },
+        "theme": {
+            "color": "#ff9933"
+        },
+        "modal": {
+            "ondismiss": function () {
+                console.log('Payment cancelled');
+            }
+        }
+    };
+
+    const rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert("❌ Payment Failed: " + response.error.description);
+    });
+    rzp1.open();
+};
         // --- UPDATED ONBOARDING (Preserves Lead Logic + Auto-Payment) ---
         window.submitOnboarding = async () => {
             const agencyName = document.getElementById('inp-agency-name').value;
@@ -2610,45 +2897,45 @@
         }
 
 
-       // --- UPDATED ADMIN LOADER (With Visual Slot Tracking & CSV Data Capture) ---
-function loadAdminData() {
-    onSnapshot(collection(db, "users"), (snapshot) => {
-        const allTable = document.getElementById('admin-all-users');
-        const leaderboardDiv = document.getElementById('admin-leaderboard');
+        // --- UPDATED ADMIN LOADER (With Visual Slot Tracking & CSV Data Capture) ---
+        function loadAdminData() {
+            onSnapshot(collection(db, "users"), (snapshot) => {
+                const allTable = document.getElementById('admin-all-users');
+                const leaderboardDiv = document.getElementById('admin-leaderboard');
 
-        // ✅ CRITICAL CHANGE: Save data to global variable for CSV Export
-        allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // ✅ CRITICAL CHANGE: Save data to global variable for CSV Export
+                allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Clear existing data
-        allTable.innerHTML = '';
-        leaderboardDiv.innerHTML = '';
+                // Clear existing data
+                allTable.innerHTML = '';
+                leaderboardDiv.innerHTML = '';
 
-        // Optional: Clear the old 'pending table' if it exists in HTML
-        const pendingTable = document.getElementById('admin-pending-table');
-        if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+                // Optional: Clear the old 'pending table' if it exists in HTML
+                const pendingTable = document.getElementById('admin-pending-table');
+                if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
 
-        let referralCounts = {};
+                let referralCounts = {};
 
-        snapshot.docs.forEach(doc => {
-            const u = doc.data();
+                snapshot.docs.forEach(doc => {
+                    const u = doc.data();
 
-            // --- 1. CALCULATE SLOTS (Used vs Paid) ---
-            const usedSlots = u.nurseCount || 0;
-            const paidSlots = u.extraSlots || 0;
+                    // --- 1. CALCULATE SLOTS (Used vs Paid) ---
+                    const usedSlots = u.nurseCount || 0;
+                    const paidSlots = u.extraSlots || 0;
 
-            // Calculate Percentage for the bar (cap at 100%)
-            let percentage = 0;
-            if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
+                    // Calculate Percentage for the bar (cap at 100%)
+                    let percentage = 0;
+                    if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-            // Determine Bar Color (Green = Space Available, Orange = Full)
-            const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
+                    // Determine Bar Color (Green = Space Available, Orange = Full)
+                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
 
-            // Create the Display String
-            let slotDisplay = '';
-            if (u.plan === 'unlimited') {
-                slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
-            } else {
-                slotDisplay = `
+                    // Create the Display String
+                    let slotDisplay = '';
+                    if (u.plan === 'unlimited') {
+                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
+                    } else {
+                        slotDisplay = `
                 <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
                     ${usedSlots} / ${paidSlots} Slots Used
                 </div>
@@ -2656,24 +2943,24 @@ function loadAdminData() {
                     <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
                 </div>
             `;
-            }
+                    }
 
-            // --- 2. LEADERBOARD AGGREGATION ---
-            if (u.referralBy && u.referralBy !== "DIRECT") {
-                if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                referralCounts[u.referralBy].total += 1;
-                if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-            }
+                    // --- 2. LEADERBOARD AGGREGATION ---
+                    if (u.referralBy && u.referralBy !== "DIRECT") {
+                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                        referralCounts[u.referralBy].total += 1;
+                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                    }
 
-            // --- 3. STATUS BADGE ---
-            let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+                    // --- 3. STATUS BADGE ---
+                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
 
-            if (u.isPaid) {
-                statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
-            }
+                    if (u.isPaid) {
+                        statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
+                    }
 
-            // --- 4. RENDER ROW ---
-            allTable.innerHTML += `
+                    // --- 4. RENDER ROW ---
+                    allTable.innerHTML += `
         <tr style="border-bottom:1px solid #f0f0f0;">
             <td style="padding:15px 10px;">
                 <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
@@ -2689,12 +2976,12 @@ function loadAdminData() {
                 ${statusHtml}
             </td>
         </tr>`;
-        });
+                });
 
-        // --- 5. RENDER LEADERBOARD ---
-        Object.keys(referralCounts).forEach(code => {
-            const data = referralCounts[code];
-            leaderboardDiv.innerHTML += `
+                // --- 5. RENDER LEADERBOARD ---
+                Object.keys(referralCounts).forEach(code => {
+                    const data = referralCounts[code];
+                    leaderboardDiv.innerHTML += `
         <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
             <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
             <div style="display:flex; gap:10px; margin-top:12px;">
@@ -2708,93 +2995,93 @@ function loadAdminData() {
                 </div>
             </div>
         </div>`;
-        });
-    });
-}
-
-
-window.exportToCSV = () => {
-    // 1. Check if it is the Super Admin
-    if (currentUser && currentUser.email === "supercare655@gmail.com") {
-        
-        if (!allAgencies || allAgencies.length === 0) {
-            alert("No agency data found to export.");
-            return;
+                });
+            });
         }
 
-        // 2. Prepare Agency Data
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "Agency Name,Email,Referral Code,Used Slots,Paid Slots,Status,Total Revenue (INR)\n";
 
-        allAgencies.forEach(agency => {
-            const safeName = (agency.agencyName || "Unknown").replace(/,/g, " ");
-            const status = agency.isPaid ? "PAID ACTIVE" : "LOCKED";
-            
-            // ✅ NEW MATH LOGIC:
-            // If they are paid, Revenue = Total Slots * 199. Otherwise 0.
-            const revenue = agency.isPaid ? (agency.extraSlots * 199) : 0;
+        window.exportToCSV = () => {
+            // 1. Check if it is the Super Admin
+            if (currentUser && currentUser.email === "supercare655@gmail.com") {
 
-            const row = [
-                safeName,
-                agency.email,
-                agency.referralBy || "DIRECT",
-                agency.nurseCount || 0,
-                agency.extraSlots || 0,
-                status,
-                revenue // 👈 Shows calculated amount (e.g., 1990)
-            ];
-            csvContent += row.join(",") + "\n";
-        });
+                if (!allAgencies || allAgencies.length === 0) {
+                    alert("No agency data found to export.");
+                    return;
+                }
 
-        // 3. Download File
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `SuperAdmin_Report_${new Date().toISOString().slice(0,10)}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        return; 
-    }
+                // 2. Prepare Agency Data
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "Agency Name,Email,Referral Code,Used Slots,Paid Slots,Status,Total Revenue (INR)\n";
 
-    // --- NORMAL USER EXPORT (Kept same as before) ---
-    if (!allNurses || allNurses.length === 0) {
-        alert("No staff data to export.");
-        return;
-    }
+                allAgencies.forEach(agency => {
+                    const safeName = (agency.agencyName || "Unknown").replace(/,/g, " ");
+                    const status = agency.isPaid ? "PAID ACTIVE" : "LOCKED";
 
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Name,Phone,Role,Daily Rate (INR),Status,Validity Expires\n";
+                    // ✅ NEW MATH LOGIC:
+                    // If they are paid, Revenue = Total Slots * 199. Otherwise 0.
+                    const revenue = agency.isPaid ? (agency.extraSlots * 199) : 0;
 
-    allNurses.forEach(nurse => {
-        const now = Date.now();
-        const days30 = 30 * 24 * 60 * 60 * 1000;
-        const expiry = nurse.validUntil || (now + (7 * days30)); 
-        const isExpired = expiry < now;
-        
-        const status = isExpired ? "Expired" : "Active";
-        const expiryDate = new Date(expiry).toLocaleDateString();
-        const safeName = nurse.name.replace(/,/g, " ");
+                    const row = [
+                        safeName,
+                        agency.email,
+                        agency.referralBy || "DIRECT",
+                        agency.nurseCount || 0,
+                        agency.extraSlots || 0,
+                        status,
+                        revenue // 👈 Shows calculated amount (e.g., 1990)
+                    ];
+                    csvContent += row.join(",") + "\n";
+                });
 
-        const row = [
-            safeName,
-            nurse.phone,
-            nurse.role,
-            nurse.rate,
-            status,
-            expiryDate
-        ];
-        csvContent += row.join(",") + "\n";
-    });
+                // 3. Download File
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `SuperAdmin_Report_${new Date().toISOString().slice(0, 10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                return;
+            }
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `SilverCare_Staff_${new Date().toISOString().slice(0,10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-};
+            // --- NORMAL USER EXPORT (Kept same as before) ---
+            if (!allNurses || allNurses.length === 0) {
+                alert("No staff data to export.");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Name,Phone,Role,Daily Rate (INR),Status,Validity Expires\n";
+
+            allNurses.forEach(nurse => {
+                const now = Date.now();
+                const days30 = 30 * 24 * 60 * 60 * 1000;
+                const expiry = nurse.validUntil || (now + (7 * days30));
+                const isExpired = expiry < now;
+
+                const status = isExpired ? "Expired" : "Active";
+                const expiryDate = new Date(expiry).toLocaleDateString();
+                const safeName = nurse.name.replace(/,/g, " ");
+
+                const row = [
+                    safeName,
+                    nurse.phone,
+                    nurse.role,
+                    nurse.rate,
+                    status,
+                    expiryDate
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `SilverCare_Staff_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        };
         // ==========================================
         // 👤 PROFILE MODAL LOGIC (NEW)
         // ==========================================
@@ -3013,46 +3300,46 @@ window.exportToCSV = () => {
             signOut(auth).then(() => window.location.reload());
         };
 
-       // Global State for Bulk Actions
-let isManageMode = false;
-let selectedNurses = new Set();
+        // Global State for Bulk Actions
+        let isManageMode = false;
+        let selectedNurses = new Set();
 
-// --- UPDATED VISUALS (Step 2: Show Days Left + Manage Mode + Replace) ---
-function renderStaffList() {
-    const grid = document.getElementById('staff-grid');
-    grid.innerHTML = '';
+        // --- UPDATED VISUALS (Step 2: Show Days Left + Manage Mode + Replace) ---
+        function renderStaffList() {
+            const grid = document.getElementById('staff-grid');
+            grid.innerHTML = '';
 
-    const now = Date.now();
-    const msPerDay = 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            const msPerDay = 24 * 60 * 60 * 1000;
 
-    allNurses.forEach(nurse => {
-        // Initials Logic
-        const names = nurse.name.split(' ');
-        const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+            allNurses.forEach(nurse => {
+                // Initials Logic
+                const names = nurse.name.split(' ');
+                const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
 
-        // 🗓️ MATH: Calculate Days Remaining
-        // If 'validUntil' is missing (old data), give 7-day grace period
-        const expiry = nurse.validUntil || (now + (7 * msPerDay));
-        const daysLeft = Math.ceil((expiry - now) / msPerDay);
+                // 🗓️ MATH: Calculate Days Remaining
+                // If 'validUntil' is missing (old data), give 7-day grace period
+                const expiry = nurse.validUntil || (now + (7 * msPerDay));
+                const daysLeft = Math.ceil((expiry - now) / msPerDay);
 
-        // Color Logic for the Validity Text
-        let statusColor = '#138808'; // Default Green (Safe)
-        let statusText = `${daysLeft} Days Left`;
+                // Color Logic for the Validity Text
+                let statusColor = '#138808'; // Default Green (Safe)
+                let statusText = `${daysLeft} Days Left`;
 
-        if (daysLeft <= 0) {
-            statusColor = '#d32f2f'; // Red (Expired)
-            statusText = "EXPIRED";
-        } else if (daysLeft <= 5) {
-            statusColor = '#ff9933'; // Orange (Warning)
-            statusText = `${daysLeft} Days (Renew Soon)`;
-        }
+                if (daysLeft <= 0) {
+                    statusColor = '#d32f2f'; // Red (Expired)
+                    statusText = "EXPIRED";
+                } else if (daysLeft <= 5) {
+                    statusColor = '#ff9933'; // Orange (Warning)
+                    statusText = `${daysLeft} Days (Renew Soon)`;
+                }
 
-        // CHECKBOX VISIBILITY LOGIC
-        const checkDisplay = isManageMode ? 'flex' : 'none';
-        const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
+                // CHECKBOX VISIBILITY LOGIC
+                const checkDisplay = isManageMode ? 'flex' : 'none';
+                const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
 
-        // Render the Card
-        grid.innerHTML += `
+                // Render the Card
+                grid.innerHTML += `
         <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
             
             <div style="display: ${checkDisplay}; position: absolute; top: 10px; left: 10px; z-index: 10;">
@@ -3103,8 +3390,8 @@ function renderStaffList() {
                 <i class="fa-solid fa-address-card"></i> View Profile
             </button>
         </div>`;
-    });
-}
+            });
+        }
 
         function populateLoginSelect() {
             const sel = document.getElementById('nurse-login-select');
@@ -3270,49 +3557,184 @@ function renderStaffList() {
             window.toggleMode();
         };
 
-        // --- UPDATED FORM ACTIONS (Step 1: Add 30-Day Validity Stamp) ---
-        document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('nurseName').value;
-            const phone = document.getElementById('nursePhone').value;
-            const role = document.getElementById('nurseSpec').value;
-            const rate = document.getElementById('nurseRate').value;
+        // --- UPDATED FORM ACTIONS (Hybrid Model: Monthly vs Daily) ---
+document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-            // 🗓️ NEW: Calculate Expiry Date (Today + 30 Days)
-            const days30 = 30 * 24 * 60 * 60 * 1000;
-            const expiryDate = Date.now() + days30;
+    // 1. GET FORM VALUES
+    // We look for the checked radio button to see which plan they chose
+    const planType = document.querySelector('input[name="staffPlan"]:checked').value;
+    const name = document.getElementById('nurseName').value;
+    const phone = document.getElementById('nursePhone').value;
+    const role = document.getElementById('nurseSpec').value;
+    const rate = document.getElementById('nurseRate').value;
 
-            // 1. Add Nurse to Subcollection WITH VALIDITY DATE
-            await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
-                name,
-                phone,
-                role,
-                rate,
-                timestamp: Date.now(),
-                validUntil: expiryDate // 👈 The Key Change: Starts the 30-day timer
-            });
+    // 2. CHECK CREDITS (Security Gate)
+    // We calculate available monthly slots by subtracting used ones from total paid slots
+    const extraSlots = currentUserData?.extraSlots || 0;
+    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
+    const monthlyLeft = extraSlots - usedSlots;
+    const dailyPasses = currentUserData?.dailyPasses || 0;
 
-            // 2. UPDATE COUNTER (Increment +1)
+    // A. Block if no Monthly Slots
+    if (planType === 'monthly' && monthlyLeft <= 0) {
+        alert("⚠️ No Monthly Slots Available!\n\nPlease purchase more slots to add permanent staff.");
+        if (window.openPaymentModal) window.openPaymentModal('monthly'); 
+        return;
+    }
+    
+    // B. Block if no Daily Passes
+    if (planType === 'daily' && dailyPasses <= 0) {
+        alert("⚠️ No Daily Passes Available!\n\nPlease purchase a Daily Pass (₹10) to add temp staff.");
+        if (window.openPaymentModal) window.openPaymentModal('daily');
+        return;
+    }
+
+    // 3. CALCULATE EXPIRY DATE
+    let expiryDate;
+    if (planType === 'monthly') {
+        // 🗓️ Monthly: Today + 30 Days
+        expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000); 
+    } else {
+        // 🗓️ Daily: Today + 24 Hours
+        expiryDate = Date.now() + (24 * 60 * 60 * 1000); 
+    }
+
+    try {
+        // 4. ADD NURSE TO FIREBASE
+        await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+            name,
+            phone,
+            role,
+            rate,
+            timestamp: Date.now(),
+            validUntil: expiryDate, // 👈 Sets the correct time (30d or 24h)
+            type: planType // 👈 Tags them as 'monthly' or 'daily' so we can filter later
+        });
+
+        // 5. CONSUME THE CORRECT CREDIT
+        if (planType === 'monthly') {
+            // For Monthly, we increment the "Used Slot" counter
             await updateDoc(doc(db, "users", currentUser.uid), {
                 nurseCount: increment(1)
             });
+        } else {
+            // For Daily, we directly REMOVE one pass
+            await updateDoc(doc(db, "users", currentUser.uid), {
+                dailyPasses: increment(-1)
+            });
+        }
 
-            window.closeModal();
-            e.target.reset();
-        });
+        // 6. SUCCESS FEEDBACK
+        alert(`✅ Staff Added Successfully!\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
+        window.closeModal();
+        e.target.reset();
 
-        // --- UPDATED REMOVE FUNCTION (With Counter) ---
-        window.removeNurse = async (id) => {
-            if (confirm("Delete staff?")) {
-                // 1. Delete Nurse
-                await deleteDoc(doc(db, "users", currentUser.uid, "nurses", id));
+    } catch (err) {
+        console.error("Error adding staff:", err);
+        alert("Error saving data: " + err.message);
+    }
+});
 
-                // 2. UPDATE COUNTER (Decrement -1)
-                await updateDoc(doc(db, "users", currentUser.uid), {
-                    nurseCount: increment(-1)
-                });
-            }
+
+        // --- 1. TOAST FUNCTION (Replaces alert) ---
+        window.showToast = (message, type = 'success') => {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            // Set Icon and Color
+            const icon = type === 'success' ? '<i class="fa-solid fa-circle-check" style="color:#4caf50;"></i>' : '<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i>';
+            const borderClass = type === 'success' ? '' : 'error';
+
+            toast.className = `toast ${borderClass}`;
+            toast.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-msg">${message}</div>
+    `;
+
+            container.appendChild(toast);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
         };
+
+        // --- 2. CONFIRM MODAL LOGIC ---
+        let confirmCallback = null;
+
+        window.showConfirmDialog = (title, message, callback) => {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-msg').innerHTML = message;
+
+            confirmCallback = callback;
+            document.getElementById('confirmModal').classList.add('active');
+        };
+
+        window.closeConfirmModal = () => {
+            document.getElementById('confirmModal').classList.remove('active');
+            confirmCallback = null;
+        };
+
+        // Bind the YES button
+        document.getElementById('confirm-btn-yes').addEventListener('click', () => {
+            if (confirmCallback) confirmCallback();
+            closeConfirmModal();
+        });
+// --- STRICT DELETE (No Refunds - "Buy Again" Model) ---
+window.removeNurse = (id) => {
+    // 1. Define the Warning Message
+    const title = "Delete Staff?";
+    const msg = `
+        <strong style="color:#d32f2f;">Warning: Action cannot be undone.</strong><br>
+        Deleting this staff member will remove them permanently.<br><br>
+        <span style="font-size:0.85rem; background:#ffebee; padding:4px 8px; border-radius:4px; color:#c62828;">
+           ⚠️ You will <b>NOT</b> get the slot or pass back.
+        </span>
+    `;
+
+    // 2. Trigger Custom Modal
+    window.showConfirmDialog(title, msg, async () => {
+        try {
+            // A. Check the Nurse Type first
+            const docRef = doc(db, "users", currentUser.uid, "nurses", id);
+            const docSnap = await getDoc(docRef);
+            
+            if (!docSnap.exists()) {
+                window.showToast("Error: Staff not found.", 'error');
+                return;
+            }
+            
+            const nurse = docSnap.data();
+            const isMonthly = !nurse.type || nurse.type === 'monthly'; // Default to monthly
+
+            // B. Delete the Document
+            await deleteDoc(docRef);
+
+            // C. Update Counters (BURN LOGIC)
+            if (isMonthly) {
+                // 🔥 Monthly: Burn the slot so they lose it (as per your request)
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    nurseCount: increment(-1), // Remove from active count
+                    extraSlots: increment(-1)  // Remove from total limit (BURN)
+                });
+            } else {
+                // 🎫 Daily: Do NOTHING.
+                // The pass was already subtracted when they added the nurse.
+                // By not adding it back here, they effectively "lose" it and must buy again.
+            }
+
+            // D. Success Message
+            window.showToast("Staff deleted. Validity consumed.");
+
+        } catch (error) {
+            console.error(error);
+            window.showToast("Error deleting: " + error.message, 'error');
+        }
+    });
+};
 
         // --- NAVIGATION ---
         let isNurseMode = false;
@@ -3487,87 +3909,88 @@ function renderStaffList() {
             });
         }
         // --- 1. MANAGE MODE TOGGLE ---
-window.toggleManageMode = () => {
-    isManageMode = !isManageMode;
-    selectedNurses.clear(); // Clear selections when toggling
-    updateBulkUI();
-    renderStaffList();
-};
+        window.toggleManageMode = () => {
+            isManageMode = !isManageMode;
+            selectedNurses.clear(); // Clear selections when toggling
+            updateBulkUI();
+            renderStaffList();
+        };
 
-window.toggleSelection = (id) => {
-    if (selectedNurses.has(id)) selectedNurses.delete(id);
-    else selectedNurses.add(id);
-    updateBulkUI();
-};
+        window.toggleSelection = (id) => {
+            if (selectedNurses.has(id)) selectedNurses.delete(id);
+            else selectedNurses.add(id);
+            updateBulkUI();
+        };
 
-function updateBulkUI() {
-    const bar = document.getElementById('bulk-action-bar');
-    const countSpan = document.getElementById('selected-count');
-    
-    if (isManageMode && selectedNurses.size > 0) {
-        bar.style.display = 'flex';
-        countSpan.innerText = selectedNurses.size;
-    } else {
-        bar.style.display = 'none';
-    }
-}
+        function updateBulkUI() {
+            const bar = document.getElementById('bulk-action-bar');
+            const countSpan = document.getElementById('selected-count');
 
-// --- 2. BULK DELETE LOGIC ---
-window.bulkDelete = async () => {
-    if (!confirm(`Delete ${selectedNurses.size} staff members permanently?`)) return;
+            if (isManageMode && selectedNurses.size > 0) {
+                bar.style.display = 'flex';
+                countSpan.innerText = selectedNurses.size;
+            } else {
+                bar.style.display = 'none';
+            }
+        }
 
-    try {
-        const batchPromises = Array.from(selectedNurses).map(id => 
-            deleteDoc(doc(db, "users", currentUser.uid, "nurses", id))
-        );
-        
-        await Promise.all(batchPromises);
+        // --- 2. BULK DELETE LOGIC ---
+        window.bulkDelete = async () => {
+            if (!confirm(`Delete ${selectedNurses.size} staff members permanently?`)) return;
 
-        // Update Counter
-        await updateDoc(doc(db, "users", currentUser.uid), {
-            nurseCount: increment(-selectedNurses.size)
-        });
+            try {
+                const batchPromises = Array.from(selectedNurses).map(id =>
+                    deleteDoc(doc(db, "users", currentUser.uid, "nurses", id))
+                );
 
-        alert("Selected staff deleted.");
-        window.toggleManageMode(); // Exit manage mode
+                await Promise.all(batchPromises);
 
-    } catch (e) {
-        console.error(e);
-        alert("Error deleting: " + e.message);
-    }
-};
+                // Update Counter
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    nurseCount: increment(-selectedNurses.size)
+                });
 
-// --- 3. REPLACE STAFF LOGIC (The Swap) ---
-window.openReplaceModal = (id, name, validUntil) => {
-    // 1. Set the hidden ID
-    const hiddenInput = document.getElementById('replace-old-id');
-    if (hiddenInput) hiddenInput.value = id;
+                alert("Selected staff deleted.");
+                window.toggleManageMode(); // Exit manage mode
 
-    // 2. Calculate Days Remaining
-    const now = Date.now();
-    const msPerDay = 24 * 60 * 60 * 1000;
-    // Handle case where validUntil might be undefined (legacy data)
-    const targetDate = validUntil || (now + (7 * msPerDay)); 
-    const daysLeft = Math.ceil((targetDate - now) / msPerDay);
-    
-    // 3. Build the Message HTML
-    const displayHtml = `
+            } catch (e) {
+                console.error(e);
+                alert("Error deleting: " + e.message);
+            }
+        };
+
+        // --- 3. REPLACE STAFF LOGIC (The Swap) ---
+        window.openReplaceModal = (id, name, validUntil) => {
+            // 1. Set the hidden ID
+            const hiddenInput = document.getElementById('replace-old-id');
+            if (hiddenInput) hiddenInput.value = id;
+
+            // 2. Calculate Days Remaining
+            const now = Date.now();
+            const msPerDay = 24 * 60 * 60 * 1000;
+            // Handle case where validUntil might be undefined (legacy data)
+            const targetDate = validUntil || (now + (7 * msPerDay));
+            const daysLeft = Math.ceil((targetDate - now) / msPerDay);
+
+            // 3. Build the Message HTML
+            const displayHtml = `
         You are replacing <b style="color:var(--navy);">${name}</b>.<br>
         <span style="display:inline-block; margin-top:8px; color:#1565c0; background:#e3f2fd; padding:4px 8px; border-radius:4px; font-weight:600; font-size:0.85rem;">
             <i class="fa-solid fa-clock-rotate-left"></i> The new staff member will inherit <u>${daysLeft} Days</u> of validity.
         </span>
     `;
-    
-    // 4. ✅ SAFE UPDATE: Targets the correct ID 'replace-message'
-    const msgBox = document.getElementById('replace-message');
-    if (msgBox) {
-        msgBox.innerHTML = displayHtml;
-        document.getElementById('replaceModal').classList.add('active');
-    } else {
-        console.error("Error: Could not find element #replace-message. Please check your HTML.");
-    }
-};
 
+            // 4. ✅ SAFE UPDATE: Targets the correct ID 'replace-message'
+            const msgBox = document.getElementById('replace-message');
+            if (msgBox) {
+                msgBox.innerHTML = displayHtml;
+                document.getElementById('replaceModal').classList.add('active');
+            } else {
+                console.error("Error: Could not find element #replace-message. Please check your HTML.");
+            }
+        };
+
+       // --- SMART REPLACE (Preserves Plan Type) ---
 document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const oldId = document.getElementById('replace-old-id').value;
@@ -3575,35 +3998,67 @@ document.getElementById('replaceNurseForm').addEventListener('submit', async (e)
     btn.innerText = "Swapping...";
 
     try {
-        // 1. Get Old Data (Specifically Validity)
+        // 1. Get Old Data (We need the Validity AND the Type)
         const oldDocRef = doc(db, "users", currentUser.uid, "nurses", oldId);
         const oldSnap = await getDoc(oldDocRef);
+        
+        if (!oldSnap.exists()) throw new Error("Original staff not found.");
         const oldData = oldSnap.data();
 
-        // 2. Add New Nurse (Inherit Validity)
+        // 2. Add New Nurse (Inherit Validity & Type)
         await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
             name: document.getElementById('repName').value,
             phone: document.getElementById('repPhone').value,
             role: document.getElementById('repRole').value,
             rate: document.getElementById('repRate').value,
             timestamp: Date.now(),
-            validUntil: oldData.validUntil // 👈 CRITICAL: Keeps the same expiry date!
+            
+            // 🛑 CRITICAL: Copy both fields!
+            validUntil: oldData.validUntil, 
+            type: oldData.type || 'monthly' // Defaults to monthly if missing
         });
 
         // 3. Delete Old Nurse
         await deleteDoc(oldDocRef);
         
-        // Note: We don't need to touch 'nurseCount' because +1 and -1 cancels out!
+        // No counter updates needed (One out, One in)
 
         alert("Staff Replaced Successfully!");
         document.getElementById('replaceModal').classList.remove('active');
         e.target.reset();
+
     } catch (error) {
         alert("Error: " + error.message);
     } finally {
         btn.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement';
     }
 });
+        // --- 4. REDIRECT HELPER ---
+window.openPaymentModal = (preferredPlan) => {
+    // Hide the add form
+    document.getElementById('addModal').classList.remove('active');
+    
+    // Show the payment screen
+    document.getElementById('modal-payment-lock').style.display = 'flex';
+    
+    // Auto-select the plan they need (Monthly or Daily)
+    if (window.switchPlan) {
+        window.switchPlan(preferredPlan);
+    }
+};
+window.openPaymentFromForm = () => {
+    // 1. Get current selection to know what they want to buy
+    const planType = document.querySelector('input[name="staffPlan"]:checked').value;
+    
+    // 2. Hide Add Form
+    document.getElementById('addModal').classList.remove('active');
+    
+    // 3. Open Payment Screen
+    document.getElementById('modal-payment-lock').style.display = 'flex';
+    
+    // 4. Switch the store tab to match
+    if(window.switchPlan) window.switchPlan(planType);
+};
     </script>
 </body>
 
