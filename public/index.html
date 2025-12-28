@@ -1724,26 +1724,7 @@
                     1 Slot = 1 Nurse Profile (Valid for 30 Days)
                 </p>
 
-                <div
-                    style="background: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #90caf9;">
-                    <p style="margin:0 0 8px 0; font-weight:bold; color:#1565c0; font-size:0.9rem;">
-                        🔥 Bulk Discounts Available:
-                    </p>
-                    <div style="display:flex; gap:5px; justify-content:space-between;">
-                        <div id="badge-5"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
-                            <b>5+ Slots</b><br>10% OFF
-                        </div>
-                        <div id="badge-10"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
-                            <b>10+ Slots</b><br>15% OFF
-                        </div>
-                        <div id="badge-20"
-                            style="background:#eee; color:#999; padding:5px 8px; border-radius:6px; font-size:0.75rem; text-align:center; flex:1; border:1px solid #ddd;">
-                            <b>20+ Slots</b><br>30% OFF
-                        </div>
-                    </div>
-                </div>
+            
 
                 <div style="margin-bottom: 1.5rem; text-align: left;">
                     <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Number of Nurses:</label>
@@ -2204,36 +2185,18 @@
             // Safety: Minimum 1
             if (!qty || qty < 1) { qty = 1; }
 
-            // A. Calculate Discount
-            let discountPercent = 0;
-            if (qty >= 20) discountPercent = 0.30;       // 30% Off
-            else if (qty >= 10) discountPercent = 0.15;  // 15% Off
-            else if (qty >= 5) discountPercent = 0.10;  // 10% Off
+            // A. Calculate Simple Math (No Discounts)
+            const finalPrice = qty * BASE_RATE;
 
-            // B. Calculate Math
-            const subtotal = qty * BASE_RATE;
-            const discountAmount = Math.round(subtotal * discountPercent);
-            const finalPrice = subtotal - discountAmount;
-
-            // C. Update State
+            // B. Update State
             currentOrder = { slots: qty, totalPrice: finalPrice };
 
-            // D. Update UI Text
-            const subEl = document.getElementById('bill-subtotal');
-            const discEl = document.getElementById('bill-discount');
+            // C. Update UI Text
+            // We only update the Total. Subtotal/Discount elements are ignored/removed.
             const totEl = document.getElementById('bill-total');
-
-            if (subEl) subEl.innerText = `₹${subtotal}`;
-            if (discEl) discEl.innerText = `-₹${discountAmount} (${discountPercent * 100}%)`;
             if (totEl) totEl.innerText = `₹${finalPrice}`;
 
-            // E. Highlight Badges
-            resetBadges();
-            if (qty >= 20) highlightBadge('badge-20');
-            else if (qty >= 10) highlightBadge('badge-10');
-            else if (qty >= 5) highlightBadge('badge-5');
-
-            // F. Generate QR Code
+            // D. Generate QR Code
             const newUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${finalPrice}`;
             const qrImg = document.getElementById('payment-qr-img');
             if (qrImg) qrImg.src = newUrl;
@@ -2330,8 +2293,7 @@
 
             // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
             // We use currentOrder.totalPrice to ensure the correct amount is charged
-            const amountInPaise = 100;
-
+            const amountInPaise = Math.round(currentOrder.totalPrice * 100);
             const options = {
                 "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
                 "amount": amountInPaise,
