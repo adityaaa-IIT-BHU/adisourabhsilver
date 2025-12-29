@@ -1191,15 +1191,17 @@
             margin-top: 10px;
             text-decoration: none;
         }
+
         /* Plan Selector Styles */
-.plan-option.active {
-    border-color: var(--primary) !important;
-    background: #fff5e6 !important;
-    color: var(--primary);
-}
-.plan-option:hover {
-    background: #f9f9f9;
-}
+        .plan-option.active {
+            border-color: var(--primary) !important;
+            background: #fff5e6 !important;
+            color: var(--primary);
+        }
+
+        .plan-option:hover {
+            background: #f9f9f9;
+        }
     </style>
 </head>
 
@@ -1861,65 +1863,78 @@
         </main>
     </div>
 
-   
+
     <div class="modal" id="addModal">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto; scrollbar-width: thin;">
             <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             <h2 style="margin-bottom: 1rem; font-family: 'Rozha One'; color: var(--navy);">New Staff Entry</h2>
-            
+
             <form id="addNurseForm">
-                <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #eee;">
-                    <label style="font-weight: 600; color: var(--navy); margin-bottom: 10px; display: block; font-size: 0.9rem;">Select Validity Plan:</label>
-                    
+                <div
+                
+                    style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #eee;">
+                    <label
+                        style="font-weight: 600; color: var(--navy); margin-bottom: 10px; display: block; font-size: 0.9rem;">Select
+                        Validity Plan:</label>
+
                     <div style="display: flex; gap: 12px;">
                         <label style="flex: 1; cursor: pointer; position: relative;">
-                            <input type="radio" name="staffPlan" value="monthly" checked onchange="updateCreditDisplay()" style="position: absolute; opacity: 0; width:0; height:0;">
-                            <div id="opt-monthly" class="plan-option active" style="padding: 12px; border: 2px solid var(--primary); border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                            <input type="radio" name="staffPlan" value="monthly" checked
+                                onchange="updateCreditDisplay()"
+                                style="position: absolute; opacity: 0; width:0; height:0;">
+                            <div id="opt-monthly" class="plan-option active"
+                                style="padding: 12px; border: 2px solid var(--primary); border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
                                 <div style="font-weight: bold; color: var(--navy); font-size: 0.95rem;">Monthly</div>
                                 <div style="font-size: 0.75rem; color: #666;">30 Days</div>
                             </div>
                         </label>
-    
+
                         <label style="flex: 1; cursor: pointer; position: relative;">
-                            <input type="radio" name="staffPlan" value="daily" onchange="updateCreditDisplay()" style="position: absolute; opacity: 0; width:0; height:0;">
-                            <div id="opt-daily" class="plan-option" style="padding: 12px; border: 2px solid transparent; border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                            <input type="radio" name="staffPlan" value="daily" onchange="updateCreditDisplay()"
+                                style="position: absolute; opacity: 0; width:0; height:0;">
+                            <div id="opt-daily" class="plan-option"
+                                style="padding: 12px; border: 2px solid transparent; border-radius: 8px; text-align: center; background: white; transition: 0.2s; height: 100%; display: flex; flex-direction: column; justify-content: center;">
                                 <div style="font-weight: bold; color: var(--navy); font-size: 0.95rem;">Daily Pass</div>
                                 <div style="font-size: 0.75rem; color: #666;">24 Hours</div>
                             </div>
                         </label>
                     </div>
-                    
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px; background: #fff; padding: 8px 12px; border-radius: 6px; border: 1px dashed #ddd;">
-                        <span id="credit-status-text" style="font-size: 0.8rem; font-weight: 600; color: #666;">Checking credits...</span>
-                        
-                        <button type="button" onclick="openPaymentFromForm()" style="background: var(--navy); color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+
+                    <div
+                        style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px; background: #fff; padding: 8px 12px; border-radius: 6px; border: 1px dashed #ddd;">
+                        <span id="credit-status-text" style="font-size: 0.8rem; font-weight: 600; color: #666;">Checking
+                            credits...</span>
+
+                        <button type="button" onclick="openPaymentFromForm()"
+                            style="background: var(--navy); color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;">
                             <i class="fa-solid fa-cart-plus"></i> Buy More
                         </button>
                     </div>
                 </div>
-    
+
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" class="form-input" id="nurseName" required placeholder="Ex. Anjali Gupta">
                 </div>
-    
+
                 <div class="form-group">
                     <label>WhatsApp Number (Active)</label>
                     <input type="tel" class="form-input" id="nursePhone" required
                         placeholder="919876543210 (No spaces or +)">
-                    <p style="font-size: 0.7rem; color: #888; margin-top: 4px;">Must match their WhatsApp number exactly.</p>
+                    <p style="font-size: 0.7rem; color: #888; margin-top: 4px;">Must match their WhatsApp number
+                        exactly.</p>
                 </div>
-    
+
                 <div class="form-group">
                     <label>Role</label>
                     <input type="text" class="form-input" id="nurseSpec" required placeholder="Ex. Senior Sister">
                 </div>
-                
+
                 <div class="form-group">
                     <label>Daily Rate (₹)</label>
                     <input type="number" class="form-input" id="nurseRate" required placeholder="Ex. 800">
                 </div>
-    
+
                 <div class="form-group">
                     <label>Document Locker (Aadhaar/ID)</label>
                     <input type="file" id="nurseDoc" style="display: none;" accept="image/*,.pdf"
@@ -1929,7 +1944,7 @@
                         <span id="doc-text">Upload ID Card</span>
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn-primary" style="width: 100%;">Save Entry</button>
             </form>
         </div>
@@ -1952,30 +1967,32 @@
     <div id="modal-payment-lock" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card"
             style="text-align: center; max-width: 450px; position: relative; max-height: 85vh; overflow-y: auto;">
-    
+
             <div id="payment-form-section">
                 <div
                     style="background: #e3f2fd; color: #1565c0; padding: 5px 15px; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: bold; margin-bottom: 1rem;">
                     <i class="fa-solid fa-bolt"></i> INSTANT ACTIVATION
                 </div>
-    
+
                 <h2 style="color: var(--navy); margin-bottom: 0.5rem;">Select Plan</h2>
-    
-                <div style="background: #f0f0f0; padding: 5px; border-radius: 12px; display: flex; gap: 5px; margin-bottom: 1.5rem; border: 1px solid #ddd;">
-                    <button id="plan-monthly" onclick="switchPlan('monthly')" 
+
+                <div
+                    style="background: #f0f0f0; padding: 5px; border-radius: 12px; display: flex; gap: 5px; margin-bottom: 1.5rem; border: 1px solid #ddd;">
+                    <button id="plan-monthly" onclick="switchPlan('monthly')"
                         style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: white; color: var(--navy); font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s;">
                         Monthly (30 Days)
                     </button>
-                    <button id="plan-daily" onclick="switchPlan('daily')" 
+                    <button id="plan-daily" onclick="switchPlan('daily')"
                         style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: #666; font-weight: 600; cursor: pointer; transition: 0.2s;">
                         Daily (24 Hours)
                     </button>
                 </div>
-    
-                <p id="plan-desc" style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; background: #fff; padding: 10px; border-radius: 8px; border: 1px dashed #ccc;">
+
+                <p id="plan-desc"
+                    style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; background: #fff; padding: 10px; border-radius: 8px; border: 1px dashed #ccc;">
                     Best for regular staff. Valid for 30 days.
                 </p>
-    
+
                 <div style="margin-bottom: 1.5rem; text-align: left;">
                     <label style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">Quantity:</label>
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
@@ -1987,7 +2004,7 @@
                         Rate: <span id="plan-rate" style="color: #138808; font-weight: bold;">₹199 per slot</span>
                     </div>
                 </div>
-    
+
                 <div
                     style="background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 1.5rem; text-align: left;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1995,18 +2012,18 @@
                         <span id="bill-total" style="font-size: 1.4rem; color: #138808; font-weight: bold;">₹199</span>
                     </div>
                 </div>
-    
+
                 <button id="rzp-button" onclick="window.startRazorpayPayment()" class="btn-primary"
                     style="width: 100%; margin-bottom: 10px;">
                     Pay & Activate <i class="fa-solid fa-credit-card"></i>
                 </button>
-    
+
                 <button id="btn-pay-later" onclick="window.activatePayLater()"
                     style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-size: 0.9rem;">
                     Cancel (Go Back)
                 </button>
             </div>
-    
+
         </div>
     </div>
 
@@ -2119,6 +2136,38 @@
 
     <div id="toast-container"
         style="position: fixed; bottom: 20px; right: 20px; z-index: 10001; display: flex; flex-direction: column; gap: 10px;">
+    </div>
+    <div class="modal" id="adminAgencyModal">
+        <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+            <button class="close-modal"
+                onclick="document.getElementById('adminAgencyModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 style="color: var(--navy); font-family: 'Rozha One'; margin-bottom: 5px;" id="admin-view-title">Agency
+                Details</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;" id="admin-view-subtitle">Inspecting Staff
+                List</p>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <div
+                    style="flex: 1; background: #e8f5e9; padding: 10px; border-radius: 8px; border: 1px solid #c8e6c9;">
+                    <div style="font-size: 0.8rem; color: #2e7d32; font-weight: 600;">Active Staff</div>
+                    <div id="adm-count-active" style="font-size: 1.4rem; font-weight: 700; color: #1b5e20;">0</div>
+                </div>
+                <div
+                    style="flex: 1; background: #ffebee; padding: 10px; border-radius: 8px; border: 1px solid #ffcdd2;">
+                    <div style="font-size: 0.8rem; color: #c62828; font-weight: 600;">Expired / Due</div>
+                    <div id="adm-count-expired" style="font-size: 1.4rem; font-weight: 700; color: #b71c1c;">0</div>
+                </div>
+            </div>
+
+            <h4 style="margin-bottom: 10px; border-bottom: 2px solid #eee; padding-bottom: 5px; color: var(--navy);">
+                Staff Roster</h4>
+            <div id="admin-staff-list" style="display: flex; flex-direction: column; gap: 10px;">
+                <p style="text-align: center; color: #999;">Loading...</p>
+            </div>
+        </div>
     </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script type="module">
@@ -2439,95 +2488,95 @@
             });
         }
 
-       // ==========================================
-// 💰 PRICING & PLAN LOGIC (Copy This Block)
-// ==========================================
+        // ==========================================
+        // 💰 PRICING & PLAN LOGIC (Copy This Block)
+        // ==========================================
 
-// 1. CONFIGURATION
-const MONTHLY_RATE = 199;
-const DAILY_RATE = 10;
-let currentPlan = 'monthly'; // Default setting
+        // 1. CONFIGURATION
+        const MONTHLY_RATE = 199;
+        const DAILY_RATE = 10;
+        let currentPlan = 'monthly'; // Default setting
 
-// Initialize the order object so it's never undefined
-let currentOrder = { 
-    slots: 1, 
-    totalPrice: 199, 
-    type: 'monthly' 
-};
+        // Initialize the order object so it's never undefined
+        let currentOrder = {
+            slots: 1,
+            totalPrice: 199,
+            type: 'monthly'
+        };
 
-// 2. THE MISSING FUNCTION: Switch Plan Logic
-window.switchPlan = (plan) => {
-    currentPlan = plan;
-    
-    // Get Elements
-    const btnMonthly = document.getElementById('plan-monthly');
-    const btnDaily = document.getElementById('plan-daily');
-    const desc = document.getElementById('plan-desc');
-    const rateTxt = document.getElementById('plan-rate');
+        // 2. THE MISSING FUNCTION: Switch Plan Logic
+        window.switchPlan = (plan) => {
+            currentPlan = plan;
 
-    // Update UI Styles
-    if (plan === 'monthly') {
-        // Active: Monthly
-        btnMonthly.style.background = 'white';
-        btnMonthly.style.color = 'var(--navy)';
-        btnMonthly.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-        
-        // Inactive: Daily
-        btnDaily.style.background = 'transparent';
-        btnDaily.style.color = '#666';
-        btnDaily.style.boxShadow = 'none';
+            // Get Elements
+            const btnMonthly = document.getElementById('plan-monthly');
+            const btnDaily = document.getElementById('plan-daily');
+            const desc = document.getElementById('plan-desc');
+            const rateTxt = document.getElementById('plan-rate');
 
-        // Text Updates
-        if(desc) desc.innerText = "Best for regular staff. Valid for 30 days.";
-        if(rateTxt) rateTxt.innerHTML = `<span style="color:#138808; font-weight:bold;">₹${MONTHLY_RATE} per slot</span>`;
-        
-    } else {
-        // Active: Daily
-        btnDaily.style.background = 'white';
-        btnDaily.style.color = '#d32f2f'; // Red highlight
-        btnDaily.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            // Update UI Styles
+            if (plan === 'monthly') {
+                // Active: Monthly
+                btnMonthly.style.background = 'white';
+                btnMonthly.style.color = 'var(--navy)';
+                btnMonthly.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
 
-        // Inactive: Monthly
-        btnMonthly.style.background = 'transparent';
-        btnMonthly.style.color = '#666';
-        btnMonthly.style.boxShadow = 'none';
+                // Inactive: Daily
+                btnDaily.style.background = 'transparent';
+                btnDaily.style.color = '#666';
+                btnDaily.style.boxShadow = 'none';
 
-        // Text Updates
-        if(desc) desc.innerText = "For temporary/unscattered needs. Valid for 24 hours.";
-        if(rateTxt) rateTxt.innerHTML = `<span style="color:#d32f2f; font-weight:bold;">₹${DAILY_RATE} per pass</span>`;
-    }
+                // Text Updates
+                if (desc) desc.innerText = "Best for regular staff. Valid for 30 days.";
+                if (rateTxt) rateTxt.innerHTML = `<span style="color:#138808; font-weight:bold;">₹${MONTHLY_RATE} per slot</span>`;
 
-    // Recalculate Price Immediately
-    window.calculateTotal();
-};
+            } else {
+                // Active: Daily
+                btnDaily.style.background = 'white';
+                btnDaily.style.color = '#d32f2f'; // Red highlight
+                btnDaily.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
 
-// 3. UPDATED CALCULATOR
-window.calculateTotal = () => {
-    const input = document.getElementById('slot-quantity');
-    if (!input) return;
+                // Inactive: Monthly
+                btnMonthly.style.background = 'transparent';
+                btnMonthly.style.color = '#666';
+                btnMonthly.style.boxShadow = 'none';
 
-    let qty = parseInt(input.value) || 1;
-    if (qty < 1) qty = 1;
+                // Text Updates
+                if (desc) desc.innerText = "For temporary/unscattered needs. Valid for 24 hours.";
+                if (rateTxt) rateTxt.innerHTML = `<span style="color:#d32f2f; font-weight:bold;">₹${DAILY_RATE} per pass</span>`;
+            }
 
-    // Use Rate based on the selected plan
-    const rate = currentPlan === 'monthly' ? MONTHLY_RATE : DAILY_RATE;
-    const finalPrice = qty * rate;
+            // Recalculate Price Immediately
+            window.calculateTotal();
+        };
 
-    // Update Global Order State (Critical for Payment)
-    currentOrder = { 
-        slots: qty, 
-        totalPrice: finalPrice, 
-        type: currentPlan // Stores 'monthly' or 'daily'
-    };
+        // 3. UPDATED CALCULATOR
+        window.calculateTotal = () => {
+            const input = document.getElementById('slot-quantity');
+            if (!input) return;
 
-    // Update Totals on Screen
-    const billTotal = document.getElementById('bill-total');
-    if(billTotal) billTotal.innerText = `₹${finalPrice}`;
-    
-    // Update Button Text
-    const btn = document.getElementById('rzp-button');
-    if(btn) btn.innerText = `Pay ₹${finalPrice} & Activate`;
-};
+            let qty = parseInt(input.value) || 1;
+            if (qty < 1) qty = 1;
+
+            // Use Rate based on the selected plan
+            const rate = currentPlan === 'monthly' ? MONTHLY_RATE : DAILY_RATE;
+            const finalPrice = qty * rate;
+
+            // Update Global Order State (Critical for Payment)
+            currentOrder = {
+                slots: qty,
+                totalPrice: finalPrice,
+                type: currentPlan // Stores 'monthly' or 'daily'
+            };
+
+            // Update Totals on Screen
+            const billTotal = document.getElementById('bill-total');
+            if (billTotal) billTotal.innerText = `₹${finalPrice}`;
+
+            // Update Button Text
+            const btn = document.getElementById('rzp-button');
+            if (btn) btn.innerText = `Pay ₹${finalPrice} & Activate`;
+        };
 
         // Helper Styles
         function highlightBadge(id) {
@@ -2549,257 +2598,257 @@ window.calculateTotal = () => {
         }
 
         // --- 1. UI HELPER: Updates the Green/Red Credit Text in Modal ---
-window.updateCreditDisplay = () => {
-    // A. Find out which plan is currently selected (Monthly or Daily)
-    const radios = document.getElementsByName('staffPlan');
-    let plan = 'monthly';
-    for (const r of radios) { if (r.checked) plan = r.value; }
-    
-    // B. Update the Visual Selection (Orange Border)
-    const optMonthly = document.getElementById('opt-monthly');
-    const optDaily = document.getElementById('opt-daily');
-    
-    if (plan === 'monthly') {
-        optMonthly.className = 'plan-option active';
-        optDaily.className = 'plan-option';
-    } else {
-        optMonthly.className = 'plan-option';
-        optDaily.className = 'plan-option active';
-    }
+        window.updateCreditDisplay = () => {
+            // A. Find out which plan is currently selected (Monthly or Daily)
+            const radios = document.getElementsByName('staffPlan');
+            let plan = 'monthly';
+            for (const r of radios) { if (r.checked) plan = r.value; }
 
-    // C. Calculate Available Credits
-    const statusTxt = document.getElementById('credit-status-text');
-    
-    // Monthly Math: (Total Paid Slots) - (Active Monthly Nurses)
-    const extraSlots = currentUserData?.extraSlots || 0;
-    // We filter so we don't count "Daily" nurses against your "Monthly" limit
-    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length; 
-    const monthlyLeft = Math.max(0, extraSlots - usedSlots);
-    
-    // Daily Math: Just read the pass count
-    const dailyPasses = currentUserData?.dailyPasses || 0;
+            // B. Update the Visual Selection (Orange Border)
+            const optMonthly = document.getElementById('opt-monthly');
+            const optDaily = document.getElementById('opt-daily');
 
-    // D. Update the Text based on choice
-    if (plan === 'monthly') {
-        if (monthlyLeft > 0) {
-            statusTxt.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#138808;"></i> Available Slots: <b>${monthlyLeft}</b>`;
-            statusTxt.style.color = '#138808';
-            statusTxt.style.background = '#e8f5e9';
-            statusTxt.style.borderColor = '#c8e6c9';
-        } else {
-            statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> Limit Reached. Purchase more slots.`;
-            statusTxt.style.color = '#d32f2f';
-            statusTxt.style.background = '#ffebee';
-            statusTxt.style.borderColor = '#ffcdd2';
-        }
-    } else {
-        if (dailyPasses > 0) {
-            statusTxt.innerHTML = `<i class="fa-solid fa-ticket" style="color:#138808;"></i> Daily Passes: <b>${dailyPasses}</b>`;
-            statusTxt.style.color = '#138808';
-            statusTxt.style.background = '#e8f5e9';
-            statusTxt.style.borderColor = '#c8e6c9';
-        } else {
-            statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> No Passes. Purchase Required (₹10).`;
-            statusTxt.style.color = '#d32f2f';
-            statusTxt.style.background = '#ffebee';
-            statusTxt.style.borderColor = '#ffcdd2';
-        }
-    }
-};
-// --- SMART TRIGGER: Handles New vs. Existing Users ---
-window.openModal = (isOnboarding = false) => {
-    // 1. Check if User is Active (Has paid at least once)
-    const isPaidUser = currentUserData?.isPaid === true;
-    
-    // Fallback: If 'isPaid' is missing but they have history (legacy users)
-    const hasHistory = (currentUserData?.extraSlots > 0) || 
-                       (currentUserData?.dailyPasses > 0) || 
-                       (allNurses.length > 0);
+            if (plan === 'monthly') {
+                optMonthly.className = 'plan-option active';
+                optDaily.className = 'plan-option';
+            } else {
+                optMonthly.className = 'plan-option';
+                optDaily.className = 'plan-option active';
+            }
 
-    const isActiveAccount = isPaidUser || hasHistory;
+            // C. Calculate Available Credits
+            const statusTxt = document.getElementById('credit-status-text');
 
-    // 2. LOGIC: New User vs Existing
-    if (!isActiveAccount || isOnboarding) {
-        // 🛑 CASE A: NEW USER (Not Active)
-        // Don't show the form. Go straight to Payment/Activation.
-        
-        document.getElementById('addModal').classList.remove('active'); // Ensure form is closed
-        document.getElementById('modal-payment-lock').style.display = 'flex';
-        
-        // Update Title for Context
-        const payTitle = document.querySelector('#payment-form-section h2');
-        if(payTitle) payTitle.innerText = "Activate Account";
+            // Monthly Math: (Total Paid Slots) - (Active Monthly Nurses)
+            const extraSlots = currentUserData?.extraSlots || 0;
+            // We filter so we don't count "Daily" nurses against your "Monthly" limit
+            const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
+            const monthlyLeft = Math.max(0, extraSlots - usedSlots);
 
-        // Default to Monthly for first purchase
-        if(window.switchPlan) window.switchPlan('monthly');
-        
-        return; // Stop here
-    }
+            // Daily Math: Just read the pass count
+            const dailyPasses = currentUserData?.dailyPasses || 0;
 
-    // ✅ CASE B: EXISTING USER (Active)
-    // Show the Add Form (They can see 'Buy More' inside if they have 0 credits)
-    document.getElementById('addModal').classList.add('active');
-    
-    // 3. Auto-Select the Plan they have credits for
-    const extraSlots = currentUserData?.extraSlots || 0;
-    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
-    const monthlyLeft = Math.max(0, extraSlots - usedSlots);
-    const dailyPasses = currentUserData?.dailyPasses || 0;
-    
-    const monthlyRadio = document.querySelector('input[value="monthly"]');
-    const dailyRadio = document.querySelector('input[value="daily"]');
-    
-    if (monthlyLeft > 0) {
-        if(monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
-    } else if (dailyPasses > 0) {
-        if(dailyRadio) { dailyRadio.checked = true; dailyRadio.click(); }
-    } else {
-        // If 0 credits, default to Monthly
-        if(monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
-    }
+            // D. Update the Text based on choice
+            if (plan === 'monthly') {
+                if (monthlyLeft > 0) {
+                    statusTxt.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#138808;"></i> Available Slots: <b>${monthlyLeft}</b>`;
+                    statusTxt.style.color = '#138808';
+                    statusTxt.style.background = '#e8f5e9';
+                    statusTxt.style.borderColor = '#c8e6c9';
+                } else {
+                    statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> Limit Reached. Purchase more slots.`;
+                    statusTxt.style.color = '#d32f2f';
+                    statusTxt.style.background = '#ffebee';
+                    statusTxt.style.borderColor = '#ffcdd2';
+                }
+            } else {
+                if (dailyPasses > 0) {
+                    statusTxt.innerHTML = `<i class="fa-solid fa-ticket" style="color:#138808;"></i> Daily Passes: <b>${dailyPasses}</b>`;
+                    statusTxt.style.color = '#138808';
+                    statusTxt.style.background = '#e8f5e9';
+                    statusTxt.style.borderColor = '#c8e6c9';
+                } else {
+                    statusTxt.innerHTML = `<i class="fa-solid fa-circle-xmark" style="color:#d32f2f;"></i> No Passes. Purchase Required (₹10).`;
+                    statusTxt.style.color = '#d32f2f';
+                    statusTxt.style.background = '#ffebee';
+                    statusTxt.style.borderColor = '#ffcdd2';
+                }
+            }
+        };
+        // --- SMART TRIGGER: Handles New vs. Existing Users ---
+        window.openModal = (isOnboarding = false) => {
+            // 1. Check if User is Active (Has paid at least once)
+            const isPaidUser = currentUserData?.isPaid === true;
 
-    // Refresh the Green/Red text
-    if (typeof window.updateCreditDisplay === 'function') {
-        window.updateCreditDisplay();
-    }
-};
+            // Fallback: If 'isPaid' is missing but they have history (legacy users)
+            const hasHistory = (currentUserData?.extraSlots > 0) ||
+                (currentUserData?.dailyPasses > 0) ||
+                (allNurses.length > 0);
+
+            const isActiveAccount = isPaidUser || hasHistory;
+
+            // 2. LOGIC: New User vs Existing
+            if (!isActiveAccount || isOnboarding) {
+                // 🛑 CASE A: NEW USER (Not Active)
+                // Don't show the form. Go straight to Payment/Activation.
+
+                document.getElementById('addModal').classList.remove('active'); // Ensure form is closed
+                document.getElementById('modal-payment-lock').style.display = 'flex';
+
+                // Update Title for Context
+                const payTitle = document.querySelector('#payment-form-section h2');
+                if (payTitle) payTitle.innerText = "Activate Account";
+
+                // Default to Monthly for first purchase
+                if (window.switchPlan) window.switchPlan('monthly');
+
+                return; // Stop here
+            }
+
+            // ✅ CASE B: EXISTING USER (Active)
+            // Show the Add Form (They can see 'Buy More' inside if they have 0 credits)
+            document.getElementById('addModal').classList.add('active');
+
+            // 3. Auto-Select the Plan they have credits for
+            const extraSlots = currentUserData?.extraSlots || 0;
+            const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
+            const monthlyLeft = Math.max(0, extraSlots - usedSlots);
+            const dailyPasses = currentUserData?.dailyPasses || 0;
+
+            const monthlyRadio = document.querySelector('input[value="monthly"]');
+            const dailyRadio = document.querySelector('input[value="daily"]');
+
+            if (monthlyLeft > 0) {
+                if (monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
+            } else if (dailyPasses > 0) {
+                if (dailyRadio) { dailyRadio.checked = true; dailyRadio.click(); }
+            } else {
+                // If 0 credits, default to Monthly
+                if (monthlyRadio) { monthlyRadio.checked = true; monthlyRadio.click(); }
+            }
+
+            // Refresh the Green/Red text
+            if (typeof window.updateCreditDisplay === 'function') {
+                window.updateCreditDisplay();
+            }
+        };
         window.closeModal = () => document.getElementById('addModal').classList.remove('active');
 
         // --- FUNCTION: Razorpay Payment Trigger (Updated for Hybrid Model) ---
-window.startRazorpayPayment = () => {
-    // 1. Safety Check
-    if (!currentOrder || !currentOrder.totalPrice) {
-        alert("Error: Invalid order details. Please refresh and try again.");
-        return;
-    }
-
-    // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
-    // ✅ FIX: Use the actual calculated price
-    const amountInPaise = 100;
-    
-    const options = {
-        "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
-        "amount": amountInPaise,
-        "currency": "INR",
-        "name": "Silver Care",
-        // ✅ FIX: Dynamic Description
-        "description": `Payment for ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'}`,
-        "image": "https://silvercareprototype.web.app/icon.png",
-
-        "handler": async function (response) {
-            // --- SUCCESS HANDLER ---
-            console.log("Payment Success:", response.razorpay_payment_id);
-
-            const btn = document.getElementById('rzp-button');
-            if (btn) {
-                btn.innerText = "Activating Credits...";
-                btn.disabled = true;
+        window.startRazorpayPayment = () => {
+            // 1. Safety Check
+            if (!currentOrder || !currentOrder.totalPrice) {
+                alert("Error: Invalid order details. Please refresh and try again.");
+                return;
             }
 
-            try {
-                const userRef = doc(db, "users", currentUser.uid);
-                const userSnap = await getDoc(userRef);
-                const userData = userSnap.data();
-                const referrerCode = userData.referralBy;
+            // 2. Convert Price to Paise (Razorpay expects 100 for ₹1)
+            // ✅ FIX: Use the actual calculated price
+            const amountInPaise = 100;
 
-                // --- A. CREDIT UPDATE (The Core Fix) ---
-                if (currentOrder.type === 'daily') {
-                    // 🟠 BUYING DAILY PASSES
-                    await updateDoc(userRef, {
-                        paymentRequest: {
-                            status: 'approved',
-                            amount: currentOrder.totalPrice,
-                            method: 'razorpay',
-                            transactionId: response.razorpay_payment_id,
-                            paidAt: serverTimestamp(),
-                            type: 'daily',
-                            quantity: currentOrder.slots
-                        },
-                        dailyPasses: increment(currentOrder.slots), // 👈 Adds Daily Passes
-                        lastPaymentId: response.razorpay_payment_id
-                    });
-                } else {
-                    // 🔵 BUYING MONTHLY SLOTS (Standard)
-                    await updateDoc(userRef, {
-                        paymentRequest: {
-                            status: 'approved',
-                            amount: currentOrder.totalPrice,
-                            method: 'razorpay',
-                            transactionId: response.razorpay_payment_id,
-                            paidAt: serverTimestamp(),
-                            type: 'monthly',
-                            slotsPurchased: currentOrder.slots
-                        },
-                        isPaid: true,
-                        extraSlots: increment(currentOrder.slots), // 👈 Adds Monthly Slots
-                        lastPaymentId: response.razorpay_payment_id
-                    });
+            const options = {
+                "key": "rzp_live_RulrnBRfeFkxjt", // ✅ Your Live Key
+                "amount": amountInPaise,
+                "currency": "INR",
+                "name": "Silver Care",
+                // ✅ FIX: Dynamic Description
+                "description": `Payment for ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'}`,
+                "image": "https://silvercareprototype.web.app/icon.png",
 
-                    // Legacy Renewal Logic (Only for Monthly)
-                    if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
-                        const days30 = 30 * 24 * 60 * 60 * 1000;
-                        const renewalPromises = expiredNursesList.map(nurse => {
-                            const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
-                            return updateDoc(nurseRef, { validUntil: Date.now() + days30 });
-                        });
-                        await Promise.all(renewalPromises);
-                        expiredNursesList = [];
+                "handler": async function (response) {
+                    // --- SUCCESS HANDLER ---
+                    console.log("Payment Success:", response.razorpay_payment_id);
+
+                    const btn = document.getElementById('rzp-button');
+                    if (btn) {
+                        btn.innerText = "Activating Credits...";
+                        btn.disabled = true;
                     }
-                }
 
-                // --- B. INTERN SALES TRACKING ---
-                if (referrerCode && referrerCode !== "DIRECT") {
-                    const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
-                    const internSnap = await getDocs(q);
+                    try {
+                        const userRef = doc(db, "users", currentUser.uid);
+                        const userSnap = await getDoc(userRef);
+                        const userData = userSnap.data();
+                        const referrerCode = userData.referralBy;
 
-                    if (!internSnap.empty) {
-                        internSnap.forEach(async (internDoc) => {
-                            await updateDoc(doc(db, "users", internDoc.id), {
-                                sales: increment(1),
-                                totalRevenue: increment(currentOrder.totalPrice)
+                        // --- A. CREDIT UPDATE (The Core Fix) ---
+                        if (currentOrder.type === 'daily') {
+                            // 🟠 BUYING DAILY PASSES
+                            await updateDoc(userRef, {
+                                paymentRequest: {
+                                    status: 'approved',
+                                    amount: currentOrder.totalPrice,
+                                    method: 'razorpay',
+                                    transactionId: response.razorpay_payment_id,
+                                    paidAt: serverTimestamp(),
+                                    type: 'daily',
+                                    quantity: currentOrder.slots
+                                },
+                                dailyPasses: increment(currentOrder.slots), // 👈 Adds Daily Passes
+                                lastPaymentId: response.razorpay_payment_id
                             });
-                        });
+                        } else {
+                            // 🔵 BUYING MONTHLY SLOTS (Standard)
+                            await updateDoc(userRef, {
+                                paymentRequest: {
+                                    status: 'approved',
+                                    amount: currentOrder.totalPrice,
+                                    method: 'razorpay',
+                                    transactionId: response.razorpay_payment_id,
+                                    paidAt: serverTimestamp(),
+                                    type: 'monthly',
+                                    slotsPurchased: currentOrder.slots
+                                },
+                                isPaid: true,
+                                extraSlots: increment(currentOrder.slots), // 👈 Adds Monthly Slots
+                                lastPaymentId: response.razorpay_payment_id
+                            });
+
+                            // Legacy Renewal Logic (Only for Monthly)
+                            if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
+                                const days30 = 30 * 24 * 60 * 60 * 1000;
+                                const renewalPromises = expiredNursesList.map(nurse => {
+                                    const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
+                                    return updateDoc(nurseRef, { validUntil: Date.now() + days30 });
+                                });
+                                await Promise.all(renewalPromises);
+                                expiredNursesList = [];
+                            }
+                        }
+
+                        // --- B. INTERN SALES TRACKING ---
+                        if (referrerCode && referrerCode !== "DIRECT") {
+                            const q = query(collection(db, "users"), where("agencyName", "==", referrerCode));
+                            const internSnap = await getDocs(q);
+
+                            if (!internSnap.empty) {
+                                internSnap.forEach(async (internDoc) => {
+                                    await updateDoc(doc(db, "users", internDoc.id), {
+                                        sales: increment(1),
+                                        totalRevenue: increment(currentOrder.totalPrice)
+                                    });
+                                });
+                            }
+                        }
+
+                        // --- C. SUCCESS UI ---
+                        alert(`✅ Payment Successful! ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'} added.`);
+                        document.getElementById('modal-payment-lock').style.display = 'none';
+
+                        // Refresh the Add Modal Credits Display immediately
+                        if (typeof window.updateCreditDisplay === 'function') {
+                            window.updateCreditDisplay();
+                        }
+
+                        // Reload data
+                        if (currentUser) startDataSync(currentUser.uid);
+
+                    } catch (error) {
+                        console.error("Activation Error:", error);
+                        alert("Payment received but update failed. ID: " + response.razorpay_payment_id);
+                    }
+                },
+                "prefill": {
+                    "name": currentUser?.displayName || "",
+                    "email": currentUser?.email || "",
+                    "contact": currentUser?.phoneNumber || ""
+                },
+                "theme": {
+                    "color": "#ff9933"
+                },
+                "modal": {
+                    "ondismiss": function () {
+                        console.log('Payment cancelled');
                     }
                 }
+            };
 
-                // --- C. SUCCESS UI ---
-                alert(`✅ Payment Successful! ${currentOrder.slots} ${currentOrder.type === 'daily' ? 'Daily Passes' : 'Monthly Slots'} added.`);
-                document.getElementById('modal-payment-lock').style.display = 'none';
-
-                // Refresh the Add Modal Credits Display immediately
-                if (typeof window.updateCreditDisplay === 'function') {
-                    window.updateCreditDisplay();
-                }
-
-                // Reload data
-                if (currentUser) startDataSync(currentUser.uid);
-
-            } catch (error) {
-                console.error("Activation Error:", error);
-                alert("Payment received but update failed. ID: " + response.razorpay_payment_id);
-            }
-        },
-        "prefill": {
-            "name": currentUser?.displayName || "",
-            "email": currentUser?.email || "",
-            "contact": currentUser?.phoneNumber || ""
-        },
-        "theme": {
-            "color": "#ff9933"
-        },
-        "modal": {
-            "ondismiss": function () {
-                console.log('Payment cancelled');
-            }
-        }
-    };
-
-    const rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response) {
-        alert("❌ Payment Failed: " + response.error.description);
-    });
-    rzp1.open();
-};
+            const rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response) {
+                alert("❌ Payment Failed: " + response.error.description);
+            });
+            rzp1.open();
+        };
         // --- UPDATED ONBOARDING (Preserves Lead Logic + Auto-Payment) ---
         window.submitOnboarding = async () => {
             const agencyName = document.getElementById('inp-agency-name').value;
@@ -2897,109 +2946,232 @@ window.startRazorpayPayment = () => {
         }
 
 
-        // --- UPDATED ADMIN LOADER (With Visual Slot Tracking & CSV Data Capture) ---
-        function loadAdminData() {
-            onSnapshot(collection(db, "users"), (snapshot) => {
-                const allTable = document.getElementById('admin-all-users');
-                const leaderboardDiv = document.getElementById('admin-leaderboard');
+// --- UPDATED ADMIN LOADER (Shows Slots + Daily Passes) ---
+function loadAdminData() {
+    onSnapshot(collection(db, "users"), (snapshot) => {
+        const allTable = document.getElementById('admin-all-users');
+        const leaderboardDiv = document.getElementById('admin-leaderboard');
 
-                // ✅ CRITICAL CHANGE: Save data to global variable for CSV Export
-                allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // ✅ Save data for CSV Export
+        allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                // Clear existing data
-                allTable.innerHTML = '';
-                leaderboardDiv.innerHTML = '';
+        // Clear existing data
+        if (allTable) allTable.innerHTML = '';
+        if (leaderboardDiv) leaderboardDiv.innerHTML = '';
 
-                // Optional: Clear the old 'pending table' if it exists in HTML
-                const pendingTable = document.getElementById('admin-pending-table');
-                if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+        // Clear pending table
+        const pendingTable = document.getElementById('admin-pending-table');
+        if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
 
-                let referralCounts = {};
+        let referralCounts = {};
 
-                snapshot.docs.forEach(doc => {
-                    const u = doc.data();
+        snapshot.docs.forEach(doc => {
+            const u = doc.data();
 
-                    // --- 1. CALCULATE SLOTS (Used vs Paid) ---
-                    const usedSlots = u.nurseCount || 0;
-                    const paidSlots = u.extraSlots || 0;
+            // --- 1. DATA PREP ---
+            const usedSlots = u.nurseCount || 0;
+            const paidSlots = u.extraSlots || 0;
+            const dailyPasses = u.dailyPasses || 0; // 👈 NEW: Get Daily Pass Count
 
-                    // Calculate Percentage for the bar (cap at 100%)
-                    let percentage = 0;
-                    if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
+            // Calculate Bar Percentage
+            let percentage = 0;
+            if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-                    // Determine Bar Color (Green = Space Available, Orange = Full)
-                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
+            const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
 
-                    // Create the Display String
-                    let slotDisplay = '';
-                    if (u.plan === 'unlimited') {
-                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
-                    } else {
-                        slotDisplay = `
-                <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
-                    ${usedSlots} / ${paidSlots} Slots Used
-                </div>
-                <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden;">
-                    <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
-                </div>
-            `;
-                    }
+            // --- 2. BUILD THE DISPLAY HTML ---
+            let slotDisplay = '';
+            
+            if (u.plan === 'unlimited') {
+                slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
+            } else {
+                // 🟢 HYBRID DISPLAY: Slots Bar + Daily Pass Badge
+                slotDisplay = `
+                    <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
+                        ${usedSlots} / ${paidSlots} Slots
+                    </div>
+                    <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden; margin-bottom:6px;">
+                        <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
+                    </div>
+                    
+                    
+                    <div style="font-size:0.75rem; color:#666; font-weight:500; display:flex; align-items:center; gap:5px;">
+                        <i class="fa-solid fa-ticket" style="color:#ff9933;"></i> ${dailyPasses} Daily Passes Available
+                    </div>
+                `;
+            }
 
-                    // --- 2. LEADERBOARD AGGREGATION ---
-                    if (u.referralBy && u.referralBy !== "DIRECT") {
-                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                        referralCounts[u.referralBy].total += 1;
-                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                    }
+            // --- 3. LEADERBOARD ---
+            if (u.referralBy && u.referralBy !== "DIRECT") {
+                if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                referralCounts[u.referralBy].total += 1;
+                if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+            }
 
-                    // --- 3. STATUS BADGE ---
-                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+            // --- 4. STATUS ---
+            let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+            if (u.isPaid) {
+                statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">ACTIVE</span>';
+            }
 
-                    if (u.isPaid) {
-                        statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">PAID ACTIVE</span>';
-                    }
+            // --- 5. RENDER ROW ---
+            allTable.innerHTML += `
+                <tr style="border-bottom:1px solid #f0f0f0;">
+                    <td style="padding:15px 10px;">
+                        <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
+                        <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+                    </td>
+                    <td style="padding:15px 10px; vertical-align:middle;">
+                        ${slotDisplay}
+                    </td>
+                    <td style="padding:15px 10px; font-weight:500; color:#555;">
+                        ${u.referralBy || 'DIRECT'}
+                    </td>
+                    <td style="padding:15px 10px;">
+                        ${statusHtml}
+                    </td>
+                    <td style="padding:15px 10px; text-align:right;">
+                        <button onclick="viewAgencyDetails('${doc.id}', '${u.agencyName || 'Agency'}')" 
+                            style="background: white; border: 1px solid #ccc; color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition:0.2s;">
+                            View Staff <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        });
 
-                    // --- 4. RENDER ROW ---
-                    allTable.innerHTML += `
-        <tr style="border-bottom:1px solid #f0f0f0;">
-            <td style="padding:15px 10px;">
-                <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
-                <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
-            </td>
-            <td style="padding:15px 10px;">
-                ${slotDisplay}
-            </td>
-            <td style="padding:15px 10px; font-weight:500; color:#555;">
-                ${u.referralBy || 'DIRECT'}
-            </td>
-            <td style="padding:15px 10px;">
-                ${statusHtml}
-            </td>
-        </tr>`;
-                });
+        // (Leaderboard rendering code remains the same...)
+        Object.keys(referralCounts).forEach(code => {
+            const data = referralCounts[code];
+            leaderboardDiv.innerHTML += `
+                <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
+                    <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
+                    <div style="display:flex; gap:10px; margin-top:12px;">
+                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                            <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
+                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                        </div>
+                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                            <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
+                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
+                        </div>
+                    </div>
+                </div>`;
+        });
+    });
+}
 
-                // --- 5. RENDER LEADERBOARD ---
-                Object.keys(referralCounts).forEach(code => {
-                    const data = referralCounts[code];
-                    leaderboardDiv.innerHTML += `
-        <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
-            <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
-            <div style="display:flex; gap:10px; margin-top:12px;">
-                <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                    <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
-                    <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
-                </div>
-                <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                    <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
-                    <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
-                </div>
-            </div>
-        </div>`;
-                });
+// 🟢 NEW FUNCTION: View Specific Agency Staff (Admin Side)
+window.viewAgencyDetails = async (agencyId, agencyName) => {
+    // 1. Open Modal & Set Title
+    const modal = document.getElementById('adminAgencyModal');
+    document.getElementById('admin-view-title').innerText = agencyName || "Agency Details";
+    document.getElementById('admin-view-subtitle').innerText = "Fetching real-time data...";
+    modal.classList.add('active');
+
+    const listContainer = document.getElementById('admin-staff-list');
+    listContainer.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>';
+
+    try {
+        // 2. Fetch Nurses for this Agency
+        const q = query(collection(db, "users", agencyId, "nurses"));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            listContainer.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">No staff found.</p>';
+            document.getElementById('adm-count-active').innerText = "0";
+            document.getElementById('adm-count-expired').innerText = "0";
+            return;
+        }
+
+        // 3. Sort Logic (Active vs Expired)
+        const now = Date.now();
+        const active = [];
+        const expired = [];
+
+        snapshot.forEach(doc => {
+            const n = doc.data();
+            // Default to 7 days grace if validUntil is missing
+            const expiry = n.validUntil || (now + (7 * 24 * 60 * 60 * 1000));
+            
+            if (expiry < now) {
+                expired.push(n);
+            } else {
+                active.push(n);
+            }
+        });
+
+        // 4. Update Counts
+        document.getElementById('adm-count-active').innerText = active.length;
+        document.getElementById('adm-count-expired').innerText = expired.length;
+
+        // 5. Generate HTML
+        let html = '';
+
+        // --- SECTION A: EXPIRED (Red Box) ---
+        if (expired.length > 0) {
+            html += `<div style="background:#ffebee; border:1px solid #ffcdd2; border-radius:8px; padding:10px; margin-bottom:10px;">
+                <h5 style="color:#c62828; margin-bottom:8px;"><i class="fa-solid fa-triangle-exclamation"></i> EXPIRED STAFF</h5>`;
+            
+            expired.forEach(n => {
+                const isDaily = n.type === 'daily';
+                const badge = isDaily 
+                    ? '<span style="background:#fff3e0; color:#e65100; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2;">Daily</span>'
+                    : '<span style="background:#e3f2fd; color:#1565c0; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb;">Monthly</span>';
+
+                html += `
+                <div style="background:white; padding:8px; border-radius:6px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-weight:600; color:#333;">${n.name} ${badge}</div>
+                        <div style="font-size:0.75rem; color:#666;">${n.role}</div>
+                    </div>
+                    <div style="font-size:0.75rem; color:#c62828; font-weight:700;">Expired</div>
+                </div>`;
+            });
+            html += `</div>`;
+        }
+
+        // --- SECTION B: ACTIVE (Normal List) ---
+        if (active.length > 0) {
+            html += `<h5 style="color:#2e7d32; margin:10px 0 5px 0;">✅ ACTIVE STAFF</h5>`;
+            
+            active.forEach(n => {
+                const isDaily = n.type === 'daily';
+                
+                // Badges
+                const badgeStyle = isDaily 
+                    ? 'background:#fff3e0; color:#ef6c00; border:1px solid #ffe0b2;'
+                    : 'background:#e3f2fd; color:#1565c0; border:1px solid #bbdefb;';
+                const typeText = isDaily ? 'Daily Pass' : 'Monthly Slot';
+
+                // Time Left Calc
+                const daysLeft = Math.ceil((n.validUntil - now) / (1000 * 60 * 60 * 24));
+                const timeText = isDaily 
+                    ? '< 24 Hours' 
+                    : `${daysLeft} Days left`;
+
+                html += `
+                <div style="background:#f9f9f9; padding:10px; border-radius:8px; border-left: 4px solid ${isDaily ? '#ff9800' : '#138808'}; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-weight:600; color:#333;">${n.name}</div>
+                        <span style="font-size:0.7rem; padding:2px 6px; border-radius:4px; font-weight:600; display:inline-block; margin-top:2px; ${badgeStyle}">
+                            ${typeText}
+                        </span>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:0.8rem; font-weight:600; color:#333;">₹${n.rate}</div>
+                        <div style="font-size:0.7rem; color:${isDaily ? '#e65100' : '#138808'};">${timeText}</div>
+                    </div>
+                </div>`;
             });
         }
 
+        listContainer.innerHTML = html;
 
+    } catch (e) {
+        console.error(e);
+        listContainer.innerHTML = '<p style="color:red; text-align:center;">Error loading data.</p>';
+    }
+};
         window.exportToCSV = () => {
             // 1. Check if it is the Super Admin
             if (currentUser && currentUser.email === "supercare655@gmail.com") {
@@ -3558,83 +3730,83 @@ window.startRazorpayPayment = () => {
         };
 
         // --- UPDATED FORM ACTIONS (Hybrid Model: Monthly vs Daily) ---
-document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+        document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    // 1. GET FORM VALUES
-    // We look for the checked radio button to see which plan they chose
-    const planType = document.querySelector('input[name="staffPlan"]:checked').value;
-    const name = document.getElementById('nurseName').value;
-    const phone = document.getElementById('nursePhone').value;
-    const role = document.getElementById('nurseSpec').value;
-    const rate = document.getElementById('nurseRate').value;
+            // 1. GET FORM VALUES
+            // We look for the checked radio button to see which plan they chose
+            const planType = document.querySelector('input[name="staffPlan"]:checked').value;
+            const name = document.getElementById('nurseName').value;
+            const phone = document.getElementById('nursePhone').value;
+            const role = document.getElementById('nurseSpec').value;
+            const rate = document.getElementById('nurseRate').value;
 
-    // 2. CHECK CREDITS (Security Gate)
-    // We calculate available monthly slots by subtracting used ones from total paid slots
-    const extraSlots = currentUserData?.extraSlots || 0;
-    const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
-    const monthlyLeft = extraSlots - usedSlots;
-    const dailyPasses = currentUserData?.dailyPasses || 0;
+            // 2. CHECK CREDITS (Security Gate)
+            // We calculate available monthly slots by subtracting used ones from total paid slots
+            const extraSlots = currentUserData?.extraSlots || 0;
+            const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
+            const monthlyLeft = extraSlots - usedSlots;
+            const dailyPasses = currentUserData?.dailyPasses || 0;
 
-    // A. Block if no Monthly Slots
-    if (planType === 'monthly' && monthlyLeft <= 0) {
-        alert("⚠️ No Monthly Slots Available!\n\nPlease purchase more slots to add permanent staff.");
-        if (window.openPaymentModal) window.openPaymentModal('monthly'); 
-        return;
-    }
-    
-    // B. Block if no Daily Passes
-    if (planType === 'daily' && dailyPasses <= 0) {
-        alert("⚠️ No Daily Passes Available!\n\nPlease purchase a Daily Pass (₹10) to add temp staff.");
-        if (window.openPaymentModal) window.openPaymentModal('daily');
-        return;
-    }
+            // A. Block if no Monthly Slots
+            if (planType === 'monthly' && monthlyLeft <= 0) {
+                alert("⚠️ No Monthly Slots Available!\n\nPlease purchase more slots to add permanent staff.");
+                if (window.openPaymentModal) window.openPaymentModal('monthly');
+                return;
+            }
 
-    // 3. CALCULATE EXPIRY DATE
-    let expiryDate;
-    if (planType === 'monthly') {
-        // 🗓️ Monthly: Today + 30 Days
-        expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000); 
-    } else {
-        // 🗓️ Daily: Today + 24 Hours
-        expiryDate = Date.now() + (24 * 60 * 60 * 1000); 
-    }
+            // B. Block if no Daily Passes
+            if (planType === 'daily' && dailyPasses <= 0) {
+                alert("⚠️ No Daily Passes Available!\n\nPlease purchase a Daily Pass (₹10) to add temp staff.");
+                if (window.openPaymentModal) window.openPaymentModal('daily');
+                return;
+            }
 
-    try {
-        // 4. ADD NURSE TO FIREBASE
-        await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
-            name,
-            phone,
-            role,
-            rate,
-            timestamp: Date.now(),
-            validUntil: expiryDate, // 👈 Sets the correct time (30d or 24h)
-            type: planType // 👈 Tags them as 'monthly' or 'daily' so we can filter later
+            // 3. CALCULATE EXPIRY DATE
+            let expiryDate;
+            if (planType === 'monthly') {
+                // 🗓️ Monthly: Today + 30 Days
+                expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000);
+            } else {
+                // 🗓️ Daily: Today + 24 Hours
+                expiryDate = Date.now() + (24 * 60 * 60 * 1000);
+            }
+
+            try {
+                // 4. ADD NURSE TO FIREBASE
+                await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+                    name,
+                    phone,
+                    role,
+                    rate,
+                    timestamp: Date.now(),
+                    validUntil: expiryDate, // 👈 Sets the correct time (30d or 24h)
+                    type: planType // 👈 Tags them as 'monthly' or 'daily' so we can filter later
+                });
+
+                // 5. CONSUME THE CORRECT CREDIT
+                if (planType === 'monthly') {
+                    // For Monthly, we increment the "Used Slot" counter
+                    await updateDoc(doc(db, "users", currentUser.uid), {
+                        nurseCount: increment(1)
+                    });
+                } else {
+                    // For Daily, we directly REMOVE one pass
+                    await updateDoc(doc(db, "users", currentUser.uid), {
+                        dailyPasses: increment(-1)
+                    });
+                }
+
+                // 6. SUCCESS FEEDBACK
+                alert(`✅ Staff Added Successfully!\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
+                window.closeModal();
+                e.target.reset();
+
+            } catch (err) {
+                console.error("Error adding staff:", err);
+                alert("Error saving data: " + err.message);
+            }
         });
-
-        // 5. CONSUME THE CORRECT CREDIT
-        if (planType === 'monthly') {
-            // For Monthly, we increment the "Used Slot" counter
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                nurseCount: increment(1)
-            });
-        } else {
-            // For Daily, we directly REMOVE one pass
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                dailyPasses: increment(-1)
-            });
-        }
-
-        // 6. SUCCESS FEEDBACK
-        alert(`✅ Staff Added Successfully!\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
-        window.closeModal();
-        e.target.reset();
-
-    } catch (err) {
-        console.error("Error adding staff:", err);
-        alert("Error saving data: " + err.message);
-    }
-});
 
 
         // --- 1. TOAST FUNCTION (Replaces alert) ---
@@ -3683,11 +3855,11 @@ document.getElementById('addNurseForm').addEventListener('submit', async (e) => 
             if (confirmCallback) confirmCallback();
             closeConfirmModal();
         });
-// --- STRICT DELETE (No Refunds - "Buy Again" Model) ---
-window.removeNurse = (id) => {
-    // 1. Define the Warning Message
-    const title = "Delete Staff?";
-    const msg = `
+        // --- STRICT DELETE (No Refunds - "Buy Again" Model) ---
+        window.removeNurse = (id) => {
+            // 1. Define the Warning Message
+            const title = "Delete Staff?";
+            const msg = `
         <strong style="color:#d32f2f;">Warning: Action cannot be undone.</strong><br>
         Deleting this staff member will remove them permanently.<br><br>
         <span style="font-size:0.85rem; background:#ffebee; padding:4px 8px; border-radius:4px; color:#c62828;">
@@ -3695,46 +3867,46 @@ window.removeNurse = (id) => {
         </span>
     `;
 
-    // 2. Trigger Custom Modal
-    window.showConfirmDialog(title, msg, async () => {
-        try {
-            // A. Check the Nurse Type first
-            const docRef = doc(db, "users", currentUser.uid, "nurses", id);
-            const docSnap = await getDoc(docRef);
-            
-            if (!docSnap.exists()) {
-                window.showToast("Error: Staff not found.", 'error');
-                return;
-            }
-            
-            const nurse = docSnap.data();
-            const isMonthly = !nurse.type || nurse.type === 'monthly'; // Default to monthly
+            // 2. Trigger Custom Modal
+            window.showConfirmDialog(title, msg, async () => {
+                try {
+                    // A. Check the Nurse Type first
+                    const docRef = doc(db, "users", currentUser.uid, "nurses", id);
+                    const docSnap = await getDoc(docRef);
 
-            // B. Delete the Document
-            await deleteDoc(docRef);
+                    if (!docSnap.exists()) {
+                        window.showToast("Error: Staff not found.", 'error');
+                        return;
+                    }
 
-            // C. Update Counters (BURN LOGIC)
-            if (isMonthly) {
-                // 🔥 Monthly: Burn the slot so they lose it (as per your request)
-                await updateDoc(doc(db, "users", currentUser.uid), {
-                    nurseCount: increment(-1), // Remove from active count
-                    extraSlots: increment(-1)  // Remove from total limit (BURN)
-                });
-            } else {
-                // 🎫 Daily: Do NOTHING.
-                // The pass was already subtracted when they added the nurse.
-                // By not adding it back here, they effectively "lose" it and must buy again.
-            }
+                    const nurse = docSnap.data();
+                    const isMonthly = !nurse.type || nurse.type === 'monthly'; // Default to monthly
 
-            // D. Success Message
-            window.showToast("Staff deleted. Validity consumed.");
+                    // B. Delete the Document
+                    await deleteDoc(docRef);
 
-        } catch (error) {
-            console.error(error);
-            window.showToast("Error deleting: " + error.message, 'error');
-        }
-    });
-};
+                    // C. Update Counters (BURN LOGIC)
+                    if (isMonthly) {
+                        // 🔥 Monthly: Burn the slot so they lose it (as per your request)
+                        await updateDoc(doc(db, "users", currentUser.uid), {
+                            nurseCount: increment(-1), // Remove from active count
+                            extraSlots: increment(-1)  // Remove from total limit (BURN)
+                        });
+                    } else {
+                        // 🎫 Daily: Do NOTHING.
+                        // The pass was already subtracted when they added the nurse.
+                        // By not adding it back here, they effectively "lose" it and must buy again.
+                    }
+
+                    // D. Success Message
+                    window.showToast("Staff deleted. Validity consumed.");
+
+                } catch (error) {
+                    console.error(error);
+                    window.showToast("Error deleting: " + error.message, 'error');
+                }
+            });
+        };
 
         // --- NAVIGATION ---
         let isNurseMode = false;
@@ -3990,75 +4162,107 @@ window.removeNurse = (id) => {
             }
         };
 
-       // --- SMART REPLACE (Preserves Plan Type) ---
-document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const oldId = document.getElementById('replace-old-id').value;
-    const btn = e.target.querySelector('button');
-    btn.innerText = "Swapping...";
+        // --- SMART REPLACE (Preserves Plan Type) ---
+        document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const oldId = document.getElementById('replace-old-id').value;
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Swapping...";
 
-    try {
-        // 1. Get Old Data (We need the Validity AND the Type)
-        const oldDocRef = doc(db, "users", currentUser.uid, "nurses", oldId);
-        const oldSnap = await getDoc(oldDocRef);
-        
-        if (!oldSnap.exists()) throw new Error("Original staff not found.");
-        const oldData = oldSnap.data();
+            try {
+                // 1. Get Old Data (We need the Validity AND the Type)
+                const oldDocRef = doc(db, "users", currentUser.uid, "nurses", oldId);
+                const oldSnap = await getDoc(oldDocRef);
 
-        // 2. Add New Nurse (Inherit Validity & Type)
-        await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
-            name: document.getElementById('repName').value,
-            phone: document.getElementById('repPhone').value,
-            role: document.getElementById('repRole').value,
-            rate: document.getElementById('repRate').value,
-            timestamp: Date.now(),
-            
-            // 🛑 CRITICAL: Copy both fields!
-            validUntil: oldData.validUntil, 
-            type: oldData.type || 'monthly' // Defaults to monthly if missing
+                if (!oldSnap.exists()) throw new Error("Original staff not found.");
+                const oldData = oldSnap.data();
+
+                // 2. Add New Nurse (Inherit Validity & Type)
+                await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+                    name: document.getElementById('repName').value,
+                    phone: document.getElementById('repPhone').value,
+                    role: document.getElementById('repRole').value,
+                    rate: document.getElementById('repRate').value,
+                    timestamp: Date.now(),
+
+                    // 🛑 CRITICAL: Copy both fields!
+                    validUntil: oldData.validUntil,
+                    type: oldData.type || 'monthly' // Defaults to monthly if missing
+                });
+
+                // 3. Delete Old Nurse
+                await deleteDoc(oldDocRef);
+
+                // No counter updates needed (One out, One in)
+
+                alert("Staff Replaced Successfully!");
+                document.getElementById('replaceModal').classList.remove('active');
+                e.target.reset();
+
+            } catch (error) {
+                alert("Error: " + error.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement';
+            }
+        });
+        // --- 4. REDIRECT HELPER ---
+        window.openPaymentModal = (preferredPlan) => {
+            // Hide the add form
+            document.getElementById('addModal').classList.remove('active');
+
+            // Show the payment screen
+            document.getElementById('modal-payment-lock').style.display = 'flex';
+
+            // Auto-select the plan they need (Monthly or Daily)
+            if (window.switchPlan) {
+                window.switchPlan(preferredPlan);
+            }
+        };
+        window.openPaymentFromForm = () => {
+            // 1. Get current selection to know what they want to buy
+            const planType = document.querySelector('input[name="staffPlan"]:checked').value;
+
+            // 2. Hide Add Form
+            document.getElementById('addModal').classList.remove('active');
+
+            // 3. Open Payment Screen
+            document.getElementById('modal-payment-lock').style.display = 'flex';
+
+            // 4. Switch the store tab to match
+            if (window.switchPlan) window.switchPlan(planType);
+        };
+
+        // Define these globally so HTML buttons can see them
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            'size': 'invisible'
         });
 
-        // 3. Delete Old Nurse
-        await deleteDoc(oldDocRef);
-        
-        // No counter updates needed (One out, One in)
+        window.sendOTP = () => {
+            const phoneNumber = document.getElementById('phone-number').value;
+            const appVerifier = window.recaptchaVerifier;
 
-        alert("Staff Replaced Successfully!");
-        document.getElementById('replaceModal').classList.remove('active');
-        e.target.reset();
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    document.getElementById('step-phone').style.display = 'none';
+                    document.getElementById('step-otp').style.display = 'block';
+                    window.showToast("OTP Sent!", "success");
+                }).catch((error) => {
+                    console.error(error);
+                    window.showToast("Error sending OTP: " + error.message, "error");
+                });
+        };
 
-    } catch (error) {
-        alert("Error: " + error.message);
-    } finally {
-        btn.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement';
-    }
-});
-        // --- 4. REDIRECT HELPER ---
-window.openPaymentModal = (preferredPlan) => {
-    // Hide the add form
-    document.getElementById('addModal').classList.remove('active');
-    
-    // Show the payment screen
-    document.getElementById('modal-payment-lock').style.display = 'flex';
-    
-    // Auto-select the plan they need (Monthly or Daily)
-    if (window.switchPlan) {
-        window.switchPlan(preferredPlan);
-    }
-};
-window.openPaymentFromForm = () => {
-    // 1. Get current selection to know what they want to buy
-    const planType = document.querySelector('input[name="staffPlan"]:checked').value;
-    
-    // 2. Hide Add Form
-    document.getElementById('addModal').classList.remove('active');
-    
-    // 3. Open Payment Screen
-    document.getElementById('modal-payment-lock').style.display = 'flex';
-    
-    // 4. Switch the store tab to match
-    if(window.switchPlan) window.switchPlan(planType);
-};
+        window.verifyOTP = () => {
+            const code = document.getElementById('otp-code').value;
+            window.confirmationResult.confirm(code).then((result) => {
+                // User signed in successfully.
+                window.showToast("Verified Success!", "success");
+                // onAuthStateChanged will handle the rest
+            }).catch((error) => {
+                window.showToast("Invalid OTP", "error");
+            });
+        };
     </script>
 </body>
 
