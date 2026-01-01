@@ -1099,98 +1099,109 @@
 
         /* --- WAR ROOM STYLES --- */
         .war-room-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .war-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid #ccc;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .war-card.status-assigned {
-            border-left-color: #ff9933;
-        }
-
-        .war-card.status-nurse_arrived {
-            border-left-color: #2196F3;
-        }
-
-        .war-card.status-in_progress {
-            border-left-color: #138808;
-            background: #f1f8e9;
-        }
-
-        .war-header {
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        .war-timer {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #138808;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+.war-card {
+    background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #ccc; position: relative; overflow: hidden; transition: 0.3s;
+}
+.war-card.status-assigned { border-left-color: #ff9933; }
+.war-card.status-nurse_arrived { border-left-color: #2196F3; }
+.war-card.status-in_progress { border-left-color: #138808; background: #f1f8e9; }
+.war-header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+.war-timer { font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.2rem; color: #138808; background: #fff; padding: 2px 8px; border-radius: 4px; border: 1px solid #c8e6c9; }
+.war-body { padding: 1rem; }
+.war-step { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; color: #555; }
+.war-step.active { color: #ff9933; font-weight: bold; animation: pulseText 1.5s infinite; }
+@keyframes pulseText { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+.client-pill { background: #e3f2fd; color: #0d47a1; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; text-decoration: none; }
+/* --- VITALS LOG STYLES --- */
+        .vitals-container {
+            margin-top: 15px;
             background: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            border: 1px solid #c8e6c9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 150px;
+            overflow-y: auto;
         }
-
-        .war-body {
-            padding: 1rem;
-        }
-
-        .war-step {
+        
+        .log-item {
             display: flex;
-            align-items: center;
             gap: 10px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: #555;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            align-items: flex-start;
         }
 
-        .war-step.active {
-            color: #ff9933;
+        .log-time {
+            font-family: monospace;
+            color: #999;
+            font-size: 0.75rem;
+            min-width: 50px;
+        }
+
+        .log-content { flex: 1; color: #444; }
+        
+        .log-critical {
+            color: #c62828;
+            background: #ffebee;
+            padding: 2px 5px;
+            border-radius: 4px;
             font-weight: bold;
-            animation: pulseText 1.5s infinite;
         }
 
-        @keyframes pulseText {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .client-pill {
-            background: #e3f2fd;
-            color: #0d47a1;
+        .btn-report {
+            background: #fff;
+            border: 1px solid #138808;
+            color: #138808;
             padding: 5px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-top: 10px;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            margin-top: 10px;
-            text-decoration: none;
         }
+        .btn-report:hover { background: #e8f5e9; }
+
+        /* Add these to your existing CSS */
+
+/* Gray State for Completed Jobs */
+.war-card.status-completed { 
+    border-left-color: #757575; 
+    background: #f4f4f4;
+    opacity: 0.8;
+}
+.war-card.status-completed .war-header h3 { color: #555; text-decoration: line-through; }
+.war-card.status-completed .war-step { color: #999; }
+.war-card.status-completed .btn-report { background: #333; color: #fff; border: none; }
+
+/* Improved Log Display */
+.log-item {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85rem;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e0e0;
+    align-items: flex-start;
+}
+.log-content { flex: 1; color: #333; line-height: 1.4; }
+.log-vitals-badge {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #0d47a1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
 
         /* Plan Selector Styles */
         .plan-option.active {
@@ -1202,6 +1213,110 @@
         .plan-option:hover {
             background: #f9f9f9;
         }
+
+        /* --- ENHANCED LOG CARD STYLES --- */
+.log-card {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s;
+    align-items: center;
+    gap: 1rem;
+}
+
+.log-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.log-time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    border-right: 1px solid #eee;
+    padding-right: 1rem;
+}
+
+.log-time-big {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+}
+
+.log-date-small {
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.log-photo-frame {
+    position: relative;
+    cursor: pointer;
+}
+
+.log-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.log-details {
+    flex: 1;
+}
+
+.log-details h4 {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.log-location {
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+}
+
+/* Image Viewer Modal */
+#img-viewer-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 20000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#img-viewer-full {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.img-viewer-close {
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
+}
     </style>
 </head>
 
@@ -2169,7 +2284,14 @@
             </div>
         </div>
     </div>
+    <div id="img-viewer-modal" onclick="closeImageViewer()">
+    <span class="img-viewer-close">&times;</span>
+    <img id="img-viewer-full" src="" alt="Proof of Attendance">
+    <p id="img-viewer-caption" style="color:white; margin-top:15px; font-family:'Poppins';"></p>
+</div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script type="module">
         // 1. IMPORTS (VERIFIED & CLEAN)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -2178,7 +2300,7 @@
         import {
             getFirestore, collection, addDoc, onSnapshot, query, orderBy,
             deleteDoc, doc, updateDoc, getDoc, serverTimestamp, setDoc, increment,
-            where, getDocs
+            where, getDocs, limit
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         import {
@@ -2418,71 +2540,93 @@
             });
         }
         // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
+        // --- DATA SYNC (Now Linked to WhatsApp Bot Data) ---
         function startDataSync(uid) {
-            // Prevent duplicate listeners
-            if (unsubscribeNurses) return;
+            if (unsubscribeNurses) return; 
 
-            console.log("Starting Data Sync...");
+            console.log("🔄 Starting Data Sync...");
 
-            // 1. Nurses
+            // 1. Nurses (Standard Directory)
             unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
                 allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderStaffList();
                 populateLoginSelect();
-                // Check if the payroll view is active before recalculating to save resources
-                if (document.getElementById('view-payroll').classList.contains('active-view')) {
-                    window.calculatePayroll();
-                }
-                document.getElementById('stat-total').innerText = allNurses.length;
+                const totalEl = document.getElementById('stat-total');
+                if(totalEl) totalEl.innerText = allNurses.length;
             });
 
-            // 2. Attendance
-            const attendanceRef = collection(db, "users", uid, "attendance");
-            unsubscribeLogs = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
-                allLogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // 2. ATTENDANCE LOGS (UPDATED: Now pulls from WhatsApp Bookings)
+            // We listen to 'bookings' but treat them as 'logs' when a nurse arrives.
+            const bookingsRef = collection(db, "users", uid, "bookings");
+            
+            unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+                const tempLogs = [];
+
+                snapshot.forEach(doc => {
+                    const b = doc.data();
+
+                    // 🛑 FILTER: Only include entries where the Nurse has reached the location via Bot
+                    // We look for statuses that imply arrival: 'nurse_arrived', 'in_progress', 'completed'
+                    if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
+                        
+                        // Create a Log Object from the Booking Data
+                        tempLogs.push({
+                            id: doc.id,
+                            nurseName: b.assignedNurseName || "Assigned Nurse",
+                            // Use the time the bot marked them as "Started/Arrived"
+                            timestamp: b.startedAt || b.timestamp, 
+                            // Use the selfie sent to the bot (Fallback to default if missing)
+                            photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                            // Use the location sent to the bot
+                            address: b.nurse_location_address || b.location
+                        });
+                    }
+                });
+
+                allLogs = tempLogs; // Update global state
+                
+                // Render the UI
                 renderDashboardLogs();
                 renderAllLogs();
 
-                // Recalculate payroll if new logs come in
-                if (document.getElementById('view-payroll').classList.contains('active-view')) {
-                    window.calculatePayroll();
-                }
-
-                // Today's Stats
+                // Update "Present Today" Stat based on these bot logs
                 const today = new Date().toDateString();
                 const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
-                document.getElementById('stat-present').innerText = todayCount;
+                const presentEl = document.getElementById('stat-present');
+                if(presentEl) presentEl.innerText = todayCount;
+
+                // Recalculate Payroll
+                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
+                    window.calculatePayroll();
+                }
             });
 
-            // 3. Bookings
-            const bookingsRef = collection(db, "users", uid, "bookings");
+            // 3. Bookings (War Room Feed) - Kept separate for the "Requests" view
             unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
                 const grid = document.getElementById('bookings-grid');
-                grid.innerHTML = '';
-                if (snapshot.empty) { grid.innerHTML = '<p style="color:#888;">No new bookings.</p>'; return; }
-
-                snapshot.docs.forEach(doc => {
-                    const b = doc.data();
-                    grid.innerHTML += `
-                    <div class="card" style="border-left: 5px solid #25D366;">
-                        <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
-                        <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
-                        <p style="font-size:0.8rem; background:#f9f9f9; padding:5px;">"${b.patient_details || 'No details'}"</p>
-                        <hr style="margin:10px 0; border:0; border-top:1px dashed #ddd;">
-                        <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
-                    </div>`;
-                });
+                if(grid) {
+                    grid.innerHTML = '';
+                    if (snapshot.empty) { 
+                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>'; 
+                    } else {
+                        snapshot.docs.forEach(doc => {
+                            const b = doc.data();
+                            grid.innerHTML += `
+                            <div class="card" style="border-left: 5px solid #25D366;">
+                                <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
+                                <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
+                                <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
+                            </div>`;
+                        });
+                    }
+                }
             });
 
-            // 4. PAYOUTS (New: Needed for the Checkbox)
+            // 4. Payouts
             const payoutsRef = collection(db, "users", uid, "payouts");
-            // We don't need to unsubscribe from this strictly, but it helps sync the checkboxes
             onSnapshot(payoutsRef, (snapshot) => {
-                // Store paid records (e.g., "nurseId_2025-12")
                 allPayouts = snapshot.docs.map(doc => doc.id);
-
-                // If the user is looking at the payroll screen, update the checkboxes instantly
-                if (document.getElementById('view-payroll').classList.contains('active-view')) {
+                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
                     window.calculatePayroll();
                 }
             });
@@ -3579,6 +3723,14 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
         function renderDashboardLogs() {
             const grid = document.getElementById('dashboard-grid');
             grid.innerHTML = '';
+            
+            // Show message if empty
+            if (!allLogs || allLogs.length === 0) {
+                grid.innerHTML = '<p style="color:#999; grid-column:1/-1; text-align:center;">No activity today.</p>';
+                return;
+            }
+
+            // Show top 3
             allLogs.slice(0, 3).forEach(log => {
                 grid.innerHTML += createLogCard(log);
             });
@@ -3587,22 +3739,90 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
         function renderAllLogs() {
             const container = document.getElementById('logs-list-container');
             container.innerHTML = '';
+
+            // Show message if empty
+            if (!allLogs || allLogs.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:3rem; color:#999;">
+                        <i class="fa-solid fa-clipboard-list" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i>
+                        <p>No attendance logs found.</p>
+                    </div>`;
+                return;
+            }
+
             allLogs.forEach(log => {
                 container.innerHTML += createLogCard(log);
             });
         }
 
         function createLogCard(log) {
+            // Safety check for data
+            const timestamp = log.timestamp || Date.now();
+            const nurseName = log.nurseName || "Unknown Staff";
+            const photoUrl = log.photo || "https://via.placeholder.com/60";
+            const locationText = log.address || "GPS Location Recorded";
+
+            const dateObj = new Date(timestamp);
+            
+            // Format Time (e.g., 09:30 AM)
+            const timeStr = dateObj.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true 
+            });
+            
+            // Format Date (e.g., OCT 24)
+            const dateStr = dateObj.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+            });
+
+            // Sanitize data for the onclick function to prevent syntax errors with quotes
+            const safeName = nurseName.replace(/'/g, "\\'"); 
+            const safeTime = `${dateStr}, ${timeStr}`;
+
             return `
-            <div class="card" style="display:flex; gap:15px; align-items:center; padding:1rem;">
-                <img src="${log.photo}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #eee;">
-                <div>
-                    <h4 style="color:var(--navy); margin-bottom:2px;">${log.nurseName}</h4>
-                    <p style="font-size:0.8rem; color:#666;">${new Date(log.timestamp).toLocaleString()}</p>
-                    <p style="font-size:0.8rem; color:var(--primary);"><i class="fa-solid fa-map-pin"></i> ${log.address || "GPS Only"}</p>
+            <div class="log-card">
+                <div class="log-time-box">
+                    <div class="log-time-big">${timeStr}</div>
+                    <div class="log-date-small">${dateStr}</div>
+                    <div style="font-size:0.65rem; color:#138808; font-weight:bold; margin-top:2px;">REACHED</div>
+                </div>
+
+                <div class="log-photo-frame" onclick="viewImage('${photoUrl}', '${safeName}', '${safeTime}')">
+                    <img src="${photoUrl}" class="log-photo" alt="Selfie">
+                    <div style="position:absolute; bottom:-5px; right:-5px; background:white; border-radius:50%; padding:4px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                        <i class="fa-solid fa-magnifying-glass-plus" style="font-size:0.7rem; color:var(--primary);"></i>
+                    </div>
+                </div>
+
+                <div class="log-details">
+                    <h4>${nurseName}</h4>
+                    <div class="log-location">
+                        <i class="fa-solid fa-location-dot" style="color:#d32f2f; margin-top:3px;"></i>
+                        <span>${locationText}</span>
+                    </div>
                 </div>
             </div>`;
         }
+
+window.viewImage = (src, name, time) => {
+            const modal = document.getElementById('img-viewer-modal');
+            const img = document.getElementById('img-viewer-full');
+            const cap = document.getElementById('img-viewer-caption');
+
+            img.src = src;
+            cap.innerHTML = `<b>${name}</b> • Checked in at ${time}`;
+            modal.style.display = 'flex';
+        };
+
+        window.closeImageViewer = () => {
+            document.getElementById('img-viewer-modal').style.display = 'none';
+        };
+
+window.closeImageViewer = () => {
+    document.getElementById('img-viewer-modal').style.display = 'none';
+};
         // Function to save the "Paid" status to Firebase
         window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
             // Unique ID for this payment: "NurseID_MonthYear"
@@ -3970,116 +4190,283 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
             }
         };
         // --- WAR ROOM LOGIC (Updated with Expiry Gatekeeper) ---
-        let warRoomInterval = null;
-        let unsubscribeWarRoom = null; // 👈 Added to prevent memory leaks
+ let warRoomInterval = null;
+let unsubscribeWarRoom = null; 
+let logListeners = []; 
 
-        // Trigger this when switching to 'war-room' tab
-        window.loadWarRoom = () => {
-            // 1. GATEKEEPER CHECK: Don't show live data if staff are expired
-            if (expiredNursesList.length > 0) {
-                showRenewalModal(expiredNursesList);
-                return;
+window.loadWarRoom = () => {
+    // 1. GATEKEEPER CHECK
+    if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
+        showRenewalModal(expiredNursesList);
+        return;
+    }
+
+    // 2. Clean up previous listeners
+    if (warRoomInterval) clearInterval(warRoomInterval);
+    if (unsubscribeWarRoom) unsubscribeWarRoom();
+    logListeners.forEach(unsub => unsub());
+    logListeners = [];
+
+    // 3. Query Active AND Completed Bookings
+    const q = query(
+        collection(db, "bookings"),
+        // Added 'completed' to this list so they don't vanish instantly
+        where("status", "in", ["assigned", "nurse_arrived", "in_progress", "completed"]),
+        orderBy("timestamp", "desc")
+    );
+
+    unsubscribeWarRoom = onSnapshot(q, (snapshot) => {
+        const grid = document.getElementById('war-room-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        if (snapshot.empty) {
+            grid.innerHTML = `<div class="empty-state"><i class="fa-solid fa-mug-hot" style="font-size: 3rem; margin-bottom: 1rem; color:#ccc;"></i><h3>All Quiet</h3><p>No active deployments.</p></div>`;
+            return;
+        }
+
+        snapshot.forEach(doc => {
+            const b = doc.data();
+            const bid = doc.id;
+            const status = b.status;
+
+            // 🛑 FILTER: If completed more than 24 hours ago, hide it.
+            if (status === 'completed' && b.completedAt) {
+                const oneDay = 24 * 60 * 60 * 1000;
+                if (Date.now() - b.completedAt > oneDay) return; 
+            }
+            
+            // Render Card IDs
+            const cardId = `card-${bid}`;
+            const logsId = `logs-${bid}`;
+            
+            // --- STATUS & TIMELINE LOGIC ---
+            // s1=Assigned, s2=Arrived, s3=Started
+            let s1 = '', s2 = '', s3 = '';
+            
+            if(status === 'assigned') { s1 = 'active'; }
+            else if(status === 'nurse_arrived') { s1 = 'done'; s2 = 'active'; }
+            else if(status === 'in_progress') { s1 = 'done'; s2 = 'done'; s3 = 'active'; }
+            else if(status === 'completed') { s1 = 'done'; s2 = 'done'; s3 = 'done'; }
+
+            // Timer Logic
+            let timerHtml = '';
+            if (status === 'in_progress' && b.startedAt) {
+                 timerHtml = `<div class="war-timer" data-start="${b.startedAt}">00h 00m 00s</div>`;
+            } else if (status === 'completed') {
+                 timerHtml = `<span style="color:#757575; font-weight:bold;">COMPLETED</span>`;
+            } else {
+                 timerHtml = `<span style="color:#ff9933; font-size:0.8rem;">En Route...</span>`;
             }
 
-            // Stop any existing timer and listener to prevent duplicates
-            if (warRoomInterval) clearInterval(warRoomInterval);
-            if (unsubscribeWarRoom) unsubscribeWarRoom();
-
-            // 2. QUERY: Listen to GLOBAL 'bookings' collection
-            const q = query(
-                collection(db, "bookings"),
-                where("status", "in", ["assigned", "nurse_arrived", "in_progress"]),
-                orderBy("timestamp", "desc")
-            );
-
-            unsubscribeWarRoom = onSnapshot(q, (snapshot) => {
-                const grid = document.getElementById('war-room-grid');
-                if (!grid) return;
-
-                grid.innerHTML = '';
-
-                if (snapshot.empty) {
-                    grid.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa-solid fa-mug-hot" style="font-size: 3rem; margin-bottom: 1rem; color:#ccc;"></i>
-                    <h3>All Quiet</h3><p>No active nurses on the field right now.</p>
-                </div>`;
-                    return;
-                }
-
-                snapshot.forEach(doc => {
-                    const b = doc.data();
-                    const status = b.status;
-
-                    // TIMELINE STATES
-                    const s1 = status === 'assigned' ? 'active' : 'done';
-                    const s2 = status === 'nurse_arrived' ? 'active' : (status === 'in_progress' ? 'done' : '');
-                    const s3 = status === 'in_progress' ? 'active' : '';
-
-                    // TIMER LOGIC
-                    let timerHtml = '<span style="color:#999; font-size:0.8rem;">Ready...</span>';
-                    if (status === 'in_progress' && b.startedAt) {
-                        timerHtml = `<div class="war-timer" data-start="${b.startedAt}">00h 00m 00s</div>`;
-                    }
-
-                    // MAP LINK
-                    const mapLink = b.clientLocation
-                        ? `https://www.google.com/maps?q=${b.clientLocation.lat},${b.clientLocation.lng}`
-                        : '#';
-
-                    grid.innerHTML += `
-                <div class="war-card status-${status}">
-                    <div class="war-header">
-                        <div>
-                            <h3 style="margin:0; color:var(--navy); font-size:1.1rem;">${b.assignedNurseName}</h3>
-                            <span style="font-size:0.75rem; color:#666;">${b.assignedNursePhone}</span>
-                        </div>
-                        ${timerHtml}
+            const html = `
+            <div class="war-card status-${status}" id="${cardId}">
+                <div class="war-header">
+                    <div>
+                        <h3 style="margin:0; color:var(--navy); font-size:1.1rem;">${b.assignedNurseName}</h3>
+                        <span style="font-size:0.75rem; color:#666;">${b.patient_details || 'Patient'}</span>
                     </div>
-                    <div class="war-body">
-                        <div style="margin-bottom:15px;">
-                            <div style="font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#444;">Patient/Client:</div>
-                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                                <a href="tel:${b.clientPhone}" class="client-pill">
-                                    <i class="fa-solid fa-phone"></i> Call
-                                </a>
-                                <a href="${mapLink}" target="_blank" class="client-pill">
-                                    <i class="fa-solid fa-location-arrow"></i> Map
-                                </a>
-                                <span class="client-pill" style="background:#f0f0f0; color:#333;">
-                                    <i class="fa-solid fa-clock"></i> ${new Date(b.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                            </div>
-                        </div>
+                    ${timerHtml}
+                </div>
+                <div class="war-body">
+                    <div style="margin-bottom:15px;">
+                         <div style="font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#444;">Status:</div>
+                         <div style="background:#f9f9f9; padding:10px; border-radius:8px; border:1px solid #eee;">
+                            <div class="war-step ${s1}"><i class="fa-solid fa-circle-check"></i> Booked & Assigned</div>
+                            <div class="war-step ${s2}"><i class="fa-solid fa-location-dot"></i> Arrived at Home</div>
+                            <div class="war-step ${s3}"><i class="fa-solid fa-user-nurse"></i> <b>Care in Progress</b></div>
+                         </div>
+                    </div>
+                    
+                    <div style="font-size:0.8rem; font-weight:bold; color:#555; margin-bottom:5px; margin-top:15px; border-top:1px dashed #eee; padding-top:10px;">
+                        📝 Live Nurse Logs
+                    </div>
+                    <div class="vitals-container" id="${logsId}">
+                        <div style="text-align:center; color:#ccc; padding:10px;">Waiting for nurse updates...</div>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; margin-top:15px; align-items:center;">
+                        <a href="tel:${b.clientPhone}" class="client-pill" style="margin:0;"><i class="fa-solid fa-phone"></i> Call Client</a>
+                        <button class="btn-report" onclick="window.generateShiftReport('${bid}')">
+                            <i class="fa-solid fa-file-pdf"></i> Report
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+            
+            grid.innerHTML += html;
+
+            // 4. LISTEN FOR LOGS (Sub-collection)
+            const logsQuery = query(collection(db, "bookings", bid, "logs"), orderBy("timestamp", "desc"), limit(10)); // Increased limit to 10
+            
+            const unsubLogs = onSnapshot(logsQuery, (logSnap) => {
+                const logContainer = document.getElementById(logsId);
+                if(!logContainer) return;
+
+                if (logSnap.empty) {
+                    logContainer.innerHTML = '<div style="text-align:center; color:#ccc; padding:10px;">No logs yet.</div>';
+                } else {
+                    logContainer.innerHTML = ''; // Clear loading text
+                    logSnap.forEach(lDoc => {
+                        const l = lDoc.data();
+                        const time = new Date(l.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                         
-                        <div style="background:#f9f9f9; padding:12px; border-radius:10px; border:1px solid #eee;">
-                            <div class="war-step ${s1}"><i class="fa-solid fa-circle-check"></i> Dispatched</div>
-                            <div class="war-step ${s2}"><i class="fa-solid fa-truck-fast"></i> At Location</div>
-                            <div class="war-step ${s3}"><i class="fa-solid fa-heart-pulse"></i> <b>On Duty</b></div>
-                        </div>
-                    </div>
-                </div>`;
+                        let contentClass = l.is_critical ? 'log-critical' : '';
+                        
+                        // 1. Get the TEXT note (Summary or Raw Text)
+                        let mainText = l.summary || l.raw_text || "Update logged.";
+                        
+                        // 2. Get the VITALS data (if exists)
+                        let vitalsHtml = '';
+                        if (l.vitals) {
+                            let parts = [];
+                            if(l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
+                            if(l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
+                            if(l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
+                            if(l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}`);
+                            
+                            if(parts.length > 0) {
+                                vitalsHtml = `<br><span class="log-vitals-badge">${parts.join(' | ')}</span>`;
+                            }
+                        }
+
+                        // 3. Render Combined
+                        logContainer.innerHTML += `
+                        <div class="log-item">
+                            <div class="log-time">${time}</div>
+                            <div class="log-content ${contentClass}">
+                                ${mainText}
+                                ${vitalsHtml}
+                            </div>
+                        </div>`;
+                    });
+                }
+            });
+            logListeners.push(unsubLogs);
+        });
+
+        // Restart Timer Interval
+        if (warRoomInterval) clearInterval(warRoomInterval);
+        warRoomInterval = setInterval(updateWarTimers, 1000);
+    });
+};
+function updateWarTimers() {
+    document.querySelectorAll('.war-timer').forEach(el => {
+        const start = parseInt(el.getAttribute('data-start'));
+        if (!start) return;
+        const diff = Date.now() - start;
+
+        const hrs = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        el.innerText = `${hrs}h ${mins}m ${secs}s`;
+    });
+}
+
+// ... existing updateWarTimers code is above here ...
+
+    // 👇 PASTE THIS MISSING FUNCTION HERE 👇
+
+    // --- GENERATE PDF REPORT ---
+    window.generateShiftReport = async (bookingId) => {
+        const { jsPDF } = window.jspdf;
+        
+        // 1. Fetch Data
+        try {
+            // Get Booking Details
+            const bookingSnap = await getDoc(doc(db, "bookings", bookingId));
+            if (!bookingSnap.exists()) return alert("Booking not found!");
+            const booking = bookingSnap.data();
+
+            // Get Medical Logs (Ordered by time)
+            const logsQuery = query(collection(db, "bookings", bookingId, "logs"), orderBy("timestamp", "asc"));
+            const logsSnap = await getDocs(logsQuery);
+            
+            // 2. Setup PDF
+            const docPdf = new jsPDF();
+            
+            // --- HEADER ---
+            docPdf.setFillColor(255, 153, 51); // Saffron Color
+            docPdf.rect(0, 0, 210, 20, 'F');   // Header Bar
+            docPdf.setTextColor(255, 255, 255);
+            docPdf.setFontSize(16);
+            docPdf.setFont("helvetica", "bold");
+            docPdf.text("Silver Care - Shift Report", 15, 13);
+            
+            // --- PATIENT DETAILS ---
+            docPdf.setTextColor(0, 0, 0);
+            docPdf.setFontSize(10);
+            docPdf.setFont("helvetica", "normal");
+            
+            docPdf.text(`Patient Name: ${booking.patient_details || 'N/A'}`, 15, 30);
+            docPdf.text(`Assigned Nurse: ${booking.assignedNurseName}`, 15, 36);
+            docPdf.text(`Shift Date: ${new Date(booking.timestamp).toDateString()}`, 15, 42);
+            docPdf.text(`Location: ${booking.location || 'Home Care'}`, 15, 48);
+
+            // --- VITALS & LOGS TABLE ---
+            const tableData = [];
+            
+            if (logsSnap.empty) {
+                // Handle empty logs
+                tableData.push(["-", "No updates recorded yet.", "-"]);
+            } else {
+                logsSnap.forEach(snap => {
+                    const l = snap.data();
+                    const time = new Date(l.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    
+                    // Format Vitals Column
+                    let vitals = "-";
+                    if (l.vitals) {
+                        let parts = [];
+                        if(l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
+                        if(l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
+                        if(l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
+                        if(l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}%`);
+                        vitals = parts.join(', ');
+                    }
+                    
+                    // Format Summary Column
+                    let summary = l.summary || l.raw_text || "Routine Check";
+                    if(l.is_critical) summary = "[ALERT] " + summary;
+
+                    tableData.push([time, summary, vitals]);
                 });
+            }
 
-                // START LIVE CLOCK
-                if (warRoomInterval) clearInterval(warRoomInterval);
-                warRoomInterval = setInterval(updateWarTimers, 1000);
+            // Generate Table
+            docPdf.autoTable({
+                startY: 55,
+                head: [['Time', 'Observation / Action', 'Vitals Recorded']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { 
+                    fillColor: [0, 51, 102], // Navy Blue
+                    textColor: 255 
+                },
+                styles: { fontSize: 9 },
+                columnStyles: {
+                    0: { cellWidth: 30 }, // Time
+                    1: { cellWidth: 'auto' }, // Observation
+                    2: { cellWidth: 50 }  // Vitals
+                }
             });
-        };
 
-        function updateWarTimers() {
-            document.querySelectorAll('.war-timer').forEach(el => {
-                const start = parseInt(el.getAttribute('data-start'));
-                if (!start) return;
-                const diff = Date.now() - start;
+            // --- FOOTER ---
+            const finalY = docPdf.lastAutoTable.finalY || 60;
+            docPdf.setFontSize(8);
+            docPdf.setTextColor(150);
+            docPdf.text("Generated automatically by Silver Care AI System", 15, finalY + 10);
+            docPdf.text(`Report ID: ${bookingId}`, 15, finalY + 15);
 
-                const hrs = Math.floor(diff / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            // Save File
+            docPdf.save(`SilverCare_Report_${booking.assignedNurseName}_${Date.now()}.pdf`);
 
-                el.innerText = `${hrs}h ${mins}m ${secs}s`;
-            });
+        } catch (e) {
+            console.error("PDF Generation Error:", e);
+            alert("Failed to generate report. See console for details.");
         }
+    };
         // --- 1. MANAGE MODE TOGGLE ---
         window.toggleManageMode = () => {
             isManageMode = !isManageMode;
