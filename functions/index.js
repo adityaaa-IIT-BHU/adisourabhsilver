@@ -16,21 +16,6 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // --- CONFIGURATION ---
-const openai = new OpenAI({ 
-    apiKey: "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" // <--- PASTE YOUR FULL NEW KEY HERE inside the quotes
-});
-// [ADD THIS] Initialize Storage for Audio Files
-const storage = admin.storage();
-const bucket = storage.bucket(); 
-
-// [ADD THIS] EXOTEL CREDENTIALS (From your Dashboard)
-const EXOTEL_API_KEY = "b84cd31104a620b59d73d2b0546dc33e98eed6b149ba9146"; 
-const EXOTEL_TOKEN = "947c821cb8f1276bdd24cd791d46c12391b6c9bab876e254"; // <--- PASTE THE TOKEN from the 'API Token' column in your screenshot
-const EXOTEL_SUBDOMAIN = "api.exotel.com";
-// PASTE YOUR META TOKEN HERE
-const WHATSAPP_TOKEN = "EAAZAdwZCN1oWUBQU47ABYOG9TKr4BOxBL8KZB3KzFg8VGctKZAbFXurv2UZBrtDtXQuZBeSZCAGV6kC0jp31OD3k4ZALmvuyZBjJB7cBBvcm4ZA7WRek6HxZC8j2bil56qpDeSkZB9ZAJ4z2fnFZA8vwPSwg6AOu9SJ4vGWEmt4jZA6BvyZAfksVIQNHSBTl1DrDnagaLVhZAGQZDZD"; 
-const PHONE_NUMBER_ID = "859484990592429"; 
-const VERIFY_TOKEN = "silver_seva_secret"; 
 
 async function getRecordingUrlFromCallSid(callSid) {
     const url = `https://${EXOTEL_SUBDOMAIN}/v1/Accounts/${EXOTEL_API_KEY}/Calls/${callSid}.json`;
