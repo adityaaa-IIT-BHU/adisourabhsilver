@@ -616,6 +616,37 @@
             font-size: 1.2rem;
         }
 
+        /* --- RATING STARS CSS --- */
+        .star-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .fa-star,
+        .fa-star-half-stroke {
+            color: #ffc107;
+            /* Standard Gold Color */
+            font-size: 0.8rem;
+        }
+
+        .rating-text {
+            font-size: 0.75rem;
+            color: #888;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        .new-badge {
+            background: #f0f0f0;
+            color: #666;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
         /* --- Camera & Nurse App Specifics --- */
         .cam-container {
             width: 100%;
@@ -1099,25 +1130,100 @@
 
         /* --- WAR ROOM STYLES --- */
         .war-room-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 1.5rem;
-}
-.war-card {
-    background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border-left: 5px solid #ccc; position: relative; overflow: hidden; transition: 0.3s;
-}
-.war-card.status-assigned { border-left-color: #ff9933; }
-.war-card.status-nurse_arrived { border-left-color: #2196F3; }
-.war-card.status-in_progress { border-left-color: #138808; background: #f1f8e9; }
-.war-header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
-.war-timer { font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.2rem; color: #138808; background: #fff; padding: 2px 8px; border-radius: 4px; border: 1px solid #c8e6c9; }
-.war-body { padding: 1rem; }
-.war-step { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; color: #555; }
-.war-step.active { color: #ff9933; font-weight: bold; animation: pulseText 1.5s infinite; }
-@keyframes pulseText { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-.client-pill { background: #e3f2fd; color: #0d47a1; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; text-decoration: none; }
-/* --- VITALS LOG STYLES --- */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .war-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ccc;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .war-card.status-assigned {
+            border-left-color: #ff9933;
+        }
+
+        .war-card.status-nurse_arrived {
+            border-left-color: #2196F3;
+        }
+
+        .war-card.status-in_progress {
+            border-left-color: #138808;
+            background: #f1f8e9;
+        }
+
+        .war-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .war-timer {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #138808;
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid #c8e6c9;
+        }
+
+        .war-body {
+            padding: 1rem;
+        }
+
+        .war-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .war-step.active {
+            color: #ff9933;
+            font-weight: bold;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .client-pill {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+        /* --- VITALS LOG STYLES --- */
         .vitals-container {
             margin-top: 15px;
             background: #fff;
@@ -1127,7 +1233,7 @@
             max-height: 150px;
             overflow-y: auto;
         }
-        
+
         .log-item {
             display: flex;
             gap: 10px;
@@ -1144,8 +1250,11 @@
             min-width: 50px;
         }
 
-        .log-content { flex: 1; color: #444; }
-        
+        .log-content {
+            flex: 1;
+            color: #444;
+        }
+
         .log-critical {
             color: #c62828;
             background: #ffebee;
@@ -1167,40 +1276,61 @@
             align-items: center;
             gap: 5px;
         }
-        .btn-report:hover { background: #e8f5e9; }
+
+        .btn-report:hover {
+            background: #e8f5e9;
+        }
 
         /* Add these to your existing CSS */
 
-/* Gray State for Completed Jobs */
-.war-card.status-completed { 
-    border-left-color: #757575; 
-    background: #f4f4f4;
-    opacity: 0.8;
-}
-.war-card.status-completed .war-header h3 { color: #555; text-decoration: line-through; }
-.war-card.status-completed .war-step { color: #999; }
-.war-card.status-completed .btn-report { background: #333; color: #fff; border: none; }
+        /* Gray State for Completed Jobs */
+        .war-card.status-completed {
+            border-left-color: #757575;
+            background: #f4f4f4;
+            opacity: 0.8;
+        }
 
-/* Improved Log Display */
-.log-item {
-    display: flex;
-    gap: 10px;
-    font-size: 0.85rem;
-    padding: 8px 0;
-    border-bottom: 1px dashed #e0e0e0;
-    align-items: flex-start;
-}
-.log-content { flex: 1; color: #333; line-height: 1.4; }
-.log-vitals-badge {
-    display: inline-block;
-    background: #e3f2fd;
-    color: #0d47a1;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-top: 4px;
-}
+        .war-card.status-completed .war-header h3 {
+            color: #555;
+            text-decoration: line-through;
+        }
+
+        .war-card.status-completed .war-step {
+            color: #999;
+        }
+
+        .war-card.status-completed .btn-report {
+            background: #333;
+            color: #fff;
+            border: none;
+        }
+
+        /* Improved Log Display */
+        .log-item {
+            display: flex;
+            gap: 10px;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            align-items: flex-start;
+        }
+
+        .log-content {
+            flex: 1;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .log-vitals-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
 
 
         /* Plan Selector Styles */
@@ -1215,108 +1345,110 @@
         }
 
         /* --- ENHANCED LOG CARD STYLES --- */
-.log-card {
-    display: flex;
-    background: white;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    border: 1px solid #f0f0f0;
-    transition: transform 0.2s;
-    align-items: center;
-    gap: 1rem;
-}
+        .log-card {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.2s;
+            align-items: center;
+            gap: 1rem;
+        }
 
-.log-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary);
-}
+        .log-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
 
-.log-time-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 80px;
-    border-right: 1px solid #eee;
-    padding-right: 1rem;
-}
+        .log-time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            border-right: 1px solid #eee;
+            padding-right: 1rem;
+        }
 
-.log-time-big {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1;
-}
+        .log-time-big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+        }
 
-.log-date-small {
-    font-size: 0.7rem;
-    color: #888;
-    margin-top: 4px;
-    text-transform: uppercase;
-}
+        .log-date-small {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
 
-.log-photo-frame {
-    position: relative;
-    cursor: pointer;
-}
+        .log-photo-frame {
+            position: relative;
+            cursor: pointer;
+        }
 
-.log-photo {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+        .log-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.log-details {
-    flex: 1;
-}
+        .log-details {
+            flex: 1;
+        }
 
-.log-details h4 {
-    color: #333;
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
+        .log-details h4 {
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
 
-.log-location {
-    font-size: 0.85rem;
-    color: #666;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    line-height: 1.4;
-}
+        .log-location {
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.4;
+        }
 
-/* Image Viewer Modal */
-#img-viewer-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 20000;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+        /* Image Viewer Modal */
+        #img-viewer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 20000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-#img-viewer-full {
-    max-width: 90%;
-    max-height: 80vh;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
-}
+        #img-viewer-full {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
 
-.img-viewer-close {
-    color: white;
-    font-size: 2rem;
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    cursor: pointer;
-}
+        .img-viewer-close {
+            color: white;
+            font-size: 2rem;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -1986,7 +2118,6 @@
 
             <form id="addNurseForm">
                 <div
-                
                     style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #eee;">
                     <label
                         style="font-weight: 600; color: var(--navy); margin-bottom: 10px; display: block; font-size: 0.9rem;">Select
@@ -2285,13 +2416,13 @@
         </div>
     </div>
     <div id="img-viewer-modal" onclick="closeImageViewer()">
-    <span class="img-viewer-close">&times;</span>
-    <img id="img-viewer-full" src="" alt="Proof of Attendance">
-    <p id="img-viewer-caption" style="color:white; margin-top:15px; font-family:'Poppins';"></p>
-</div>
+        <span class="img-viewer-close">&times;</span>
+        <img id="img-viewer-full" src="" alt="Proof of Attendance">
+        <p id="img-viewer-caption" style="color:white; margin-top:15px; font-family:'Poppins';"></p>
+    </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script type="module">
         // 1. IMPORTS (VERIFIED & CLEAN)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -2396,7 +2527,7 @@
             }
         });
 
-        // --- 🗓️ VALIDITY CHECKER SYSTEM (Step 3) ---
+        // --- 🗓️ VALIDITY CHECKER SYSTEM (Step 3: Updated for Plan Types) ---
         let expiredNursesList = []; // Stores IDs of nurses who need payment
 
         async function checkNurseValidity(uid) {
@@ -2413,7 +2544,12 @@
                 const expiry = n.validUntil || (now + (7 * msPerDay));
 
                 if (expiry < now) {
-                    expiredNursesList.push({ id: docSnap.id, name: n.name });
+                    // 🟢 UPDATED: Capture the 'type' so the modal knows what badge to show
+                    expiredNursesList.push({
+                        id: docSnap.id,
+                        name: n.name,
+                        type: n.type || 'monthly' // Default to monthly if missing
+                    });
                 }
             });
 
@@ -2425,7 +2561,8 @@
             }
         }
 
-        // --- UPDATED: Renewal Modal with Individual Delete Option ---
+
+        // --- UPDATED: Renewal Modal (Fixes Pricing Loophole) ---
         function showRenewalModal(expiredList) {
             const modal = document.getElementById('modal-payment-lock');
             const title = document.querySelector('#payment-form-section h2');
@@ -2434,35 +2571,62 @@
             const payBtn = document.getElementById('rzp-button');
             const backBtn = document.getElementById('btn-pay-later');
 
+            // 🟢 NEW: Get Plan Buttons to manipulate them
+            const monthlyBtn = document.getElementById('plan-monthly');
+            const dailyBtn = document.getElementById('plan-daily');
+
             if (!modal) return;
             modal.style.display = 'flex';
 
+            // 🟢 LOCK PLAN TO MONTHLY (Prevent the ₹10 Loophole)
+            if (monthlyBtn && dailyBtn) {
+                // Force click Monthly to set price to 199
+                monthlyBtn.click();
+                // Hide Daily button so they can't switch
+                dailyBtn.style.display = 'none';
+                // Update text to show why
+                monthlyBtn.innerText = "Renew as Monthly (30 Days)";
+                monthlyBtn.style.width = "100%"; // Make it look full width
+            }
+
             if (title) {
-                title.innerText = "⚠️ Membership Expired";
+                title.innerText = "⚠️ Validity Expired";
                 title.style.color = "#d32f2f";
             }
 
             if (desc) {
-                // Create a list of nurses with a "Delete & Stop Paying" button for each
                 let listHtml = `<div style="text-align:left; margin-top:15px; border-top:1px solid #eee; padding-top:10px; max-height:200px; overflow-y:auto;">`;
 
                 expiredList.forEach(nurse => {
+                    const isDaily = nurse.type === 'daily';
+                    const badgeStyle = isDaily
+                        ? "background:#fff3e0; color:#e65100; border:1px solid #ffe0b2;"
+                        : "background:#e3f2fd; color:#1565c0; border:1px solid #bbdefb;";
+                    const typeText = isDaily ? "Daily Pass" : "Monthly Slot";
+
                     listHtml += `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#fff5f5; padding:10px; border-radius:10px; border:1px solid #ffebee;">
                 <div>
-                    <span style="font-size:0.9rem; font-weight:600; color:#333; display:block;">${nurse.name}</span>
-                    <span style="font-size:0.7rem; color:#d32f2f;">Expired</span>
+                    <span style="font-size:0.9rem; font-weight:600; color:#333;">${nurse.name}</span>
+                    <span style="font-size:0.65rem; margin-left:6px; padding:2px 6px; border-radius:4px; font-weight:bold; ${badgeStyle}">${typeText}</span>
+                    <span style="font-size:0.7rem; color:#d32f2f; display:block; margin-top:2px;">Expired</span>
                 </div>
-                <button onclick="window.removeNurseFromLock('${nurse.id}')" 
-                        style="background:#ff4444; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.75rem; font-weight:600; transition:0.2s;">
-                    <i class="fa-solid fa-trash"></i> Delete
-                </button>
+                <button onclick="window.removeNurse('${nurse.id}', true)" 
+                style="background:#ff4444; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.75rem; font-weight:600; transition:0.2s; display:flex; align-items:center; gap:5px;">
+            <i class="fa-solid fa-trash"></i> Delete
+        </button>
             </div>`;
                 });
-
                 listHtml += `</div>`;
 
-                desc.innerHTML = `Action required for <b>${expiredList.length} staff member(s)</b>. Pay to renew or delete to continue: ${listHtml}`;
+                desc.innerHTML = `
+            <div style="background:#fff3cd; color:#856404; padding:12px; border-radius:8px; margin-bottom:15px; font-size:0.85rem; border:1px solid #ffeeba; text-align:left;">
+                <i class="fa-solid fa-circle-info"></i> <b>Action Required:</b><br>
+                • <b>Daily Pass:</b> Shift is over. Please <b style="color:#d32f2f;">Delete</b> them.<br>
+                • <b>Monthly:</b> <b style="color:#d32f2f;">Delete</b> or <b>Renew</b> (Upgrade) below.
+            </div>
+            ${listHtml}
+        `;
             }
 
             if (input) {
@@ -2472,32 +2636,70 @@
             }
 
             if (payBtn) payBtn.innerText = `Renew ${expiredList.length} Staff (30 Days)`;
-
-            // Hide back button because renewal/cleanup is mandatory to access dashboard
             if (backBtn) backBtn.style.display = 'none';
         }
 
-        // Function to delete staff directly from the Lock Screen
-        window.removeNurseFromLock = async (id) => {
-            if (confirm("Delete this staff member permanently? You won't have to pay for them, but their attendance data will be lost.")) {
-                try {
-                    // 1. Delete from Firebase
-                    await deleteDoc(doc(db, "users", currentUser.uid, "nurses", id));
+// --- FINAL LOCK SCREEN DELETE (Handles Daily vs Monthly Logic) ---
+window.removeNurseFromLock = async (id) => {
+    if (!confirm("Are you sure you want to delete this staff member?")) return;
 
-                    // 2. Decrement your agency's nurse count
-                    await updateDoc(doc(db, "users", currentUser.uid), {
-                        nurseCount: increment(-1)
-                    });
+    try {
+        // 1. GET DATA
+        const nurseRef = doc(db, "users", currentUser.uid, "nurses", id);
+        const nurseSnap = await getDoc(nurseRef);
+        
+        if (!nurseSnap.exists()) {
+            // Already deleted? Clean UI and exit.
+            const btn = document.querySelector(`button[onclick*="${id}"]`);
+            if(btn) btn.closest('div').remove();
+            return;
+        }
 
-                    // 3. Re-scan validity. If list is now empty, it hides the modal!
-                    await checkNurseValidity(currentUser.uid);
+        const n = nurseSnap.data();
+        const isDaily = (n.type === 'daily');
+        
+        // 2. DELETE THE NURSE
+        await deleteDoc(nurseRef);
 
-                } catch (error) {
-                    console.error("Removal Error:", error);
-                    alert("Could not remove staff. Please try again.");
-                }
+        // 3. UPDATE THE NUMBERS (The Smart Part)
+        if (isDaily) {
+            // 🎫 DAILY LOGIC:
+            // We ALREADY burned the pass when we added them.
+            // We DO NOT touch 'nurseCount' because daily staff don't count towards that limit.
+            // So we just delete the doc and do nothing else.
+            console.log("🎫 Daily Staff deleted. Cleanup only.");
+        } 
+        else {
+            // 🗓️ MONTHLY LOGIC:
+            const updates = {
+                nurseCount: increment(-1) // 1. Always lower Active Count
+            };
+
+            // Check Expiry for "Burn" logic
+            const now = Date.now();
+            const validUntil = n.validUntil || (n.createdAt + (30 * 24 * 60 * 60 * 1000));
+            const isExpired = validUntil < now;
+
+            // 2. If they used the full month, burn the slot limit too.
+            if (isExpired) {
+                console.log("🔥 Burning used Monthly slot...");
+                updates.extraSlots = increment(-1); 
             }
-        };
+            
+            await updateDoc(doc(db, "users", currentUser.uid), updates);
+        }
+
+        // 4. UI CLEANUP
+        const btn = document.querySelector(`button[onclick*="${id}"]`);
+        if (btn) btn.closest('div').remove();
+
+        await checkNurseValidity(currentUser.uid);
+
+    } catch (error) {
+        console.error("Removal Error:", error);
+        alert("Could not remove staff. Please try again.");
+    }
+};
 
         // --- THE GATEKEEPER (Step 3: Prepaid Validity Model) ---
         function setupGatekeeper(uid) {
@@ -2542,7 +2744,7 @@
         // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
         // --- DATA SYNC (Now Linked to WhatsApp Bot Data) ---
         function startDataSync(uid) {
-            if (unsubscribeNurses) return; 
+            if (unsubscribeNurses) return;
 
             console.log("🔄 Starting Data Sync...");
 
@@ -2552,13 +2754,13 @@
                 renderStaffList();
                 populateLoginSelect();
                 const totalEl = document.getElementById('stat-total');
-                if(totalEl) totalEl.innerText = allNurses.length;
+                if (totalEl) totalEl.innerText = allNurses.length;
             });
 
             // 2. ATTENDANCE LOGS (UPDATED: Now pulls from WhatsApp Bookings)
             // We listen to 'bookings' but treat them as 'logs' when a nurse arrives.
             const bookingsRef = collection(db, "users", uid, "bookings");
-            
+
             unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
                 const tempLogs = [];
 
@@ -2568,13 +2770,13 @@
                     // 🛑 FILTER: Only include entries where the Nurse has reached the location via Bot
                     // We look for statuses that imply arrival: 'nurse_arrived', 'in_progress', 'completed'
                     if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
-                        
+
                         // Create a Log Object from the Booking Data
                         tempLogs.push({
                             id: doc.id,
                             nurseName: b.assignedNurseName || "Assigned Nurse",
                             // Use the time the bot marked them as "Started/Arrived"
-                            timestamp: b.startedAt || b.timestamp, 
+                            timestamp: b.startedAt || b.timestamp,
                             // Use the selfie sent to the bot (Fallback to default if missing)
                             photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                             // Use the location sent to the bot
@@ -2584,7 +2786,7 @@
                 });
 
                 allLogs = tempLogs; // Update global state
-                
+
                 // Render the UI
                 renderDashboardLogs();
                 renderAllLogs();
@@ -2593,7 +2795,7 @@
                 const today = new Date().toDateString();
                 const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
                 const presentEl = document.getElementById('stat-present');
-                if(presentEl) presentEl.innerText = todayCount;
+                if (presentEl) presentEl.innerText = todayCount;
 
                 // Recalculate Payroll
                 if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
@@ -2604,10 +2806,10 @@
             // 3. Bookings (War Room Feed) - Kept separate for the "Requests" view
             unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
                 const grid = document.getElementById('bookings-grid');
-                if(grid) {
+                if (grid) {
                     grid.innerHTML = '';
-                    if (snapshot.empty) { 
-                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>'; 
+                    if (snapshot.empty) {
+                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
                     } else {
                         snapshot.docs.forEach(doc => {
                             const b = doc.data();
@@ -2801,6 +3003,18 @@
         };
         // --- SMART TRIGGER: Handles New vs. Existing Users ---
         window.openModal = (isOnboarding = false) => {
+
+            // 🟢 RESET PLAN BUTTONS (Fix for Lock Screen Loophole)
+            // We must unhide the Daily button in case the Lock Screen hid it previously.
+            const dailyBtn = document.getElementById('plan-daily');
+            const monthlyBtn = document.getElementById('plan-monthly');
+
+            if (dailyBtn) dailyBtn.style.display = 'block'; // Bring it back
+            if (monthlyBtn) {
+                monthlyBtn.innerText = "Monthly (30 Days)"; // Reset Text
+                monthlyBtn.style.width = ""; // Reset width (remove 100% stretch)
+            }
+
             // 1. Check if User is Active (Has paid at least once)
             const isPaidUser = currentUserData?.isPaid === true;
 
@@ -2933,7 +3147,12 @@
                                 const days30 = 30 * 24 * 60 * 60 * 1000;
                                 const renewalPromises = expiredNursesList.map(nurse => {
                                     const nurseRef = doc(db, "users", currentUser.uid, "nurses", nurse.id);
-                                    return updateDoc(nurseRef, { validUntil: Date.now() + days30 });
+
+                                    // 🟢 FIX: Also update 'type' to 'monthly' so the badge turns Blue!
+                                    return updateDoc(nurseRef, {
+                                        validUntil: Date.now() + days30,
+                                        type: 'monthly'  // <--- THIS IS THE KEY LINE
+                                    });
                                 });
                                 await Promise.all(renewalPromises);
                                 expiredNursesList = [];
@@ -3090,47 +3309,47 @@
         }
 
 
-// --- UPDATED ADMIN LOADER (Shows Slots + Daily Passes) ---
-function loadAdminData() {
-    onSnapshot(collection(db, "users"), (snapshot) => {
-        const allTable = document.getElementById('admin-all-users');
-        const leaderboardDiv = document.getElementById('admin-leaderboard');
+        // --- UPDATED ADMIN LOADER (Shows Slots + Daily Passes) ---
+        function loadAdminData() {
+            onSnapshot(collection(db, "users"), (snapshot) => {
+                const allTable = document.getElementById('admin-all-users');
+                const leaderboardDiv = document.getElementById('admin-leaderboard');
 
-        // ✅ Save data for CSV Export
-        allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // ✅ Save data for CSV Export
+                allAgencies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Clear existing data
-        if (allTable) allTable.innerHTML = '';
-        if (leaderboardDiv) leaderboardDiv.innerHTML = '';
+                // Clear existing data
+                if (allTable) allTable.innerHTML = '';
+                if (leaderboardDiv) leaderboardDiv.innerHTML = '';
 
-        // Clear pending table
-        const pendingTable = document.getElementById('admin-pending-table');
-        if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
+                // Clear pending table
+                const pendingTable = document.getElementById('admin-pending-table');
+                if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
 
-        let referralCounts = {};
+                let referralCounts = {};
 
-        snapshot.docs.forEach(doc => {
-            const u = doc.data();
+                snapshot.docs.forEach(doc => {
+                    const u = doc.data();
 
-            // --- 1. DATA PREP ---
-            const usedSlots = u.nurseCount || 0;
-            const paidSlots = u.extraSlots || 0;
-            const dailyPasses = u.dailyPasses || 0; // 👈 NEW: Get Daily Pass Count
+                    // --- 1. DATA PREP ---
+                    const usedSlots = u.nurseCount || 0;
+                    const paidSlots = u.extraSlots || 0;
+                    const dailyPasses = u.dailyPasses || 0; // 👈 NEW: Get Daily Pass Count
 
-            // Calculate Bar Percentage
-            let percentage = 0;
-            if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
+                    // Calculate Bar Percentage
+                    let percentage = 0;
+                    if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
-            const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
+                    const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
 
-            // --- 2. BUILD THE DISPLAY HTML ---
-            let slotDisplay = '';
-            
-            if (u.plan === 'unlimited') {
-                slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
-            } else {
-                // 🟢 HYBRID DISPLAY: Slots Bar + Daily Pass Badge
-                slotDisplay = `
+                    // --- 2. BUILD THE DISPLAY HTML ---
+                    let slotDisplay = '';
+
+                    if (u.plan === 'unlimited') {
+                        slotDisplay = `<span style="color:#e65100; font-weight:bold;">💎 Unlimited</span>`;
+                    } else {
+                        // 🟢 HYBRID DISPLAY: Slots Bar + Daily Pass Badge
+                        slotDisplay = `
                     <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
                         ${usedSlots} / ${paidSlots} Slots
                     </div>
@@ -3143,23 +3362,23 @@ function loadAdminData() {
                         <i class="fa-solid fa-ticket" style="color:#ff9933;"></i> ${dailyPasses} Daily Passes Available
                     </div>
                 `;
-            }
+                    }
 
-            // --- 3. LEADERBOARD ---
-            if (u.referralBy && u.referralBy !== "DIRECT") {
-                if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                referralCounts[u.referralBy].total += 1;
-                if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-            }
+                    // --- 3. LEADERBOARD ---
+                    if (u.referralBy && u.referralBy !== "DIRECT") {
+                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                        referralCounts[u.referralBy].total += 1;
+                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                    }
 
-            // --- 4. STATUS ---
-            let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
-            if (u.isPaid) {
-                statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">ACTIVE</span>';
-            }
+                    // --- 4. STATUS ---
+                    let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
+                    if (u.isPaid) {
+                        statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">ACTIVE</span>';
+                    }
 
-            // --- 5. RENDER ROW ---
-            allTable.innerHTML += `
+                    // --- 5. RENDER ROW ---
+                    allTable.innerHTML += `
                 <tr style="border-bottom:1px solid #f0f0f0;">
                     <td style="padding:15px 10px;">
                         <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
@@ -3181,12 +3400,12 @@ function loadAdminData() {
                         </button>
                     </td>
                 </tr>`;
-        });
+                });
 
-        // (Leaderboard rendering code remains the same...)
-        Object.keys(referralCounts).forEach(code => {
-            const data = referralCounts[code];
-            leaderboardDiv.innerHTML += `
+                // (Leaderboard rendering code remains the same...)
+                Object.keys(referralCounts).forEach(code => {
+                    const data = referralCounts[code];
+                    leaderboardDiv.innerHTML += `
                 <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
                     <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
                     <div style="display:flex; gap:10px; margin-top:12px;">
@@ -3200,69 +3419,69 @@ function loadAdminData() {
                         </div>
                     </div>
                 </div>`;
-        });
-    });
-}
-
-// 🟢 NEW FUNCTION: View Specific Agency Staff (Admin Side)
-window.viewAgencyDetails = async (agencyId, agencyName) => {
-    // 1. Open Modal & Set Title
-    const modal = document.getElementById('adminAgencyModal');
-    document.getElementById('admin-view-title').innerText = agencyName || "Agency Details";
-    document.getElementById('admin-view-subtitle').innerText = "Fetching real-time data...";
-    modal.classList.add('active');
-
-    const listContainer = document.getElementById('admin-staff-list');
-    listContainer.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>';
-
-    try {
-        // 2. Fetch Nurses for this Agency
-        const q = query(collection(db, "users", agencyId, "nurses"));
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-            listContainer.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">No staff found.</p>';
-            document.getElementById('adm-count-active').innerText = "0";
-            document.getElementById('adm-count-expired').innerText = "0";
-            return;
+                });
+            });
         }
 
-        // 3. Sort Logic (Active vs Expired)
-        const now = Date.now();
-        const active = [];
-        const expired = [];
+        // 🟢 NEW FUNCTION: View Specific Agency Staff (Admin Side)
+        window.viewAgencyDetails = async (agencyId, agencyName) => {
+            // 1. Open Modal & Set Title
+            const modal = document.getElementById('adminAgencyModal');
+            document.getElementById('admin-view-title').innerText = agencyName || "Agency Details";
+            document.getElementById('admin-view-subtitle').innerText = "Fetching real-time data...";
+            modal.classList.add('active');
 
-        snapshot.forEach(doc => {
-            const n = doc.data();
-            // Default to 7 days grace if validUntil is missing
-            const expiry = n.validUntil || (now + (7 * 24 * 60 * 60 * 1000));
-            
-            if (expiry < now) {
-                expired.push(n);
-            } else {
-                active.push(n);
-            }
-        });
+            const listContainer = document.getElementById('admin-staff-list');
+            listContainer.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>';
 
-        // 4. Update Counts
-        document.getElementById('adm-count-active').innerText = active.length;
-        document.getElementById('adm-count-expired').innerText = expired.length;
+            try {
+                // 2. Fetch Nurses for this Agency
+                const q = query(collection(db, "users", agencyId, "nurses"));
+                const snapshot = await getDocs(q);
 
-        // 5. Generate HTML
-        let html = '';
+                if (snapshot.empty) {
+                    listContainer.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">No staff found.</p>';
+                    document.getElementById('adm-count-active').innerText = "0";
+                    document.getElementById('adm-count-expired').innerText = "0";
+                    return;
+                }
 
-        // --- SECTION A: EXPIRED (Red Box) ---
-        if (expired.length > 0) {
-            html += `<div style="background:#ffebee; border:1px solid #ffcdd2; border-radius:8px; padding:10px; margin-bottom:10px;">
+                // 3. Sort Logic (Active vs Expired)
+                const now = Date.now();
+                const active = [];
+                const expired = [];
+
+                snapshot.forEach(doc => {
+                    const n = doc.data();
+                    // Default to 7 days grace if validUntil is missing
+                    const expiry = n.validUntil || (now + (7 * 24 * 60 * 60 * 1000));
+
+                    if (expiry < now) {
+                        expired.push(n);
+                    } else {
+                        active.push(n);
+                    }
+                });
+
+                // 4. Update Counts
+                document.getElementById('adm-count-active').innerText = active.length;
+                document.getElementById('adm-count-expired').innerText = expired.length;
+
+                // 5. Generate HTML
+                let html = '';
+
+                // --- SECTION A: EXPIRED (Red Box) ---
+                if (expired.length > 0) {
+                    html += `<div style="background:#ffebee; border:1px solid #ffcdd2; border-radius:8px; padding:10px; margin-bottom:10px;">
                 <h5 style="color:#c62828; margin-bottom:8px;"><i class="fa-solid fa-triangle-exclamation"></i> EXPIRED STAFF</h5>`;
-            
-            expired.forEach(n => {
-                const isDaily = n.type === 'daily';
-                const badge = isDaily 
-                    ? '<span style="background:#fff3e0; color:#e65100; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2;">Daily</span>'
-                    : '<span style="background:#e3f2fd; color:#1565c0; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb;">Monthly</span>';
 
-                html += `
+                    expired.forEach(n => {
+                        const isDaily = n.type === 'daily';
+                        const badge = isDaily
+                            ? '<span style="background:#fff3e0; color:#e65100; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2;">Daily</span>'
+                            : '<span style="background:#e3f2fd; color:#1565c0; font-size:0.7rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb;">Monthly</span>';
+
+                        html += `
                 <div style="background:white; padding:8px; border-radius:6px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div style="font-weight:600; color:#333;">${n.name} ${badge}</div>
@@ -3270,30 +3489,30 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
                     </div>
                     <div style="font-size:0.75rem; color:#c62828; font-weight:700;">Expired</div>
                 </div>`;
-            });
-            html += `</div>`;
-        }
+                    });
+                    html += `</div>`;
+                }
 
-        // --- SECTION B: ACTIVE (Normal List) ---
-        if (active.length > 0) {
-            html += `<h5 style="color:#2e7d32; margin:10px 0 5px 0;">✅ ACTIVE STAFF</h5>`;
-            
-            active.forEach(n => {
-                const isDaily = n.type === 'daily';
-                
-                // Badges
-                const badgeStyle = isDaily 
-                    ? 'background:#fff3e0; color:#ef6c00; border:1px solid #ffe0b2;'
-                    : 'background:#e3f2fd; color:#1565c0; border:1px solid #bbdefb;';
-                const typeText = isDaily ? 'Daily Pass' : 'Monthly Slot';
+                // --- SECTION B: ACTIVE (Normal List) ---
+                if (active.length > 0) {
+                    html += `<h5 style="color:#2e7d32; margin:10px 0 5px 0;">✅ ACTIVE STAFF</h5>`;
 
-                // Time Left Calc
-                const daysLeft = Math.ceil((n.validUntil - now) / (1000 * 60 * 60 * 24));
-                const timeText = isDaily 
-                    ? '< 24 Hours' 
-                    : `${daysLeft} Days left`;
+                    active.forEach(n => {
+                        const isDaily = n.type === 'daily';
 
-                html += `
+                        // Badges
+                        const badgeStyle = isDaily
+                            ? 'background:#fff3e0; color:#ef6c00; border:1px solid #ffe0b2;'
+                            : 'background:#e3f2fd; color:#1565c0; border:1px solid #bbdefb;';
+                        const typeText = isDaily ? 'Daily Pass' : 'Monthly Slot';
+
+                        // Time Left Calc
+                        const daysLeft = Math.ceil((n.validUntil - now) / (1000 * 60 * 60 * 24));
+                        const timeText = isDaily
+                            ? '< 24 Hours'
+                            : `${daysLeft} Days left`;
+
+                        html += `
                 <div style="background:#f9f9f9; padding:10px; border-radius:8px; border-left: 4px solid ${isDaily ? '#ff9800' : '#138808'}; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div style="font-weight:600; color:#333;">${n.name}</div>
@@ -3306,16 +3525,16 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
                         <div style="font-size:0.7rem; color:${isDaily ? '#e65100' : '#138808'};">${timeText}</div>
                     </div>
                 </div>`;
-            });
-        }
+                    });
+                }
 
-        listContainer.innerHTML = html;
+                listContainer.innerHTML = html;
 
-    } catch (e) {
-        console.error(e);
-        listContainer.innerHTML = '<p style="color:red; text-align:center;">Error loading data.</p>';
-    }
-};
+            } catch (e) {
+                console.error(e);
+                listContainer.innerHTML = '<p style="color:red; text-align:center;">Error loading data.</p>';
+            }
+        };
         window.exportToCSV = () => {
             // 1. Check if it is the Super Admin
             if (currentUser && currentUser.email === "supercare655@gmail.com") {
@@ -3616,11 +3835,40 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
             signOut(auth).then(() => window.location.reload());
         };
 
+        // --- HELPER: Generate Star HTML ---
+        function getStarRatingHTML(rating, count) {
+            // 1. If no rating, show "New" badge
+            if (!rating || count === 0) {
+                return `<div class="star-row"><span class="new-badge">New Staff</span></div>`;
+            }
+
+            // 2. Round to nearest 0.5 (e.g., 4.3 -> 4.5, 4.1 -> 4.0)
+            const rounded = Math.round(rating * 2) / 2;
+            let stars = '';
+
+            // 3. Loop 5 times to create full, half, or empty stars
+            for (let i = 1; i <= 5; i++) {
+                if (rounded >= i) {
+                    stars += '<i class="fa-solid fa-star"></i>'; // Full Star
+                } else if (rounded >= i - 0.5) {
+                    stars += '<i class="fa-solid fa-star-half-stroke"></i>'; // Half Star
+                } else {
+                    stars += '<i class="fa-regular fa-star" style="color:#ddd;"></i>'; // Empty Star (Grey)
+                }
+            }
+
+            // 4. Return the complete HTML
+            return `
+        <div class="star-row" title="Average Rating: ${rating}">
+            ${stars}
+            <span class="rating-text">(${count} reviews)</span>
+        </div>
+    `;
+        }
         // Global State for Bulk Actions
         let isManageMode = false;
         let selectedNurses = new Set();
-
-        // --- UPDATED VISUALS (Step 2: Show Days Left + Manage Mode + Replace) ---
+        // --- FINAL RENDER FUNCTION (Clean UI + Fixed Buttons) ---
         function renderStaffList() {
             const grid = document.getElementById('staff-grid');
             grid.innerHTML = '';
@@ -3629,83 +3877,114 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
             const msPerDay = 24 * 60 * 60 * 1000;
 
             allNurses.forEach(nurse => {
-                // Initials Logic
+                // 1. Initials
                 const names = nurse.name.split(' ');
                 const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
 
-                // 🗓️ MATH: Calculate Days Remaining
-                // If 'validUntil' is missing (old data), give 7-day grace period
-                const expiry = nurse.validUntil || (now + (7 * msPerDay));
+                // 2. Expiry Logic (Prioritize validUntil from DB)
+                let expiry = nurse.validUntil;
+                if (!expiry) {
+                    // Fallback: If DB value is missing, use CreatedAt + 30 Days
+                    const start = nurse.createdAt || now;
+                    expiry = start + (30 * msPerDay);
+                }
+
                 const daysLeft = Math.ceil((expiry - now) / msPerDay);
 
-                // Color Logic for the Validity Text
-                let statusColor = '#138808'; // Default Green (Safe)
+                // 3. Colors & Text
+                let statusColor = '#138808'; // Green
                 let statusText = `${daysLeft} Days Left`;
 
                 if (daysLeft <= 0) {
-                    statusColor = '#d32f2f'; // Red (Expired)
+                    statusColor = '#d32f2f'; // Red
                     statusText = "EXPIRED";
                 } else if (daysLeft <= 5) {
-                    statusColor = '#ff9933'; // Orange (Warning)
+                    statusColor = '#ff9933'; // Orange
                     statusText = `${daysLeft} Days (Renew Soon)`;
                 }
 
-                // CHECKBOX VISIBILITY LOGIC
+                // 4. Badge Logic (Daily vs Monthly)
+                const isDaily = nurse.type === 'daily';
+                const badgeHtml = isDaily 
+                    ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
+                    : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
+
+                // 5. Checkbox & Rating
                 const checkDisplay = isManageMode ? 'flex' : 'none';
                 const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
+                const rating = nurse.rating || 4.5;
+                const reviewCount = nurse.reviewCount || 12;
+                const starHTML = getStarRatingHTML(rating, reviewCount);
 
-                // Render the Card
-                grid.innerHTML += `
-        <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
-            
-            <div style="display: ${checkDisplay}; position: absolute; top: 10px; left: 10px; z-index: 10;">
-                <input type="checkbox" style="width: 20px; height: 20px; accent-color: #d32f2f; cursor: pointer;" 
-                    ${isChecked} onchange="toggleSelection('${nurse.id}')">
-            </div>
-
-            <div style="flex: 1;">
-                <div style="position: absolute; top: 1rem; right: 1rem; display: flex; gap: 8px;">
-                     <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
-                        title="Replace Staff (Transfer Validity)"
-                        style="background: #e3f2fd; color: #1565c0; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition:0.2s;">
+                // 🟢 FIXED BUTTONS: Side-by-Side, No Overlap, Always Visible
+                const actionButtonsHtml = `
+                <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 20;">
+                    
+                    <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
+                        title="Replace Staff"
+                        style="width: 32px; height: 32px; border-radius: 50%; border: none; 
+                               background: #e3f2fd; color: #1565c0; cursor: pointer; 
+                               display: flex; align-items: center; justify-content: center; 
+                               box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;">
                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
                     </button>
                     
-                    <button class="delete-btn" onclick="window.removeNurse('${nurse.id}')"
+                    <button onclick="window.removeNurse('${nurse.id}')"
                         title="Delete Permanently"
-                        style="position: static; opacity: 1; background: #ffebee; color: #c62828; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition:0.2s;">
+                        class="delete-btn-force"
+                        style="width: 32px; height: 32px; border-radius: 50%; border: none; 
+                               background: #ffebee; color: #c62828; cursor: pointer; 
+                               display: flex; align-items: center; justify-content: center; 
+                               box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;
+                               opacity: 1; visibility: visible;">
                         <i class="fa-solid fa-trash"></i>
                     </button>
-                </div>
+                </div>`;
 
-                <div class="nurse-header" style="margin-top: 15px;">
-                    <div class="nurse-avatar">${initials}</div>
-                    <div class="nurse-info">
-                        <h3>${nurse.name}</h3>
-                        <p>${nurse.role}</p>
-                    </div>
-                </div>
+                // Render Card
+                grid.innerHTML += `
+    <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
+        
+        <div style="display: ${checkDisplay}; position: absolute; top: 12px; left: 12px; z-index: 10;">
+            <input type="checkbox" style="width: 20px; height: 20px; accent-color: #d32f2f; cursor: pointer;" 
+                ${isChecked} onchange="toggleSelection('${nurse.id}')">
+        </div>
 
-                <div class="metrics-row">
-                    <div class="metric">
-                        <span class="metric-val">₹${nurse.rate}</span>
-                        <span class="metric-lbl">Daily Rate</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-val" style="color:${statusColor}; font-size:0.9rem;">
-                            ${statusText}
-                        </span>
-                        <span class="metric-lbl">Validity</span>
-                    </div>
+        ${actionButtonsHtml}
+
+        <div style="flex: 1;">
+            <div class="nurse-header" style="margin-top: 25px;">
+                <div class="nurse-avatar">${initials}</div>
+                <div class="nurse-info">
+                    <h3 style="margin-bottom:2px; display:flex; align-items:center;">
+                        ${nurse.name} 
+                        ${badgeHtml}
+                    </h3>
+                    <p style="font-size:0.85rem; color:#666;">${nurse.role}</p>
+                    ${starHTML}
                 </div>
             </div>
 
-            <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
-                style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
-                       border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                <i class="fa-solid fa-address-card"></i> View Profile
-            </button>
-        </div>`;
+            <div class="metrics-row">
+                <div class="metric">
+                    <span class="metric-val">₹${nurse.rate}</span>
+                    <span class="metric-lbl">Daily Rate</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-val" style="color:${statusColor}; font-size:0.9rem;">
+                        ${statusText}
+                    </span>
+                    <span class="metric-lbl">Validity</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
+            style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
+                   border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+            View Profile
+        </button>
+    </div>`;
             });
         }
 
@@ -3723,7 +4002,7 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
         function renderDashboardLogs() {
             const grid = document.getElementById('dashboard-grid');
             grid.innerHTML = '';
-            
+
             // Show message if empty
             if (!allLogs || allLogs.length === 0) {
                 grid.innerHTML = '<p style="color:#999; grid-column:1/-1; text-align:center;">No activity today.</p>';
@@ -3763,22 +4042,22 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
             const locationText = log.address || "GPS Location Recorded";
 
             const dateObj = new Date(timestamp);
-            
+
             // Format Time (e.g., 09:30 AM)
-            const timeStr = dateObj.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                hour12: true 
+            const timeStr = dateObj.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
             });
-            
+
             // Format Date (e.g., OCT 24)
-            const dateStr = dateObj.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric' 
+            const dateStr = dateObj.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric'
             });
 
             // Sanitize data for the onclick function to prevent syntax errors with quotes
-            const safeName = nurseName.replace(/'/g, "\\'"); 
+            const safeName = nurseName.replace(/'/g, "\\'");
             const safeTime = `${dateStr}, ${timeStr}`;
 
             return `
@@ -3806,7 +4085,7 @@ window.viewAgencyDetails = async (agencyId, agencyName) => {
             </div>`;
         }
 
-window.viewImage = (src, name, time) => {
+        window.viewImage = (src, name, time) => {
             const modal = document.getElementById('img-viewer-modal');
             const img = document.getElementById('img-viewer-full');
             const cap = document.getElementById('img-viewer-caption');
@@ -3820,9 +4099,9 @@ window.viewImage = (src, name, time) => {
             document.getElementById('img-viewer-modal').style.display = 'none';
         };
 
-window.closeImageViewer = () => {
-    document.getElementById('img-viewer-modal').style.display = 'none';
-};
+        window.closeImageViewer = () => {
+            document.getElementById('img-viewer-modal').style.display = 'none';
+        };
         // Function to save the "Paid" status to Firebase
         window.togglePayout = async (nurseId, monthSuffix, isChecked) => {
             // Unique ID for this payment: "NurseID_MonthYear"
@@ -3949,20 +4228,18 @@ window.closeImageViewer = () => {
             window.toggleMode();
         };
 
-        // --- UPDATED FORM ACTIONS (Hybrid Model: Monthly vs Daily) ---
+        // --- UPDATED FORM SUBMISSION (No Auto-Redirect) ---
         document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // 1. GET FORM VALUES
-            // We look for the checked radio button to see which plan they chose
             const planType = document.querySelector('input[name="staffPlan"]:checked').value;
             const name = document.getElementById('nurseName').value;
             const phone = document.getElementById('nursePhone').value;
             const role = document.getElementById('nurseSpec').value;
             const rate = document.getElementById('nurseRate').value;
 
-            // 2. CHECK CREDITS (Security Gate)
-            // We calculate available monthly slots by subtracting used ones from total paid slots
+            // 2. CHECK CREDITS
             const extraSlots = currentUserData?.extraSlots || 0;
             const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
             const monthlyLeft = extraSlots - usedSlots;
@@ -3970,15 +4247,15 @@ window.closeImageViewer = () => {
 
             // A. Block if no Monthly Slots
             if (planType === 'monthly' && monthlyLeft <= 0) {
-                alert("⚠️ No Monthly Slots Available!\n\nPlease purchase more slots to add permanent staff.");
-                if (window.openPaymentModal) window.openPaymentModal('monthly');
+                alert("⚠️ No Monthly Slots Available!\n\nPlease click the 'Buy More' button above to purchase slots.");
+                // 🛑 STOPPED AUTO-REDIRECT. User stays on form.
                 return;
             }
 
             // B. Block if no Daily Passes
             if (planType === 'daily' && dailyPasses <= 0) {
-                alert("⚠️ No Daily Passes Available!\n\nPlease purchase a Daily Pass (₹10) to add temp staff.");
-                if (window.openPaymentModal) window.openPaymentModal('daily');
+                alert("⚠️ No Daily Passes Available!\n\nPlease click the 'Buy More' button above to purchase a pass.");
+                // 🛑 STOPPED AUTO-REDIRECT. User stays on form.
                 return;
             }
 
@@ -4001,17 +4278,15 @@ window.closeImageViewer = () => {
                     rate,
                     timestamp: Date.now(),
                     validUntil: expiryDate, // 👈 Sets the correct time (30d or 24h)
-                    type: planType // 👈 Tags them as 'monthly' or 'daily' so we can filter later
+                    type: planType // 👈 Tags them as 'monthly' or 'daily'
                 });
 
                 // 5. CONSUME THE CORRECT CREDIT
                 if (planType === 'monthly') {
-                    // For Monthly, we increment the "Used Slot" counter
                     await updateDoc(doc(db, "users", currentUser.uid), {
                         nurseCount: increment(1)
                     });
                 } else {
-                    // For Daily, we directly REMOVE one pass
                     await updateDoc(doc(db, "users", currentUser.uid), {
                         dailyPasses: increment(-1)
                     });
@@ -4190,76 +4465,76 @@ window.closeImageViewer = () => {
             }
         };
         // --- WAR ROOM LOGIC (Updated with Expiry Gatekeeper) ---
- let warRoomInterval = null;
-let unsubscribeWarRoom = null; 
-let logListeners = []; 
+        let warRoomInterval = null;
+        let unsubscribeWarRoom = null;
+        let logListeners = [];
 
-window.loadWarRoom = () => {
-    // 1. GATEKEEPER CHECK
-    if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
-        showRenewalModal(expiredNursesList);
-        return;
-    }
-
-    // 2. Clean up previous listeners
-    if (warRoomInterval) clearInterval(warRoomInterval);
-    if (unsubscribeWarRoom) unsubscribeWarRoom();
-    logListeners.forEach(unsub => unsub());
-    logListeners = [];
-
-    // 3. Query Active AND Completed Bookings
-    const q = query(
-        collection(db, "bookings"),
-        // Added 'completed' to this list so they don't vanish instantly
-        where("status", "in", ["assigned", "nurse_arrived", "in_progress", "completed"]),
-        orderBy("timestamp", "desc")
-    );
-
-    unsubscribeWarRoom = onSnapshot(q, (snapshot) => {
-        const grid = document.getElementById('war-room-grid');
-        if (!grid) return;
-        grid.innerHTML = '';
-
-        if (snapshot.empty) {
-            grid.innerHTML = `<div class="empty-state"><i class="fa-solid fa-mug-hot" style="font-size: 3rem; margin-bottom: 1rem; color:#ccc;"></i><h3>All Quiet</h3><p>No active deployments.</p></div>`;
-            return;
-        }
-
-        snapshot.forEach(doc => {
-            const b = doc.data();
-            const bid = doc.id;
-            const status = b.status;
-
-            // 🛑 FILTER: If completed more than 24 hours ago, hide it.
-            if (status === 'completed' && b.completedAt) {
-                const oneDay = 24 * 60 * 60 * 1000;
-                if (Date.now() - b.completedAt > oneDay) return; 
-            }
-            
-            // Render Card IDs
-            const cardId = `card-${bid}`;
-            const logsId = `logs-${bid}`;
-            
-            // --- STATUS & TIMELINE LOGIC ---
-            // s1=Assigned, s2=Arrived, s3=Started
-            let s1 = '', s2 = '', s3 = '';
-            
-            if(status === 'assigned') { s1 = 'active'; }
-            else if(status === 'nurse_arrived') { s1 = 'done'; s2 = 'active'; }
-            else if(status === 'in_progress') { s1 = 'done'; s2 = 'done'; s3 = 'active'; }
-            else if(status === 'completed') { s1 = 'done'; s2 = 'done'; s3 = 'done'; }
-
-            // Timer Logic
-            let timerHtml = '';
-            if (status === 'in_progress' && b.startedAt) {
-                 timerHtml = `<div class="war-timer" data-start="${b.startedAt}">00h 00m 00s</div>`;
-            } else if (status === 'completed') {
-                 timerHtml = `<span style="color:#757575; font-weight:bold;">COMPLETED</span>`;
-            } else {
-                 timerHtml = `<span style="color:#ff9933; font-size:0.8rem;">En Route...</span>`;
+        window.loadWarRoom = () => {
+            // 1. GATEKEEPER CHECK
+            if (typeof expiredNursesList !== 'undefined' && expiredNursesList.length > 0) {
+                showRenewalModal(expiredNursesList);
+                return;
             }
 
-            const html = `
+            // 2. Clean up previous listeners
+            if (warRoomInterval) clearInterval(warRoomInterval);
+            if (unsubscribeWarRoom) unsubscribeWarRoom();
+            logListeners.forEach(unsub => unsub());
+            logListeners = [];
+
+            // 3. Query Active AND Completed Bookings
+            const q = query(
+                collection(db, "bookings"),
+                // Added 'completed' to this list so they don't vanish instantly
+                where("status", "in", ["assigned", "nurse_arrived", "in_progress", "completed"]),
+                orderBy("timestamp", "desc")
+            );
+
+            unsubscribeWarRoom = onSnapshot(q, (snapshot) => {
+                const grid = document.getElementById('war-room-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+
+                if (snapshot.empty) {
+                    grid.innerHTML = `<div class="empty-state"><i class="fa-solid fa-mug-hot" style="font-size: 3rem; margin-bottom: 1rem; color:#ccc;"></i><h3>All Quiet</h3><p>No active deployments.</p></div>`;
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const b = doc.data();
+                    const bid = doc.id;
+                    const status = b.status;
+
+                    // 🛑 FILTER: If completed more than 24 hours ago, hide it.
+                    if (status === 'completed' && b.completedAt) {
+                        const oneDay = 24 * 60 * 60 * 1000;
+                        if (Date.now() - b.completedAt > oneDay) return;
+                    }
+
+                    // Render Card IDs
+                    const cardId = `card-${bid}`;
+                    const logsId = `logs-${bid}`;
+
+                    // --- STATUS & TIMELINE LOGIC ---
+                    // s1=Assigned, s2=Arrived, s3=Started
+                    let s1 = '', s2 = '', s3 = '';
+
+                    if (status === 'assigned') { s1 = 'active'; }
+                    else if (status === 'nurse_arrived') { s1 = 'done'; s2 = 'active'; }
+                    else if (status === 'in_progress') { s1 = 'done'; s2 = 'done'; s3 = 'active'; }
+                    else if (status === 'completed') { s1 = 'done'; s2 = 'done'; s3 = 'done'; }
+
+                    // Timer Logic
+                    let timerHtml = '';
+                    if (status === 'in_progress' && b.startedAt) {
+                        timerHtml = `<div class="war-timer" data-start="${b.startedAt}">00h 00m 00s</div>`;
+                    } else if (status === 'completed') {
+                        timerHtml = `<span style="color:#757575; font-weight:bold;">COMPLETED</span>`;
+                    } else {
+                        timerHtml = `<span style="color:#ff9933; font-size:0.8rem;">En Route...</span>`;
+                    }
+
+                    const html = `
             <div class="war-card status-${status}" id="${cardId}">
                 <div class="war-header">
                     <div>
@@ -4293,45 +4568,45 @@ window.loadWarRoom = () => {
                     </div>
                 </div>
             </div>`;
-            
-            grid.innerHTML += html;
 
-            // 4. LISTEN FOR LOGS (Sub-collection)
-            const logsQuery = query(collection(db, "bookings", bid, "logs"), orderBy("timestamp", "desc"), limit(10)); // Increased limit to 10
-            
-            const unsubLogs = onSnapshot(logsQuery, (logSnap) => {
-                const logContainer = document.getElementById(logsId);
-                if(!logContainer) return;
+                    grid.innerHTML += html;
 
-                if (logSnap.empty) {
-                    logContainer.innerHTML = '<div style="text-align:center; color:#ccc; padding:10px;">No logs yet.</div>';
-                } else {
-                    logContainer.innerHTML = ''; // Clear loading text
-                    logSnap.forEach(lDoc => {
-                        const l = lDoc.data();
-                        const time = new Date(l.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                        
-                        let contentClass = l.is_critical ? 'log-critical' : '';
-                        
-                        // 1. Get the TEXT note (Summary or Raw Text)
-                        let mainText = l.summary || l.raw_text || "Update logged.";
-                        
-                        // 2. Get the VITALS data (if exists)
-                        let vitalsHtml = '';
-                        if (l.vitals) {
-                            let parts = [];
-                            if(l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
-                            if(l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
-                            if(l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
-                            if(l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}`);
-                            
-                            if(parts.length > 0) {
-                                vitalsHtml = `<br><span class="log-vitals-badge">${parts.join(' | ')}</span>`;
-                            }
-                        }
+                    // 4. LISTEN FOR LOGS (Sub-collection)
+                    const logsQuery = query(collection(db, "bookings", bid, "logs"), orderBy("timestamp", "desc"), limit(10)); // Increased limit to 10
 
-                        // 3. Render Combined
-                        logContainer.innerHTML += `
+                    const unsubLogs = onSnapshot(logsQuery, (logSnap) => {
+                        const logContainer = document.getElementById(logsId);
+                        if (!logContainer) return;
+
+                        if (logSnap.empty) {
+                            logContainer.innerHTML = '<div style="text-align:center; color:#ccc; padding:10px;">No logs yet.</div>';
+                        } else {
+                            logContainer.innerHTML = ''; // Clear loading text
+                            logSnap.forEach(lDoc => {
+                                const l = lDoc.data();
+                                const time = new Date(l.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                                let contentClass = l.is_critical ? 'log-critical' : '';
+
+                                // 1. Get the TEXT note (Summary or Raw Text)
+                                let mainText = l.summary || l.raw_text || "Update logged.";
+
+                                // 2. Get the VITALS data (if exists)
+                                let vitalsHtml = '';
+                                if (l.vitals) {
+                                    let parts = [];
+                                    if (l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
+                                    if (l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
+                                    if (l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
+                                    if (l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}`);
+
+                                    if (parts.length > 0) {
+                                        vitalsHtml = `<br><span class="log-vitals-badge">${parts.join(' | ')}</span>`;
+                                    }
+                                }
+
+                                // 3. Render Combined
+                                logContainer.innerHTML += `
                         <div class="log-item">
                             <div class="log-time">${time}</div>
                             <div class="log-content ${contentClass}">
@@ -4339,134 +4614,134 @@ window.loadWarRoom = () => {
                                 ${vitalsHtml}
                             </div>
                         </div>`;
+                            });
+                        }
+                    });
+                    logListeners.push(unsubLogs);
+                });
+
+                // Restart Timer Interval
+                if (warRoomInterval) clearInterval(warRoomInterval);
+                warRoomInterval = setInterval(updateWarTimers, 1000);
+            });
+        };
+        function updateWarTimers() {
+            document.querySelectorAll('.war-timer').forEach(el => {
+                const start = parseInt(el.getAttribute('data-start'));
+                if (!start) return;
+                const diff = Date.now() - start;
+
+                const hrs = Math.floor(diff / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                el.innerText = `${hrs}h ${mins}m ${secs}s`;
+            });
+        }
+
+        // ... existing updateWarTimers code is above here ...
+
+        // 👇 PASTE THIS MISSING FUNCTION HERE 👇
+
+        // --- GENERATE PDF REPORT ---
+        window.generateShiftReport = async (bookingId) => {
+            const { jsPDF } = window.jspdf;
+
+            // 1. Fetch Data
+            try {
+                // Get Booking Details
+                const bookingSnap = await getDoc(doc(db, "bookings", bookingId));
+                if (!bookingSnap.exists()) return alert("Booking not found!");
+                const booking = bookingSnap.data();
+
+                // Get Medical Logs (Ordered by time)
+                const logsQuery = query(collection(db, "bookings", bookingId, "logs"), orderBy("timestamp", "asc"));
+                const logsSnap = await getDocs(logsQuery);
+
+                // 2. Setup PDF
+                const docPdf = new jsPDF();
+
+                // --- HEADER ---
+                docPdf.setFillColor(255, 153, 51); // Saffron Color
+                docPdf.rect(0, 0, 210, 20, 'F');   // Header Bar
+                docPdf.setTextColor(255, 255, 255);
+                docPdf.setFontSize(16);
+                docPdf.setFont("helvetica", "bold");
+                docPdf.text("Silver Care - Shift Report", 15, 13);
+
+                // --- PATIENT DETAILS ---
+                docPdf.setTextColor(0, 0, 0);
+                docPdf.setFontSize(10);
+                docPdf.setFont("helvetica", "normal");
+
+                docPdf.text(`Patient Name: ${booking.patient_details || 'N/A'}`, 15, 30);
+                docPdf.text(`Assigned Nurse: ${booking.assignedNurseName}`, 15, 36);
+                docPdf.text(`Shift Date: ${new Date(booking.timestamp).toDateString()}`, 15, 42);
+                docPdf.text(`Location: ${booking.location || 'Home Care'}`, 15, 48);
+
+                // --- VITALS & LOGS TABLE ---
+                const tableData = [];
+
+                if (logsSnap.empty) {
+                    // Handle empty logs
+                    tableData.push(["-", "No updates recorded yet.", "-"]);
+                } else {
+                    logsSnap.forEach(snap => {
+                        const l = snap.data();
+                        const time = new Date(l.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        // Format Vitals Column
+                        let vitals = "-";
+                        if (l.vitals) {
+                            let parts = [];
+                            if (l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
+                            if (l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
+                            if (l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
+                            if (l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}%`);
+                            vitals = parts.join(', ');
+                        }
+
+                        // Format Summary Column
+                        let summary = l.summary || l.raw_text || "Routine Check";
+                        if (l.is_critical) summary = "[ALERT] " + summary;
+
+                        tableData.push([time, summary, vitals]);
                     });
                 }
-            });
-            logListeners.push(unsubLogs);
-        });
 
-        // Restart Timer Interval
-        if (warRoomInterval) clearInterval(warRoomInterval);
-        warRoomInterval = setInterval(updateWarTimers, 1000);
-    });
-};
-function updateWarTimers() {
-    document.querySelectorAll('.war-timer').forEach(el => {
-        const start = parseInt(el.getAttribute('data-start'));
-        if (!start) return;
-        const diff = Date.now() - start;
-
-        const hrs = Math.floor(diff / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        el.innerText = `${hrs}h ${mins}m ${secs}s`;
-    });
-}
-
-// ... existing updateWarTimers code is above here ...
-
-    // 👇 PASTE THIS MISSING FUNCTION HERE 👇
-
-    // --- GENERATE PDF REPORT ---
-    window.generateShiftReport = async (bookingId) => {
-        const { jsPDF } = window.jspdf;
-        
-        // 1. Fetch Data
-        try {
-            // Get Booking Details
-            const bookingSnap = await getDoc(doc(db, "bookings", bookingId));
-            if (!bookingSnap.exists()) return alert("Booking not found!");
-            const booking = bookingSnap.data();
-
-            // Get Medical Logs (Ordered by time)
-            const logsQuery = query(collection(db, "bookings", bookingId, "logs"), orderBy("timestamp", "asc"));
-            const logsSnap = await getDocs(logsQuery);
-            
-            // 2. Setup PDF
-            const docPdf = new jsPDF();
-            
-            // --- HEADER ---
-            docPdf.setFillColor(255, 153, 51); // Saffron Color
-            docPdf.rect(0, 0, 210, 20, 'F');   // Header Bar
-            docPdf.setTextColor(255, 255, 255);
-            docPdf.setFontSize(16);
-            docPdf.setFont("helvetica", "bold");
-            docPdf.text("Silver Care - Shift Report", 15, 13);
-            
-            // --- PATIENT DETAILS ---
-            docPdf.setTextColor(0, 0, 0);
-            docPdf.setFontSize(10);
-            docPdf.setFont("helvetica", "normal");
-            
-            docPdf.text(`Patient Name: ${booking.patient_details || 'N/A'}`, 15, 30);
-            docPdf.text(`Assigned Nurse: ${booking.assignedNurseName}`, 15, 36);
-            docPdf.text(`Shift Date: ${new Date(booking.timestamp).toDateString()}`, 15, 42);
-            docPdf.text(`Location: ${booking.location || 'Home Care'}`, 15, 48);
-
-            // --- VITALS & LOGS TABLE ---
-            const tableData = [];
-            
-            if (logsSnap.empty) {
-                // Handle empty logs
-                tableData.push(["-", "No updates recorded yet.", "-"]);
-            } else {
-                logsSnap.forEach(snap => {
-                    const l = snap.data();
-                    const time = new Date(l.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    
-                    // Format Vitals Column
-                    let vitals = "-";
-                    if (l.vitals) {
-                        let parts = [];
-                        if(l.vitals.bp) parts.push(`BP: ${l.vitals.bp}`);
-                        if(l.vitals.temp) parts.push(`Temp: ${l.vitals.temp}`);
-                        if(l.vitals.sugar) parts.push(`Sugar: ${l.vitals.sugar}`);
-                        if(l.vitals.spo2) parts.push(`SpO2: ${l.vitals.spo2}%`);
-                        vitals = parts.join(', ');
+                // Generate Table
+                docPdf.autoTable({
+                    startY: 55,
+                    head: [['Time', 'Observation / Action', 'Vitals Recorded']],
+                    body: tableData,
+                    theme: 'grid',
+                    headStyles: {
+                        fillColor: [0, 51, 102], // Navy Blue
+                        textColor: 255
+                    },
+                    styles: { fontSize: 9 },
+                    columnStyles: {
+                        0: { cellWidth: 30 }, // Time
+                        1: { cellWidth: 'auto' }, // Observation
+                        2: { cellWidth: 50 }  // Vitals
                     }
-                    
-                    // Format Summary Column
-                    let summary = l.summary || l.raw_text || "Routine Check";
-                    if(l.is_critical) summary = "[ALERT] " + summary;
-
-                    tableData.push([time, summary, vitals]);
                 });
+
+                // --- FOOTER ---
+                const finalY = docPdf.lastAutoTable.finalY || 60;
+                docPdf.setFontSize(8);
+                docPdf.setTextColor(150);
+                docPdf.text("Generated automatically by Silver Care AI System", 15, finalY + 10);
+                docPdf.text(`Report ID: ${bookingId}`, 15, finalY + 15);
+
+                // Save File
+                docPdf.save(`SilverCare_Report_${booking.assignedNurseName}_${Date.now()}.pdf`);
+
+            } catch (e) {
+                console.error("PDF Generation Error:", e);
+                alert("Failed to generate report. See console for details.");
             }
-
-            // Generate Table
-            docPdf.autoTable({
-                startY: 55,
-                head: [['Time', 'Observation / Action', 'Vitals Recorded']],
-                body: tableData,
-                theme: 'grid',
-                headStyles: { 
-                    fillColor: [0, 51, 102], // Navy Blue
-                    textColor: 255 
-                },
-                styles: { fontSize: 9 },
-                columnStyles: {
-                    0: { cellWidth: 30 }, // Time
-                    1: { cellWidth: 'auto' }, // Observation
-                    2: { cellWidth: 50 }  // Vitals
-                }
-            });
-
-            // --- FOOTER ---
-            const finalY = docPdf.lastAutoTable.finalY || 60;
-            docPdf.setFontSize(8);
-            docPdf.setTextColor(150);
-            docPdf.text("Generated automatically by Silver Care AI System", 15, finalY + 10);
-            docPdf.text(`Report ID: ${bookingId}`, 15, finalY + 15);
-
-            // Save File
-            docPdf.save(`SilverCare_Report_${booking.assignedNurseName}_${Date.now()}.pdf`);
-
-        } catch (e) {
-            console.error("PDF Generation Error:", e);
-            alert("Failed to generate report. See console for details.");
-        }
-    };
+        };
         // --- 1. MANAGE MODE TOGGLE ---
         window.toggleManageMode = () => {
             isManageMode = !isManageMode;
