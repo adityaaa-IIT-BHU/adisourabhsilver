@@ -1984,47 +1984,7 @@
                 </div>
             </div>
 
-            <div class="modal" id="replaceModal">
-                <div class="modal-content">
-                    <button class="close-modal"
-                        onclick="document.getElementById('replaceModal').classList.remove('active')">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-
-                    <h2 style="margin-bottom: 0.5rem; font-family: 'Rozha One'; color: var(--navy);">Replace Staff</h2>
-
-                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6;">
-                    </p>
-
-                    <form id="replaceNurseForm">
-                        <input type="hidden" id="replace-old-id">
-
-                        <div class="form-group">
-                            <label>New Staff Name</label>
-                            <input type="text" class="form-input" id="repName" required placeholder="New Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label>New WhatsApp Number</label>
-                            <input type="tel" class="form-input" id="repPhone" required placeholder="919876543210">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Role</label>
-                            <input type="text" class="form-input" id="repRole" required placeholder="Ex. Nurse">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Daily Rate (₹)</label>
-                            <input type="number" class="form-input" id="repRate" required placeholder="Ex. 800">
-                        </div>
-
-                        <button type="submit" class="btn-primary" style="width: 100%; background: var(--navy);">
-                            <i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement
-                        </button>
-                    </form>
-                </div>
-            </div>
+          
 
             <div id="view-super-admin" class="view-section">
                 <header>
@@ -2431,7 +2391,7 @@
         import {
             getFirestore, collection, addDoc, onSnapshot, query, orderBy,
             deleteDoc, doc, updateDoc, getDoc, serverTimestamp, setDoc, increment,
-            where, getDocs, limit
+            where, getDocs, limit, writeBatch
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         import {
@@ -2639,67 +2599,67 @@
             if (backBtn) backBtn.style.display = 'none';
         }
 
-// --- FINAL LOCK SCREEN DELETE (Handles Daily vs Monthly Logic) ---
-window.removeNurseFromLock = async (id) => {
-    if (!confirm("Are you sure you want to delete this staff member?")) return;
+        // --- FINAL LOCK SCREEN DELETE (Handles Daily vs Monthly Logic) ---
+        window.removeNurseFromLock = async (id) => {
+            if (!confirm("Are you sure you want to delete this staff member?")) return;
 
-    try {
-        // 1. GET DATA
-        const nurseRef = doc(db, "users", currentUser.uid, "nurses", id);
-        const nurseSnap = await getDoc(nurseRef);
-        
-        if (!nurseSnap.exists()) {
-            // Already deleted? Clean UI and exit.
-            const btn = document.querySelector(`button[onclick*="${id}"]`);
-            if(btn) btn.closest('div').remove();
-            return;
-        }
+            try {
+                // 1. GET DATA
+                const nurseRef = doc(db, "users", currentUser.uid, "nurses", id);
+                const nurseSnap = await getDoc(nurseRef);
 
-        const n = nurseSnap.data();
-        const isDaily = (n.type === 'daily');
-        
-        // 2. DELETE THE NURSE
-        await deleteDoc(nurseRef);
+                if (!nurseSnap.exists()) {
+                    // Already deleted? Clean UI and exit.
+                    const btn = document.querySelector(`button[onclick*="${id}"]`);
+                    if (btn) btn.closest('div').remove();
+                    return;
+                }
 
-        // 3. UPDATE THE NUMBERS (The Smart Part)
-        if (isDaily) {
-            // 🎫 DAILY LOGIC:
-            // We ALREADY burned the pass when we added them.
-            // We DO NOT touch 'nurseCount' because daily staff don't count towards that limit.
-            // So we just delete the doc and do nothing else.
-            console.log("🎫 Daily Staff deleted. Cleanup only.");
-        } 
-        else {
-            // 🗓️ MONTHLY LOGIC:
-            const updates = {
-                nurseCount: increment(-1) // 1. Always lower Active Count
-            };
+                const n = nurseSnap.data();
+                const isDaily = (n.type === 'daily');
 
-            // Check Expiry for "Burn" logic
-            const now = Date.now();
-            const validUntil = n.validUntil || (n.createdAt + (30 * 24 * 60 * 60 * 1000));
-            const isExpired = validUntil < now;
+                // 2. DELETE THE NURSE
+                await deleteDoc(nurseRef);
 
-            // 2. If they used the full month, burn the slot limit too.
-            if (isExpired) {
-                console.log("🔥 Burning used Monthly slot...");
-                updates.extraSlots = increment(-1); 
+                // 3. UPDATE THE NUMBERS (The Smart Part)
+                if (isDaily) {
+                    // 🎫 DAILY LOGIC:
+                    // We ALREADY burned the pass when we added them.
+                    // We DO NOT touch 'nurseCount' because daily staff don't count towards that limit.
+                    // So we just delete the doc and do nothing else.
+                    console.log("🎫 Daily Staff deleted. Cleanup only.");
+                }
+                else {
+                    // 🗓️ MONTHLY LOGIC:
+                    const updates = {
+                        nurseCount: increment(-1) // 1. Always lower Active Count
+                    };
+
+                    // Check Expiry for "Burn" logic
+                    const now = Date.now();
+                    const validUntil = n.validUntil || (n.createdAt + (30 * 24 * 60 * 60 * 1000));
+                    const isExpired = validUntil < now;
+
+                    // 2. If they used the full month, burn the slot limit too.
+                    if (isExpired) {
+                        console.log("🔥 Burning used Monthly slot...");
+                        updates.extraSlots = increment(-1);
+                    }
+
+                    await updateDoc(doc(db, "users", currentUser.uid), updates);
+                }
+
+                // 4. UI CLEANUP
+                const btn = document.querySelector(`button[onclick*="${id}"]`);
+                if (btn) btn.closest('div').remove();
+
+                await checkNurseValidity(currentUser.uid);
+
+            } catch (error) {
+                console.error("Removal Error:", error);
+                alert("Could not remove staff. Please try again.");
             }
-            
-            await updateDoc(doc(db, "users", currentUser.uid), updates);
-        }
-
-        // 4. UI CLEANUP
-        const btn = document.querySelector(`button[onclick*="${id}"]`);
-        if (btn) btn.closest('div').remove();
-
-        await checkNurseValidity(currentUser.uid);
-
-    } catch (error) {
-        console.error("Removal Error:", error);
-        alert("Could not remove staff. Please try again.");
-    }
-};
+        };
 
         // --- THE GATEKEEPER (Step 3: Prepaid Validity Model) ---
         function setupGatekeeper(uid) {
@@ -2742,97 +2702,129 @@ window.removeNurseFromLock = async (id) => {
             });
         }
         // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
-        // --- DATA SYNC (Now Linked to WhatsApp Bot Data) ---
-        function startDataSync(uid) {
-            if (unsubscribeNurses) return;
+       // --- DATA SYNC (Reads Bookings AND Availability Attendance) ---
+       function startDataSync(uid) {
+        if (unsubscribeNurses) return;
 
-            console.log("🔄 Starting Data Sync...");
+        console.log("🔄 Starting Data Sync...");
 
-            // 1. Nurses (Standard Directory)
-            unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
-                allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderStaffList();
-                populateLoginSelect();
-                const totalEl = document.getElementById('stat-total');
-                if (totalEl) totalEl.innerText = allNurses.length;
+        // 1. Nurses Directory
+        unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
+            allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderStaffList();
+            populateLoginSelect();
+            const totalEl = document.getElementById('stat-total');
+            if (totalEl) totalEl.innerText = allNurses.length;
+        });
+
+        // 2. COMBINED LOGS: Bookings + Attendance (Availability)
+        const bookingsRef = collection(db, "users", uid, "bookings");
+        const attendanceRef = collection(db, "users", uid, "attendance");
+
+        // Init temporary holders attached to window so they persist between updates
+        window.tempBookingsLogs = [];
+        window.tempAttendanceLogs = [];
+
+        // Helper to merge both lists and update the UI
+        const updateMergedLogs = () => {
+            // Combine arrays
+            const merged = [...window.tempBookingsLogs, ...window.tempAttendanceLogs];
+            
+            // Sort by time (newest first)
+            merged.sort((a, b) => b.timestamp - a.timestamp);
+            
+            allLogs = merged; // Update Global State
+
+            // Render UI
+            renderDashboardLogs();
+            renderAllLogs();
+
+            // Update "Present Today" Stat
+            const today = new Date().toDateString();
+            const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
+            
+            const presentEl = document.getElementById('stat-present');
+            if (presentEl) presentEl.innerText = todayCount;
+
+            // Recalculate Payroll (if view is open)
+            if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
+                window.calculatePayroll();
+            }
+        };
+
+        // Listener A: Bookings (Actual Jobs)
+        unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+            window.tempBookingsLogs = [];
+            snapshot.forEach(doc => {
+                const b = doc.data();
+                // We treat "Arrived", "In Progress", and "Completed" as being PRESENT
+                if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
+                    window.tempBookingsLogs.push({
+                        id: doc.id,
+                        nurseId: b.assignedNurseId, 
+                        nurseName: b.assignedNurseName || "Assigned Nurse",
+                        timestamp: b.startedAt || b.timestamp,
+                        photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                        address: b.nurse_location_address || b.location,
+                        type: 'job'
+                    });
+                }
             });
+            updateMergedLogs();
+        });
 
-            // 2. ATTENDANCE LOGS (UPDATED: Now pulls from WhatsApp Bookings)
-            // We listen to 'bookings' but treat them as 'logs' when a nurse arrives.
-            const bookingsRef = collection(db, "users", uid, "bookings");
-
-            unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
-                const tempLogs = [];
-
-                snapshot.forEach(doc => {
-                    const b = doc.data();
-
-                    // 🛑 FILTER: Only include entries where the Nurse has reached the location via Bot
-                    // We look for statuses that imply arrival: 'nurse_arrived', 'in_progress', 'completed'
-                    if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
-
-                        // Create a Log Object from the Booking Data
-                        tempLogs.push({
-                            id: doc.id,
-                            nurseName: b.assignedNurseName || "Assigned Nurse",
-                            // Use the time the bot marked them as "Started/Arrived"
-                            timestamp: b.startedAt || b.timestamp,
-                            // Use the selfie sent to the bot (Fallback to default if missing)
-                            photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-                            // Use the location sent to the bot
-                            address: b.nurse_location_address || b.location
-                        });
-                    }
+        // Listener B: Attendance (Availability Check-ins from Bot)
+        // 🌟 This picks up the new records created when they share location
+        const unsubAttendance = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
+            window.tempAttendanceLogs = [];
+            snapshot.forEach(doc => {
+                const a = doc.data();
+                window.tempAttendanceLogs.push({
+                    id: doc.id,
+                    nurseId: a.nurseId,
+                    nurseName: a.nurseName,
+                    timestamp: a.timestamp,
+                    photo: a.photo || "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Map Icon
+                    address: a.address,
+                    type: 'checkin'
                 });
-
-                allLogs = tempLogs; // Update global state
-
-                // Render the UI
-                renderDashboardLogs();
-                renderAllLogs();
-
-                // Update "Present Today" Stat based on these bot logs
-                const today = new Date().toDateString();
-                const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
-                const presentEl = document.getElementById('stat-present');
-                if (presentEl) presentEl.innerText = todayCount;
-
-                // Recalculate Payroll
-                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
-                    window.calculatePayroll();
-                }
             });
+            updateMergedLogs();
+        });
+        
+        // Track this listener to unsubscribe later if needed
+        window.unsubscribeAttendance = unsubAttendance;
 
-            // 3. Bookings (War Room Feed) - Kept separate for the "Requests" view
-            unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
-                const grid = document.getElementById('bookings-grid');
-                if (grid) {
-                    grid.innerHTML = '';
-                    if (snapshot.empty) {
-                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
-                    } else {
-                        snapshot.docs.forEach(doc => {
-                            const b = doc.data();
-                            grid.innerHTML += `
-                            <div class="card" style="border-left: 5px solid #25D366;">
-                                <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
-                                <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
-                                <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
-                            </div>`;
-                        });
-                    }
+        // 3. Payouts (Existing Code)
+        const payoutsRef = collection(db, "users", uid, "payouts");
+        onSnapshot(payoutsRef, (snapshot) => {
+            allPayouts = snapshot.docs.map(doc => doc.id);
+            if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
+                window.calculatePayroll();
+            }
+        });
+        
+         // 4. Bookings Request Feed (Existing Code)
+        unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+            const grid = document.getElementById('bookings-grid');
+            if (grid) {
+                grid.innerHTML = '';
+                if (snapshot.empty) {
+                    grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
+                } else {
+                    snapshot.docs.forEach(doc => {
+                        const b = doc.data();
+                        grid.innerHTML += `
+                        <div class="card" style="border-left: 5px solid #25D366;">
+                            <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
+                            <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
+                            <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
+                        </div>`;
+                    });
                 }
-            });
-
-            // 4. Payouts
-            const payoutsRef = collection(db, "users", uid, "payouts");
-            onSnapshot(payoutsRef, (snapshot) => {
-                allPayouts = snapshot.docs.map(doc => doc.id);
-                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
-                    window.calculatePayroll();
-                }
-            });
-        }
+            }
+        });
+    }
 
         // ==========================================
         // 💰 PRICING & PLAN LOGIC (Copy This Block)
@@ -3905,7 +3897,7 @@ window.removeNurseFromLock = async (id) => {
 
                 // 4. Badge Logic (Daily vs Monthly)
                 const isDaily = nurse.type === 'daily';
-                const badgeHtml = isDaily 
+                const badgeHtml = isDaily
                     ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
                     : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
 
@@ -4228,7 +4220,7 @@ window.removeNurseFromLock = async (id) => {
             window.toggleMode();
         };
 
-        // --- UPDATED FORM SUBMISSION (No Auto-Redirect) ---
+        // --- UPDATED FORM SUBMISSION (Dual Write: Dashboard + Bot) ---
         document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -4248,14 +4240,12 @@ window.removeNurseFromLock = async (id) => {
             // A. Block if no Monthly Slots
             if (planType === 'monthly' && monthlyLeft <= 0) {
                 alert("⚠️ No Monthly Slots Available!\n\nPlease click the 'Buy More' button above to purchase slots.");
-                // 🛑 STOPPED AUTO-REDIRECT. User stays on form.
                 return;
             }
 
             // B. Block if no Daily Passes
             if (planType === 'daily' && dailyPasses <= 0) {
                 alert("⚠️ No Daily Passes Available!\n\nPlease click the 'Buy More' button above to purchase a pass.");
-                // 🛑 STOPPED AUTO-REDIRECT. User stays on form.
                 return;
             }
 
@@ -4270,30 +4260,53 @@ window.removeNurseFromLock = async (id) => {
             }
 
             try {
-                // 4. ADD NURSE TO FIREBASE
-                await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
+                // 4. PREPARE BATCH WRITE
+                const batch = writeBatch(db);
+
+                // A. Generate Unique ID (Use Root Collection to ensure global uniqueness)
+                const newNurseRef = doc(collection(db, "nurses"));
+                const nurseId = newNurseRef.id;
+
+                // B. Create References for Dual Write
+                const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", nurseId); // Dashboard View
+                const rootNurseRef = doc(db, "nurses", nurseId); // Bot View
+
+                // C. Prepare Data Object
+                const nurseData = {
                     name,
                     phone,
                     role,
                     rate,
                     timestamp: Date.now(),
-                    validUntil: expiryDate, // 👈 Sets the correct time (30d or 24h)
-                    type: planType // 👈 Tags them as 'monthly' or 'daily'
-                });
+                    validUntil: expiryDate,
+                    type: planType,
+                    status: "offline", // Initial status for bot
+                    agencyId: currentUser.uid, // Link back to Agency
+                    agencyName: currentUserData.agencyName || "Silver Care Agency"
+                };
 
-                // 5. CONSUME THE CORRECT CREDIT
+                // D. Queue the Writes
+                batch.set(agencyNurseRef, nurseData);
+                batch.set(rootNurseRef, nurseData);
+
+                // 5. CONSUME THE CORRECT CREDIT (In the same batch)
+                const agencyUserRef = doc(db, "users", currentUser.uid);
+
                 if (planType === 'monthly') {
-                    await updateDoc(doc(db, "users", currentUser.uid), {
+                    batch.update(agencyUserRef, {
                         nurseCount: increment(1)
                     });
                 } else {
-                    await updateDoc(doc(db, "users", currentUser.uid), {
+                    batch.update(agencyUserRef, {
                         dailyPasses: increment(-1)
                     });
                 }
 
-                // 6. SUCCESS FEEDBACK
-                alert(`✅ Staff Added Successfully!\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
+                // 6. COMMIT ALL CHANGES AT ONCE
+                await batch.commit();
+
+                // 7. SUCCESS FEEDBACK
+                alert(`✅ Staff Added Successfully!\nActive on WhatsApp Bot.\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
                 window.closeModal();
                 e.target.reset();
 
@@ -4356,45 +4369,58 @@ window.removeNurseFromLock = async (id) => {
             const title = "Delete Staff?";
             const msg = `
         <strong style="color:#d32f2f;">Warning: Action cannot be undone.</strong><br>
-        Deleting this staff member will remove them permanently.<br><br>
+        Deleting this staff member will remove them permanently from the Dashboard AND the Bot.<br><br>
         <span style="font-size:0.85rem; background:#ffebee; padding:4px 8px; border-radius:4px; color:#c62828;">
            ⚠️ You will <b>NOT</b> get the slot or pass back.
         </span>
     `;
 
             // 2. Trigger Custom Modal
+            
             window.showConfirmDialog(title, msg, async () => {
                 try {
-                    // A. Check the Nurse Type first
-                    const docRef = doc(db, "users", currentUser.uid, "nurses", id);
-                    const docSnap = await getDoc(docRef);
+                    // A. Check the Nurse Type first (from Agency view)
+                    const agencyDocRef = doc(db, "users", currentUser.uid, "nurses", id);
+                    const agencyDocSnap = await getDoc(agencyDocRef);
 
-                    if (!docSnap.exists()) {
-                        window.showToast("Error: Staff not found.", 'error');
+                    if (!agencyDocSnap.exists()) {
+                        window.showToast("Error: Staff not found in dashboard.", 'error');
                         return;
                     }
 
-                    const nurse = docSnap.data();
-                    const isMonthly = !nurse.type || nurse.type === 'monthly'; // Default to monthly
+                    const nurseData = agencyDocSnap.data();
+                    const isMonthly = !nurseData.type || nurseData.type === 'monthly'; 
 
-                    // B. Delete the Document
-                    await deleteDoc(docRef);
+                    // B. PREPARE BATCH DELETE
+                    const batch = writeBatch(db);
+
+                    // 1. Delete from Agency View (Dashboard)
+                    batch.delete(agencyDocRef);
+
+                    // 2. Delete from Bot View (Root Collection)
+                    const rootDocRef = doc(db, "nurses", id);
+                    batch.delete(rootDocRef);
 
                     // C. Update Counters (BURN LOGIC)
+                    const agencyRef = doc(db, "users", currentUser.uid);
+
                     if (isMonthly) {
-                        // 🔥 Monthly: Burn the slot so they lose it (as per your request)
-                        await updateDoc(doc(db, "users", currentUser.uid), {
+                        // 🔥 Monthly: Burn the slot so they lose it
+                        batch.update(agencyRef, {
                             nurseCount: increment(-1), // Remove from active count
-                            extraSlots: increment(-1)  // Remove from total limit (BURN)
+                            extraSlots: increment(-1)  // Remove from total limit
                         });
                     } else {
                         // 🎫 Daily: Do NOTHING.
-                        // The pass was already subtracted when they added the nurse.
-                        // By not adding it back here, they effectively "lose" it and must buy again.
+                        // The pass was already subtracted when added. 
+                        // By not adding it back, they effectively "lose" it.
                     }
 
-                    // D. Success Message
-                    window.showToast("Staff deleted. Validity consumed.");
+                    // D. COMMIT ALL OPERATIONS
+                    await batch.commit();
+
+                    // E. Success Message
+                    window.showToast("Staff deleted from Dashboard & Bot.");
 
                 } catch (error) {
                     console.error(error);
@@ -4824,49 +4850,79 @@ window.removeNurseFromLock = async (id) => {
             }
         };
 
-        // --- SMART REPLACE (Preserves Plan Type) ---
-        document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const oldId = document.getElementById('replace-old-id').value;
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Swapping...";
+       // --- SMART REPLACE (Dual Write: Dashboard + Bot) ---
+       document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldId = document.getElementById('replace-old-id').value;
+        const btn = e.target.querySelector('button');
+        const originalBtnText = btn.innerHTML; // Store original button content
+        
+        btn.innerText = "Swapping...";
+        btn.disabled = true;
 
-            try {
-                // 1. Get Old Data (We need the Validity AND the Type)
-                const oldDocRef = doc(db, "users", currentUser.uid, "nurses", oldId);
-                const oldSnap = await getDoc(oldDocRef);
+        try {
+            // 1. Get Old Data (We need to copy the Validity & Plan Type)
+            const oldAgencyRef = doc(db, "users", currentUser.uid, "nurses", oldId);
+            const oldSnap = await getDoc(oldAgencyRef);
 
-                if (!oldSnap.exists()) throw new Error("Original staff not found.");
-                const oldData = oldSnap.data();
+            if (!oldSnap.exists()) throw new Error("Original staff not found.");
+            const oldData = oldSnap.data();
 
-                // 2. Add New Nurse (Inherit Validity & Type)
-                await addDoc(collection(db, "users", currentUser.uid, "nurses"), {
-                    name: document.getElementById('repName').value,
-                    phone: document.getElementById('repPhone').value,
-                    role: document.getElementById('repRole').value,
-                    rate: document.getElementById('repRate').value,
-                    timestamp: Date.now(),
+            // 2. Prepare Batch Operation
+            const batch = writeBatch(db);
 
-                    // 🛑 CRITICAL: Copy both fields!
-                    validUntil: oldData.validUntil,
-                    type: oldData.type || 'monthly' // Defaults to monthly if missing
-                });
+            // --- STEP A: DELETE OLD NURSE (Revoke Access) ---
+            // 1. Delete from Dashboard
+            batch.delete(oldAgencyRef); 
+            // 2. Delete from Bot (Global) - This stops the old number from working
+            batch.delete(doc(db, "nurses", oldId)); 
 
-                // 3. Delete Old Nurse
-                await deleteDoc(oldDocRef);
+            // --- STEP B: CREATE NEW NURSE (Grant Access) ---
+            // Generate a NEW ID for the new person (globally unique)
+            const newNurseRef = doc(collection(db, "nurses"));
+            const newId = newNurseRef.id;
 
-                // No counter updates needed (One out, One in)
+            const newNurseData = {
+                name: document.getElementById('repName').value,
+                phone: document.getElementById('repPhone').value, // New WhatsApp Number
+                role: document.getElementById('repRole').value,
+                rate: document.getElementById('repRate').value,
+                timestamp: Date.now(),
+                
+                // 🛑 CRITICAL: Inherit Validity from Old Nurse
+                validUntil: oldData.validUntil, 
+                type: oldData.type || 'monthly', 
 
-                alert("Staff Replaced Successfully!");
-                document.getElementById('replaceModal').classList.remove('active');
-                e.target.reset();
+                // Bot Fields
+                status: "offline",
+                agencyId: currentUser.uid,
+                agencyName: currentUserData.agencyName || "Silver Care Agency"
+            };
 
-            } catch (error) {
-                alert("Error: " + error.message);
-            } finally {
-                btn.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i> Confirm Replacement';
-            }
-        });
+            // 3. Add to Dashboard (using the new ID)
+            const newAgencyRef = doc(db, "users", currentUser.uid, "nurses", newId);
+            batch.set(newAgencyRef, newNurseData);
+            
+            // 4. Add to Bot (Global) - This activates the new number
+            const newGlobalRef = doc(db, "nurses", newId);
+            batch.set(newGlobalRef, newNurseData);
+
+            // --- STEP C: COMMIT ---
+            await batch.commit();
+
+            // 3. Success Feedback
+            alert(`✅ Staff Replaced Successfully!\n\n• Old Number: Access Revoked\n• New Number: Active on Bot\n• Validity: Preserved`);
+            document.getElementById('replaceModal').classList.remove('active');
+            e.target.reset();
+
+        } catch (error) {
+            console.error(error);
+            alert("Error: " + error.message);
+        } finally {
+            btn.innerHTML = originalBtnText; // Restore original button text/icon
+            btn.disabled = false;
+        }
+    });
         // --- 4. REDIRECT HELPER ---
         window.openPaymentModal = (preferredPlan) => {
             // Hide the add form
