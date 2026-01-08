@@ -1449,6 +1449,109 @@
             right: 30px;
             cursor: pointer;
         }
+        /* --- NEW TIMELINE CARD DESIGN --- */
+.log-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    padding: 0; /* Remove padding here, we handle it inside */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    border: 1px solid #f0f0f0;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.log-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* 1. Left Timeline Section */
+.log-timeline {
+    background: #f8f9fa;
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    border-right: 1px solid #eee;
+    min-width: 90px;
+    text-align: right;
+}
+
+.time-point {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.tp-start { color: #2e7d32; } /* Green */
+.tp-end   { color: #c62828; } /* Red */
+
+/* 2. Photo Section */
+.log-photo-box {
+    padding: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.log-photo-box img {
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 3. Details Section */
+.log-info {
+    flex: 1;
+    padding: 12px 15px 12px 5px;
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.log-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+}
+
+.log-address {
+    font-size: 0.8rem;
+    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.3;
+}
+
+/* Status Badges */
+.status-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-ongoing { background: #e3f2fd; color: #1565c0; }
+.badge-completed { background: #e8f5e9; color: #2e7d32; }
+.badge-checkin { background: #fff3e0; color: #e65100; }
     </style>
 </head>
 
@@ -1833,8 +1936,18 @@
                     </div>
                 </div>
 
-                <h2 style="font-family: 'Rozha One'; color: var(--navy); margin-bottom: 1.5rem;">Recent Activity</h2>
-                <div class="nurse-grid" id="dashboard-grid">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: 'Rozha One'; color: var(--navy); margin:0;">Recent Activity</h2>
+                    
+                    <div style="display:flex; align-items:center; gap:8px; background:white; padding:6px 12px; border-radius:8px; border:1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <span style="color:#666; font-size:0.8rem;"><i class="fa-solid fa-filter"></i> Date:</span>
+                        <input type="date" id="dashboard-date-filter" class="form-input" 
+                               style="width:auto; padding:4px; border:none; background:transparent; font-weight:600; color:var(--navy); font-size:0.9rem;"
+                               onchange="renderDashboardLogs()">
+                    </div>
+                </div>
+
+                <div class="nurse-grid" id="dashboard-grid" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
                 </div>
             </div>
 
@@ -1984,7 +2097,7 @@
                 </div>
             </div>
 
-          
+
 
             <div id="view-super-admin" class="view-section">
                 <header>
@@ -2028,6 +2141,13 @@
                     <div class="page-title">
                         <h1>Daily Attendance Logs</h1>
                         <p>Real-time check-in data with location</p>
+                    </div>
+                    <div
+                        style="display:flex; align-items:center; gap:10px; background:white; padding:8px; border-radius:10px; border:1px solid #ddd;">
+                        <span style="color:#666; font-size:0.9rem;"><i class="fa-solid fa-calendar"></i> Filter:</span>
+                        <input type="date" id="logs-date-filter" class="form-input"
+                            style="width:auto; padding:5px; border:none; background:transparent; font-weight:600; color:var(--navy);"
+                            onchange="renderAllLogs()">
                     </div>
                 </header>
                 <div id="logs-list-container" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -2702,129 +2822,140 @@
             });
         }
         // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
-       // --- DATA SYNC (Reads Bookings AND Availability Attendance) ---
-       function startDataSync(uid) {
-        if (unsubscribeNurses) return;
+        // --- DATA SYNC (Reads Bookings AND Availability Attendance) ---
+        function startDataSync(uid) {
+            if (unsubscribeNurses) return;
 
-        console.log("🔄 Starting Data Sync...");
+            console.log("🔄 Starting Data Sync...");
 
-        // 1. Nurses Directory
-        unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
-            allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderStaffList();
-            populateLoginSelect();
-            const totalEl = document.getElementById('stat-total');
-            if (totalEl) totalEl.innerText = allNurses.length;
-        });
+            // 1. Nurses Directory
+            unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
+                allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderStaffList();
+                populateLoginSelect();
+                const totalEl = document.getElementById('stat-total');
+                if (totalEl) totalEl.innerText = allNurses.length;
+            });
 
-        // 2. COMBINED LOGS: Bookings + Attendance (Availability)
-        const bookingsRef = collection(db, "users", uid, "bookings");
-        const attendanceRef = collection(db, "users", uid, "attendance");
+            // 2. COMBINED LOGS: Bookings + Attendance (Availability)
+            const bookingsRef = collection(db, "users", uid, "bookings");
+            const attendanceRef = collection(db, "users", uid, "attendance");
 
-        // Init temporary holders attached to window so they persist between updates
-        window.tempBookingsLogs = [];
-        window.tempAttendanceLogs = [];
-
-        // Helper to merge both lists and update the UI
-        const updateMergedLogs = () => {
-            // Combine arrays
-            const merged = [...window.tempBookingsLogs, ...window.tempAttendanceLogs];
-            
-            // Sort by time (newest first)
-            merged.sort((a, b) => b.timestamp - a.timestamp);
-            
-            allLogs = merged; // Update Global State
-
-            // Render UI
-            renderDashboardLogs();
-            renderAllLogs();
-
-            // Update "Present Today" Stat
-            const today = new Date().toDateString();
-            const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
-            
-            const presentEl = document.getElementById('stat-present');
-            if (presentEl) presentEl.innerText = todayCount;
-
-            // Recalculate Payroll (if view is open)
-            if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
-                window.calculatePayroll();
-            }
-        };
-
-        // Listener A: Bookings (Actual Jobs)
-        unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+            // Init temporary holders attached to window so they persist between updates
             window.tempBookingsLogs = [];
-            snapshot.forEach(doc => {
-                const b = doc.data();
-                // We treat "Arrived", "In Progress", and "Completed" as being PRESENT
-                if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
-                    window.tempBookingsLogs.push({
+            window.tempAttendanceLogs = [];
+
+            // Helper to merge both lists and update the UI
+            const updateMergedLogs = () => {
+                // Combine arrays
+                const merged = [...window.tempBookingsLogs, ...window.tempAttendanceLogs];
+
+                // Sort by time (newest first)
+                merged.sort((a, b) => b.timestamp - a.timestamp);
+
+                allLogs = merged; // Update Global State
+
+                // --- UPDATE UI ---
+                
+                // 1. Init Dashboard Date & Render
+                const dashInput = document.getElementById('dashboard-date-filter');
+                if(dashInput && !dashInput.value) dashInput.valueAsDate = new Date();
+                if(window.renderDashboardLogs) window.renderDashboardLogs(); // Call the window function
+
+                // 2. Init Logs Page Date & Render
+                const logsInput = document.getElementById('logs-date-filter');
+                if(logsInput && !logsInput.value) logsInput.valueAsDate = new Date();
+                if(window.renderAllLogs) window.renderAllLogs();
+
+                // Update "Present Today" Stat
+                const today = new Date().toDateString();
+                const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
+
+                const presentEl = document.getElementById('stat-present');
+                if (presentEl) presentEl.innerText = todayCount;
+
+                // Recalculate Payroll (if view is open)
+                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
+                    window.calculatePayroll();
+                }
+            };
+
+            // Listener A: Bookings (Actual Jobs)
+            unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+                window.tempBookingsLogs = [];
+                snapshot.forEach(doc => {
+                    const b = doc.data();
+                    // We treat "Arrived", "In Progress", and "Completed" as being PRESENT
+                    if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
+                        window.tempBookingsLogs.push({
+                            id: doc.id,
+                            nurseId: b.assignedNurseId,
+                            nurseName: b.assignedNurseName || "Assigned Nurse",
+                            timestamp: b.startedAt || b.timestamp, // Start Time
+                            endTime: b.completedAt || null,        // 🟢 Added: End Time
+                            photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                            address: b.nurse_location_address || b.location,
+                            type: 'job',
+                            status: b.status                       // 🟢 Added: Status
+                        });
+                    }
+                });
+                updateMergedLogs();
+            });
+
+            // Listener B: Attendance (Availability Check-ins from Bot)
+            // 🌟 This picks up the new records created when they share location
+            const unsubAttendance = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
+                window.tempAttendanceLogs = [];
+                snapshot.forEach(doc => {
+                    const a = doc.data();
+                    window.tempAttendanceLogs.push({
                         id: doc.id,
-                        nurseId: b.assignedNurseId, 
-                        nurseName: b.assignedNurseName || "Assigned Nurse",
-                        timestamp: b.startedAt || b.timestamp,
-                        photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-                        address: b.nurse_location_address || b.location,
-                        type: 'job'
+                        nurseId: a.nurseId,
+                        nurseName: a.nurseName,
+                        timestamp: a.timestamp,
+                        endTime: null, // Availability check-ins have no end time
+                        photo: a.photo || "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Map Icon
+                        address: a.address,
+                        type: 'checkin'
                     });
+                });
+                updateMergedLogs();
+            });
+
+            // Track this listener to unsubscribe later if needed
+            window.unsubscribeAttendance = unsubAttendance;
+
+            // 3. Payouts (Existing Code)
+            const payoutsRef = collection(db, "users", uid, "payouts");
+            onSnapshot(payoutsRef, (snapshot) => {
+                allPayouts = snapshot.docs.map(doc => doc.id);
+                if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
+                    window.calculatePayroll();
                 }
             });
-            updateMergedLogs();
-        });
 
-        // Listener B: Attendance (Availability Check-ins from Bot)
-        // 🌟 This picks up the new records created when they share location
-        const unsubAttendance = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
-            window.tempAttendanceLogs = [];
-            snapshot.forEach(doc => {
-                const a = doc.data();
-                window.tempAttendanceLogs.push({
-                    id: doc.id,
-                    nurseId: a.nurseId,
-                    nurseName: a.nurseName,
-                    timestamp: a.timestamp,
-                    photo: a.photo || "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Map Icon
-                    address: a.address,
-                    type: 'checkin'
-                });
-            });
-            updateMergedLogs();
-        });
-        
-        // Track this listener to unsubscribe later if needed
-        window.unsubscribeAttendance = unsubAttendance;
-
-        // 3. Payouts (Existing Code)
-        const payoutsRef = collection(db, "users", uid, "payouts");
-        onSnapshot(payoutsRef, (snapshot) => {
-            allPayouts = snapshot.docs.map(doc => doc.id);
-            if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
-                window.calculatePayroll();
-            }
-        });
-        
-         // 4. Bookings Request Feed (Existing Code)
-        unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
-            const grid = document.getElementById('bookings-grid');
-            if (grid) {
-                grid.innerHTML = '';
-                if (snapshot.empty) {
-                    grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
-                } else {
-                    snapshot.docs.forEach(doc => {
-                        const b = doc.data();
-                        grid.innerHTML += `
+            // 4. Bookings Request Feed (Existing Code)
+            unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
+                const grid = document.getElementById('bookings-grid');
+                if (grid) {
+                    grid.innerHTML = '';
+                    if (snapshot.empty) {
+                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
+                    } else {
+                        snapshot.docs.forEach(doc => {
+                            const b = doc.data();
+                            grid.innerHTML += `
                         <div class="card" style="border-left: 5px solid #25D366;">
                             <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
                             <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
                             <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
                         </div>`;
-                    });
+                        });
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
         // ==========================================
         // 💰 PRICING & PLAN LOGIC (Copy This Block)
@@ -3991,91 +4122,154 @@
             });
         }
 
-        function renderDashboardLogs() {
-            const grid = document.getElementById('dashboard-grid');
-            grid.innerHTML = '';
+       // 🟢 FIX: Attached to window + Added Date Filter Logic
+       window.renderDashboardLogs = () => {
+        const grid = document.getElementById('dashboard-grid');
+        const dateInput = document.getElementById('dashboard-date-filter');
 
-            // Show message if empty
-            if (!allLogs || allLogs.length === 0) {
-                grid.innerHTML = '<p style="color:#999; grid-column:1/-1; text-align:center;">No activity today.</p>';
-                return;
+        // 1. Set Default to Today
+        if (dateInput && !dateInput.value) {
+            dateInput.valueAsDate = new Date();
+        }
+
+        // Safety Check
+        if (!grid || !dateInput) return;
+
+        grid.innerHTML = '';
+
+        // 2. Filter Logs by Selected Date
+        const selectedDate = new Date(dateInput.value).toDateString();
+        
+        const filteredLogs = allLogs.filter(log => {
+            const logDate = new Date(log.timestamp).toDateString();
+            return logDate === selectedDate;
+        });
+
+        // 3. Handle Empty State
+        if (filteredLogs.length === 0) {
+            grid.innerHTML = `
+                <div style="color:#999; grid-column:1/-1; text-align:center; padding:2rem; background:#f9f9f9; border-radius:12px; border:1px dashed #ddd;">
+                    <i class="fa-regular fa-clock" style="font-size:1.5rem; margin-bottom:8px; opacity:0.5;"></i>
+                    <p style="font-size:0.9rem;">No activity found for <b>${selectedDate}</b>.</p>
+                </div>`;
+            return;
+        }
+
+        // 4. Render Logs (Show all matching logs for that day)
+        filteredLogs.forEach(log => {
+            grid.innerHTML += createLogCard(log);
+        });
+    };
+
+       // 🟢 FIX: Attach to 'window' so HTML onchange="" can see it
+       window.renderAllLogs = () => {
+        const container = document.getElementById('logs-list-container');
+        const dateInput = document.getElementById('logs-date-filter');
+        
+        // 1. Set Default Date to Today if empty
+        if (dateInput && !dateInput.value) {
+            dateInput.valueAsDate = new Date();
+        }
+
+        // Safety check
+        if (!container || !dateInput) return;
+
+        container.innerHTML = '';
+
+        // 2. Filter Logs by Selected Date
+        // Note: We use 'toDateString' to ignore exact time (HH:MM:SS)
+        const selectedDate = new Date(dateInput.value).toDateString();
+        
+        const filteredLogs = allLogs.filter(log => {
+            const logDate = new Date(log.timestamp).toDateString();
+            return logDate === selectedDate;
+        });
+
+        // 3. Show Empty State if no logs for that date
+        if (filteredLogs.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:3rem; color:#999;">
+                    <i class="fa-regular fa-calendar-xmark" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i>
+                    <p>No activity found for <b>${selectedDate}</b>.</p>
+                </div>`;
+            return;
+        }
+
+        // 4. Render Filtered Logs
+        filteredLogs.forEach(log => {
+            container.innerHTML += createLogCard(log);
+        });
+    };
+
+    function createLogCard(log) {
+        // 1. Time Formatting
+        const startObj = new Date(log.timestamp);
+        const startTime = startObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        let endTimeHtml = '';
+        let statusBadge = '';
+
+        // 2. Determine Layout based on Type (Job vs Check-in)
+        if (log.type === 'checkin') {
+            // Scenario A: Just Availability (One time only)
+            endTimeHtml = `<div class="time-point" style="opacity:0.4;">
+                                <span>--:--</span> <i class="fa-solid fa-ellipsis-vertical"></i>
+                           </div>`;
+            statusBadge = `<span class="status-badge badge-checkin">Available</span>`;
+        
+        } else {
+            // Scenario B: Job (Might have End Time)
+            if (log.endTime) {
+                // Job Completed
+                const endObj = new Date(log.endTime);
+                const endTime = endObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                endTimeHtml = `<div class="time-point tp-end">
+                                    <span>${endTime}</span> <i class="fa-solid fa-flag-checkered"></i>
+                               </div>`;
+                statusBadge = `<span class="status-badge badge-completed">Completed</span>`;
+            } else {
+                // Job Ongoing
+                endTimeHtml = `<div class="time-point" style="color:#ff9800;">
+                                    <span style="font-size:0.7rem;">ON DUTY</span> <i class="fa-solid fa-spinner fa-spin"></i>
+                               </div>`;
+                statusBadge = `<span class="status-badge badge-ongoing">On Duty</span>`;
             }
-
-            // Show top 3
-            allLogs.slice(0, 3).forEach(log => {
-                grid.innerHTML += createLogCard(log);
-            });
         }
 
-        function renderAllLogs() {
-            const container = document.getElementById('logs-list-container');
-            container.innerHTML = '';
+        // 3. Address Cleanup (Remove "India", "Uttar Pradesh" to save space)
+        let cleanAddress = log.address || "GPS Location";
+        cleanAddress = cleanAddress.replace(', Uttar Pradesh', '').replace(', India', '');
 
-            // Show message if empty
-            if (!allLogs || allLogs.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center; padding:3rem; color:#999;">
-                        <i class="fa-solid fa-clipboard-list" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i>
-                        <p>No attendance logs found.</p>
-                    </div>`;
-                return;
-            }
+        // 4. Safe Strings for onclick
+        const safeName = log.nurseName ? log.nurseName.replace(/'/g, "\\'") : "Staff";
+        const safePhoto = log.photo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
-            allLogs.forEach(log => {
-                container.innerHTML += createLogCard(log);
-            });
-        }
-
-        function createLogCard(log) {
-            // Safety check for data
-            const timestamp = log.timestamp || Date.now();
-            const nurseName = log.nurseName || "Unknown Staff";
-            const photoUrl = log.photo || "https://via.placeholder.com/60";
-            const locationText = log.address || "GPS Location Recorded";
-
-            const dateObj = new Date(timestamp);
-
-            // Format Time (e.g., 09:30 AM)
-            const timeStr = dateObj.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-
-            // Format Date (e.g., OCT 24)
-            const dateStr = dateObj.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric'
-            });
-
-            // Sanitize data for the onclick function to prevent syntax errors with quotes
-            const safeName = nurseName.replace(/'/g, "\\'");
-            const safeTime = `${dateStr}, ${timeStr}`;
-
-            return `
-            <div class="log-card">
-                <div class="log-time-box">
-                    <div class="log-time-big">${timeStr}</div>
-                    <div class="log-date-small">${dateStr}</div>
-                    <div style="font-size:0.65rem; color:#138808; font-weight:bold; margin-top:2px;">REACHED</div>
+        return `
+        <div class="log-card">
+            <div class="log-timeline">
+                <div class="time-point tp-start">
+                    <span>${startTime}</span> <i class="fa-solid fa-play"></i>
                 </div>
+                ${endTimeHtml}
+            </div>
 
-                <div class="log-photo-frame" onclick="viewImage('${photoUrl}', '${safeName}', '${safeTime}')">
-                    <img src="${photoUrl}" class="log-photo" alt="Selfie">
-                    <div style="position:absolute; bottom:-5px; right:-5px; background:white; border-radius:50%; padding:4px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
-                        <i class="fa-solid fa-magnifying-glass-plus" style="font-size:0.7rem; color:var(--primary);"></i>
-                    </div>
-                </div>
+            <div class="log-photo-box" onclick="viewImage('${safePhoto}', '${safeName}', '${startTime}')">
+                <img src="${safePhoto}" alt="Selfie">
+            </div>
 
-                <div class="log-details">
-                    <h4>${nurseName}</h4>
-                    <div class="log-location">
-                        <i class="fa-solid fa-location-dot" style="color:#d32f2f; margin-top:3px;"></i>
-                        <span>${locationText}</span>
-                    </div>
+            <div class="log-info">
+                <div class="log-header">
+                    <div class="log-name">${log.nurseName}</div>
+                    ${statusBadge}
                 </div>
-            </div>`;
-        }
+                <div class="log-address">
+                    <i class="fa-solid fa-location-dot" style="color:#ff5722; font-size:0.8rem; margin-right:4px;"></i>
+                    ${cleanAddress}
+                </div>
+            </div>
+        </div>`;
+    }
 
         window.viewImage = (src, name, time) => {
             const modal = document.getElementById('img-viewer-modal');
@@ -4376,7 +4570,7 @@
     `;
 
             // 2. Trigger Custom Modal
-            
+
             window.showConfirmDialog(title, msg, async () => {
                 try {
                     // A. Check the Nurse Type first (from Agency view)
@@ -4389,7 +4583,7 @@
                     }
 
                     const nurseData = agencyDocSnap.data();
-                    const isMonthly = !nurseData.type || nurseData.type === 'monthly'; 
+                    const isMonthly = !nurseData.type || nurseData.type === 'monthly';
 
                     // B. PREPARE BATCH DELETE
                     const batch = writeBatch(db);
@@ -4511,7 +4705,6 @@
             // 3. Query Active AND Completed Bookings
             const q = query(
                 collection(db, "bookings"),
-                // Added 'completed' to this list so they don't vanish instantly
                 where("status", "in", ["assigned", "nurse_arrived", "in_progress", "completed"]),
                 orderBy("timestamp", "desc")
             );
@@ -4526,10 +4719,17 @@
                     return;
                 }
 
+                // 🔒 SECURITY FILTER: Get ID list of ONLY my nurses
+                // We use the 'allNurses' global array which is already loaded for your agency
+                const myNurseIds = allNurses.map(n => n.id);
+
                 snapshot.forEach(doc => {
                     const b = doc.data();
                     const bid = doc.id;
                     const status = b.status;
+
+                    // 🛑 FILTER: Skip if the nurse is not in my staff list
+                    if (!myNurseIds.includes(b.assignedNurseId)) return;
 
                     // 🛑 FILTER: If completed more than 24 hours ago, hide it.
                     if (status === 'completed' && b.completedAt) {
@@ -4542,7 +4742,6 @@
                     const logsId = `logs-${bid}`;
 
                     // --- STATUS & TIMELINE LOGIC ---
-                    // s1=Assigned, s2=Arrived, s3=Started
                     let s1 = '', s2 = '', s3 = '';
 
                     if (status === 'assigned') { s1 = 'active'; }
@@ -4598,7 +4797,7 @@
                     grid.innerHTML += html;
 
                     // 4. LISTEN FOR LOGS (Sub-collection)
-                    const logsQuery = query(collection(db, "bookings", bid, "logs"), orderBy("timestamp", "desc"), limit(10)); // Increased limit to 10
+                    const logsQuery = query(collection(db, "bookings", bid, "logs"), orderBy("timestamp", "desc"), limit(10));
 
                     const unsubLogs = onSnapshot(logsQuery, (logSnap) => {
                         const logContainer = document.getElementById(logsId);
@@ -4607,17 +4806,14 @@
                         if (logSnap.empty) {
                             logContainer.innerHTML = '<div style="text-align:center; color:#ccc; padding:10px;">No logs yet.</div>';
                         } else {
-                            logContainer.innerHTML = ''; // Clear loading text
+                            logContainer.innerHTML = '';
                             logSnap.forEach(lDoc => {
                                 const l = lDoc.data();
                                 const time = new Date(l.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                                 let contentClass = l.is_critical ? 'log-critical' : '';
-
-                                // 1. Get the TEXT note (Summary or Raw Text)
                                 let mainText = l.summary || l.raw_text || "Update logged.";
-
-                                // 2. Get the VITALS data (if exists)
+                                
                                 let vitalsHtml = '';
                                 if (l.vitals) {
                                     let parts = [];
@@ -4631,7 +4827,6 @@
                                     }
                                 }
 
-                                // 3. Render Combined
                                 logContainer.innerHTML += `
                         <div class="log-item">
                             <div class="log-time">${time}</div>
@@ -4850,79 +5045,79 @@
             }
         };
 
-       // --- SMART REPLACE (Dual Write: Dashboard + Bot) ---
-       document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const oldId = document.getElementById('replace-old-id').value;
-        const btn = e.target.querySelector('button');
-        const originalBtnText = btn.innerHTML; // Store original button content
-        
-        btn.innerText = "Swapping...";
-        btn.disabled = true;
+        // --- SMART REPLACE (Dual Write: Dashboard + Bot) ---
+        document.getElementById('replaceNurseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const oldId = document.getElementById('replace-old-id').value;
+            const btn = e.target.querySelector('button');
+            const originalBtnText = btn.innerHTML; // Store original button content
 
-        try {
-            // 1. Get Old Data (We need to copy the Validity & Plan Type)
-            const oldAgencyRef = doc(db, "users", currentUser.uid, "nurses", oldId);
-            const oldSnap = await getDoc(oldAgencyRef);
+            btn.innerText = "Swapping...";
+            btn.disabled = true;
 
-            if (!oldSnap.exists()) throw new Error("Original staff not found.");
-            const oldData = oldSnap.data();
+            try {
+                // 1. Get Old Data (We need to copy the Validity & Plan Type)
+                const oldAgencyRef = doc(db, "users", currentUser.uid, "nurses", oldId);
+                const oldSnap = await getDoc(oldAgencyRef);
 
-            // 2. Prepare Batch Operation
-            const batch = writeBatch(db);
+                if (!oldSnap.exists()) throw new Error("Original staff not found.");
+                const oldData = oldSnap.data();
 
-            // --- STEP A: DELETE OLD NURSE (Revoke Access) ---
-            // 1. Delete from Dashboard
-            batch.delete(oldAgencyRef); 
-            // 2. Delete from Bot (Global) - This stops the old number from working
-            batch.delete(doc(db, "nurses", oldId)); 
+                // 2. Prepare Batch Operation
+                const batch = writeBatch(db);
 
-            // --- STEP B: CREATE NEW NURSE (Grant Access) ---
-            // Generate a NEW ID for the new person (globally unique)
-            const newNurseRef = doc(collection(db, "nurses"));
-            const newId = newNurseRef.id;
+                // --- STEP A: DELETE OLD NURSE (Revoke Access) ---
+                // 1. Delete from Dashboard
+                batch.delete(oldAgencyRef);
+                // 2. Delete from Bot (Global) - This stops the old number from working
+                batch.delete(doc(db, "nurses", oldId));
 
-            const newNurseData = {
-                name: document.getElementById('repName').value,
-                phone: document.getElementById('repPhone').value, // New WhatsApp Number
-                role: document.getElementById('repRole').value,
-                rate: document.getElementById('repRate').value,
-                timestamp: Date.now(),
-                
-                // 🛑 CRITICAL: Inherit Validity from Old Nurse
-                validUntil: oldData.validUntil, 
-                type: oldData.type || 'monthly', 
+                // --- STEP B: CREATE NEW NURSE (Grant Access) ---
+                // Generate a NEW ID for the new person (globally unique)
+                const newNurseRef = doc(collection(db, "nurses"));
+                const newId = newNurseRef.id;
 
-                // Bot Fields
-                status: "offline",
-                agencyId: currentUser.uid,
-                agencyName: currentUserData.agencyName || "Silver Care Agency"
-            };
+                const newNurseData = {
+                    name: document.getElementById('repName').value,
+                    phone: document.getElementById('repPhone').value, // New WhatsApp Number
+                    role: document.getElementById('repRole').value,
+                    rate: document.getElementById('repRate').value,
+                    timestamp: Date.now(),
 
-            // 3. Add to Dashboard (using the new ID)
-            const newAgencyRef = doc(db, "users", currentUser.uid, "nurses", newId);
-            batch.set(newAgencyRef, newNurseData);
-            
-            // 4. Add to Bot (Global) - This activates the new number
-            const newGlobalRef = doc(db, "nurses", newId);
-            batch.set(newGlobalRef, newNurseData);
+                    // 🛑 CRITICAL: Inherit Validity from Old Nurse
+                    validUntil: oldData.validUntil,
+                    type: oldData.type || 'monthly',
 
-            // --- STEP C: COMMIT ---
-            await batch.commit();
+                    // Bot Fields
+                    status: "offline",
+                    agencyId: currentUser.uid,
+                    agencyName: currentUserData.agencyName || "Silver Care Agency"
+                };
 
-            // 3. Success Feedback
-            alert(`✅ Staff Replaced Successfully!\n\n• Old Number: Access Revoked\n• New Number: Active on Bot\n• Validity: Preserved`);
-            document.getElementById('replaceModal').classList.remove('active');
-            e.target.reset();
+                // 3. Add to Dashboard (using the new ID)
+                const newAgencyRef = doc(db, "users", currentUser.uid, "nurses", newId);
+                batch.set(newAgencyRef, newNurseData);
 
-        } catch (error) {
-            console.error(error);
-            alert("Error: " + error.message);
-        } finally {
-            btn.innerHTML = originalBtnText; // Restore original button text/icon
-            btn.disabled = false;
-        }
-    });
+                // 4. Add to Bot (Global) - This activates the new number
+                const newGlobalRef = doc(db, "nurses", newId);
+                batch.set(newGlobalRef, newNurseData);
+
+                // --- STEP C: COMMIT ---
+                await batch.commit();
+
+                // 3. Success Feedback
+                alert(`✅ Staff Replaced Successfully!\n\n• Old Number: Access Revoked\n• New Number: Active on Bot\n• Validity: Preserved`);
+                document.getElementById('replaceModal').classList.remove('active');
+                e.target.reset();
+
+            } catch (error) {
+                console.error(error);
+                alert("Error: " + error.message);
+            } finally {
+                btn.innerHTML = originalBtnText; // Restore original button text/icon
+                btn.disabled = false;
+            }
+        });
         // --- 4. REDIRECT HELPER ---
         window.openPaymentModal = (preferredPlan) => {
             // Hide the add form
