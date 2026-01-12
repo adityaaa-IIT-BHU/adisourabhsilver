@@ -2231,11 +2231,13 @@
     </div>
 
     <div class="modal" id="addModal">
-        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; scrollbar-width: thin;">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; scrollbar-width: thin; max-width: 600px;">
             <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h2 style="margin-bottom: 1rem; font-family: 'Rozha One'; color: var(--navy);">New Staff Entry</h2>
+            <h2 style="margin-bottom: 1rem; font-family: 'Rozha One'; color: var(--navy); text-align: center;">Staff
+                Application Form</h2>
 
             <form id="addNurseForm">
+
                 <div
                     style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #eee;">
                     <label
@@ -2269,13 +2271,16 @@
                         style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px; background: #fff; padding: 8px 12px; border-radius: 6px; border: 1px dashed #ddd;">
                         <span id="credit-status-text" style="font-size: 0.8rem; font-weight: 600; color: #666;">Checking
                             credits...</span>
-
                         <button type="button" onclick="openPaymentFromForm()"
                             style="background: var(--navy); color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 5px;">
                             <i class="fa-solid fa-cart-plus"></i> Buy More
                         </button>
                     </div>
                 </div>
+
+                <h4
+                    style="color: var(--primary); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    Personal Details</h4>
 
                 <div style="text-align:center; margin-bottom: 1.5rem;">
                     <div style="position:relative; width:100px; height:100px; margin:0 auto; border-radius:50%; background:#f0f0f0; border:2px dashed #ccc; overflow:hidden; cursor:pointer;"
@@ -2291,31 +2296,137 @@
                     <label style="font-size:0.8rem; color:#666; display:block; margin-top:5px;">Tap to add photo</label>
                 </div>
 
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-input" id="nurseName" required placeholder="Ex. Anjali Gupta">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-input" id="nurseName" required placeholder="Name of Staff">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-input" id="nurseGender">
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" class="form-input" id="nurseDob" onchange="calculateAge()">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-input" id="nurseAge" placeholder="Auto">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>WhatsApp Number (Active)</label>
+                    <label>Contact Number (WhatsApp)</label>
                     <input type="tel" class="form-input" id="nursePhone" required
-                        placeholder="919876543210 (No spaces or +)">
-                    <p style="font-size: 0.7rem; color: #888; margin-top: 4px;">Must match their WhatsApp number
-                        exactly.</p>
+                        placeholder="919876543210 (No spaces)">
+                </div>
+
+                <h4
+                    style="color: var(--primary); margin: 20px 0 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    Address Details</h4>
+
+                <div class="form-group">
+                    <label>Permanent Address</label>
+                    <textarea class="form-input" id="nursePermAddress" rows="2"
+                        placeholder="Village, City, State, Pincode"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Communication Address</label>
+                    <textarea class="form-input" id="nurseCommAddress" rows="2"
+                        placeholder="Current residential address"></textarea>
+                </div>
+
+                <h4
+                    style="color: var(--primary); margin: 20px 0 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    Qualifications</h4>
+
+                <div class="form-group">
+                    <label style="margin-bottom:8px; display:block;">Skills (Select all that apply)</label>
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background:#fff; padding:10px; border:1px solid #eee; border-radius:8px;">
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Patient Care"> Patient Care</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Baby Care"> Baby Care</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Cancer Care"> Cancer Care</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Paralysis"> Paralysis</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Limb Care"> Limb Care</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseSkills" value="Old Age"> Old Age</label>
+                        <label
+                            style="font-size:0.9rem; display:flex; align-items:center; gap:6px; grid-column: 1 / -1;"><input
+                                type="checkbox" name="nurseSkills" value="Others"> Others</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Role</label>
-                    <input type="text" class="form-input" id="nurseSpec" required placeholder="Ex. Senior Sister">
+                    <label style="margin-bottom:8px; display:block;">Languages Known</label>
+                    <div
+                        style="display: flex; flex-wrap: wrap; gap: 10px; background:#fff; padding:10px; border:1px solid #eee; border-radius:8px;">
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="Kannada"> Kannada</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="English"> English</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="Hindi"> Hindi</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="Telugu"> Telugu</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="Malayalam"> Malayalam</label>
+                        <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px;"><input
+                                type="checkbox" name="nurseLangs" value="Others"> Others</label>
+                    </div>
+                </div>
+
+                <h4
+                    style="color: var(--primary); margin: 20px 0 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    Office Use</h4>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Role / Title</label>
+                        <input type="text" class="form-input" id="nurseSpec" required placeholder="Ex. Senior Sister">
+                    </div>
+                    <div class="form-group">
+                        <label>Daily Rate (₹)</label>
+                        <input type="number" class="form-input" id="nurseRate" required placeholder="Ex. 800">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Place</label>
+                        <input type="text" class="form-input" id="nursePlace" placeholder="Location">
+                    </div>
+                    <div class="form-group">
+                        <label>Signature (Image)</label>
+                        <div style="border: 2px dashed #ccc; border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fff; overflow: hidden; position: relative;"
+                             onclick="document.getElementById('nurseSign').click()">
+                            
+                            <div id="sign-placeholder" style="text-align: center;">
+                                <i class="fa-solid fa-file-signature" style="font-size: 1.2rem; color: var(--navy);"></i>
+                                <div style="font-size: 0.7rem; color: #666; margin-top: 4px;">Tap to Upload</div>
+                            </div>
+
+                            <img id="sign-preview" src="" style="width: 100%; height: 100%; object-fit: contain; display: none;">
+                        </div>
+
+                        <input type="file" id="nurseSign" accept="image/*" style="display: none;" onchange="previewSignature(this)">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Daily Rate (₹)</label>
-                    <input type="number" class="form-input" id="nurseRate" required placeholder="Ex. 800">
-                </div>
-
-                <div class="form-group">
-                    <label>Document Locker (Aadhaar/ID)</label>
+                    <label>ID Proof (Aadhaar/Voter)</label>
                     <input type="file" id="nurseDoc" style="display: none;" accept="image/*,.pdf"
                         onchange="handleFileSelect(this)">
                     <div class="doc-box" id="doc-trigger" onclick="document.getElementById('nurseDoc').click()">
@@ -2324,7 +2435,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%;">Save Entry</button>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Save
+                    Application</button>
             </form>
         </div>
     </div>
@@ -2479,31 +2591,84 @@
                     <div style="text-align:center; margin-bottom: 1.5rem;">
                         <div style="position:relative; width:100px; height:100px; margin:0 auto; border-radius:50%; background:#f0f0f0; border:2px dashed #ccc; overflow:hidden; cursor:pointer;"
                              onclick="document.getElementById('editPhotoInput').click()">
-                            <img id="editPhotoPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" 
-                                 style="width:100%; height:100%; object-fit:cover; opacity:0.8;">
+                            <img id="editPhotoPreview" src="" style="width:100%; height:100%; object-fit:cover; opacity:0.8;">
                             <div style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.5); color:white; font-size:0.7rem; padding:2px;">Change</div>
                         </div>
                         <input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="previewEditPhoto(this)">
                     </div>
 
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="edit-name" class="form-input">
+                    <h4 style="color: var(--navy); border-bottom: 1px solid #eee; margin-bottom: 15px; padding-bottom: 5px;">Personal Details</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="edit-name" class="form-input"></div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="edit-gender" class="form-input">
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" id="edit-phone" class="form-input">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group"><label>DOB</label><input type="date" id="edit-dob" class="form-input"></div>
+                        <div class="form-group"><label>Age</label><input type="number" id="edit-age" class="form-input"></div>
                     </div>
+
+                    <div class="form-group"><label>WhatsApp</label><input type="text" id="edit-phone" class="form-input"></div>
+
+                    <h4 style="color: var(--navy); border-bottom: 1px solid #eee; margin: 20px 0 10px 0; padding-bottom: 5px;">Addresses</h4>
+                    <div class="form-group"><label>Permanent Address</label><textarea id="edit-permAddress" class="form-input" rows="2"></textarea></div>
+                    <div class="form-group"><label>Communication Address</label><textarea id="edit-commAddress" class="form-input" rows="2"></textarea></div>
+
+                    <h4 style="color: var(--navy); border-bottom: 1px solid #eee; margin: 20px 0 10px 0; padding-bottom: 5px;">Qualifications</h4>
+                    
                     <div class="form-group">
-                        <label>Rate (₹)</label>
-                        <input type="number" id="edit-rate" class="form-input">
+                        <label style="margin-bottom:8px; display:block;">Skills</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background:#fff; padding:10px; border:1px solid #eee; border-radius:8px;">
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Patient Care"> Patient Care</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Baby Care"> Baby Care</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Cancer Care"> Cancer Care</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Paralysis"> Paralysis</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Limb Care"> Limb Care</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Old Age"> Old Age</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editSkills" value="Others"> Others</label>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label>Role</label>
-                        <input type="text" id="edit-role" class="form-input">
+                        <label style="margin-bottom:8px; display:block;">Languages</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; background:#fff; padding:10px; border:1px solid #eee; border-radius:8px;">
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="Kannada"> Kannada</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="English"> English</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="Hindi"> Hindi</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="Telugu"> Telugu</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="Malayalam"> Malayalam</label>
+                            <label style="font-size:0.85rem;"><input type="checkbox" name="editLangs" value="Others"> Others</label>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--navy); border-bottom: 1px solid #eee; margin: 20px 0 10px 0; padding-bottom: 5px;">Office & Sign</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group"><label>Role</label><input type="text" id="edit-role" class="form-input"></div>
+                        <div class="form-group"><label>Rate (₹)</label><input type="number" id="edit-rate" class="form-input"></div>
+                    </div>
+
+                    <div class="form-group"><label>Place</label><input type="text" id="edit-place" class="form-input"></div>
+
+                    <div class="form-group">
+                        <label>Signature Update</label>
+                        <div style="border: 2px dashed #ccc; border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; background:#fff;"
+                             onclick="document.getElementById('editSignInput').click()">
+                            <img id="editSignPreview" src="" style="width: 100%; height: 100%; object-fit: contain; display: none;">
+                            <div id="editSignPlaceholder" style="font-size:0.8rem; color:#666;">Tap to Change Sign</div>
+                        </div>
+                        <input type="file" id="editSignInput" accept="image/*" style="display:none;" onchange="previewEditSignature(this)">
                     </div>
                     
-                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update Profile</button>
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:15px; padding: 12px;">Update Full Profile</button>
                 </form>
             </div>
         </div>
@@ -2855,8 +3020,9 @@
         };
 
         // --- THE GATEKEEPER (Step 3: Prepaid Validity Model) ---
+        // --- THE GATEKEEPER (Fixed Link Generation) ---
         function setupGatekeeper(uid) {
-            unsubscribeUserDoc = onSnapshot(doc(db, "users", uid), (docSnap) => {
+            unsubscribeUserDoc = onSnapshot(doc(db, "users", uid), async (docSnap) => {
 
                 // 1. SUPER ADMIN BYPASS
                 if (currentUser.email === "supercare655@gmail.com") {
@@ -2873,9 +3039,20 @@
                 }
 
                 currentUserData = docSnap.data();
-                if (currentUserData.agencyCode) {
-                    const botNumber = "12183792683"; // Your Bot Number
-                    const text = encodeURIComponent(`Join ${currentUserData.agencyCode}`);
+
+                // 🟢 FIX: ROBUST LINK GENERATION
+                let myCode = currentUserData.agencyCode;
+
+                // Fallback: If code is missing, generate it from the Name
+                if (!myCode && currentUserData.agencyName) {
+                    myCode = currentUserData.agencyName.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+                    // Save it back to DB so it sticks next time
+                    updateDoc(doc(db, "users", uid), { agencyCode: myCode });
+                }
+
+                if (myCode) {
+                    const botNumber = "918450993358"; // Your Bot Number
+                    const text = encodeURIComponent(`Join ${myCode}`);
                     const link = `https://wa.me/${botNumber}?text=${text}`;
 
                     // Update Dashboard Input
@@ -2891,15 +3068,12 @@
                     document.getElementById('modal-onboarding').style.display = 'none';
                 }
 
-                // 4. CHECK PREPAID VALIDITY (New Model)
-                // This scans all your nurses. If any are expired, it shows the Lock Screen.
-                // It replaces the old "isPaid" and "Payment Pending" checks.
+                // 4. CHECK PREPAID VALIDITY
                 if (typeof checkNurseValidity === 'function') {
                     checkNurseValidity(uid);
                 }
 
                 // 5. START DATA SYNC
-                // We load data so the dashboard is ready as soon as they recharge.
                 startDataSync(uid);
             });
         }
@@ -3560,7 +3734,11 @@
 
 
         // --- UPDATED ADMIN LOADER (Shows Slots + Daily Passes) ---
+        // --- UPDATED ADMIN LOADER (FIXED ORDERING BUG) ---
         function loadAdminData() {
+            // Check if DB is initialized
+            if (!db) return console.error("DB not initialized");
+
             onSnapshot(collection(db, "users"), (snapshot) => {
                 const allTable = document.getElementById('admin-all-users');
                 const leaderboardDiv = document.getElementById('admin-leaderboard');
@@ -3572,10 +3750,6 @@
                 if (allTable) allTable.innerHTML = '';
                 if (leaderboardDiv) leaderboardDiv.innerHTML = '';
 
-                // Clear pending table
-                const pendingTable = document.getElementById('admin-pending-table');
-                if (pendingTable) pendingTable.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">Automated Payments Active (No Pending Actions)</td></tr>';
-
                 let referralCounts = {};
 
                 snapshot.docs.forEach(doc => {
@@ -3584,7 +3758,7 @@
                     // --- 1. DATA PREP ---
                     const usedSlots = u.nurseCount || 0;
                     const paidSlots = u.extraSlots || 0;
-                    const dailyPasses = u.dailyPasses || 0; // 👈 NEW: Get Daily Pass Count
+                    const dailyPasses = u.dailyPasses || 0;
 
                     // Calculate Bar Percentage
                     let percentage = 0;
@@ -3592,39 +3766,9 @@
 
                     const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
                     const safeCode = (u.agencyCode || (u.agencyName || "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase());
-    const botLink = `https://wa.me/12183792683?text=Join%20${encodeURIComponent(safeCode)}`;
+                    const botLink = `https://wa.me/+918450993358?text=Join%20${encodeURIComponent(safeCode)}`;
 
-    // 🟢 UPDATED TABLE ROW
-    allTable.innerHTML += `
-    <tr style="border-bottom:1px solid #f0f0f0;">
-        <td style="padding:15px 10px;">
-            <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete'}</div>
-            <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
-        </td>
-        <td style="padding:15px 10px; vertical-align:middle;">
-            ${slotDisplay}
-        </td>
-        <td style="padding:15px 10px; font-weight:500; color:#555;">
-            ${u.referralBy || 'DIRECT'}
-        </td>
-        <td style="padding:15px 10px;">
-            ${statusHtml}
-        </td>
-        <td style="padding:15px 10px; text-align:right; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
-            
-            <button onclick="navigator.clipboard.writeText('${botLink}'); alert('Link Copied: ${safeCode}');" 
-                title="Copy Client Link"
-                style="background: #e3f2fd; border: 1px solid #bbdefb; color: #1565c0; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-                <i class="fa-solid fa-link"></i>
-            </button>
-
-            <button onclick="viewAgencyDetails('${doc.id}', '${u.agencyName || 'Agency'}')" 
-                style="background: white; border: 1px solid #ccc; color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-                View <i class="fa-solid fa-chevron-right"></i>
-            </button>
-        </td>
-    </tr>`;
-                    // --- 2. BUILD THE DISPLAY HTML ---
+                    // --- 2. BUILD THE DISPLAY HTML (CALCULATE FIRST!) ---
                     let slotDisplay = '';
 
                     if (u.plan === 'unlimited') {
@@ -3632,75 +3776,81 @@
                     } else {
                         // 🟢 HYBRID DISPLAY: Slots Bar + Daily Pass Badge
                         slotDisplay = `
-                    <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
-                        ${usedSlots} / ${paidSlots} Slots
-                    </div>
-                    <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden; margin-bottom:6px;">
-                        <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
-                    </div>
-                    
-                    
-                    <div style="font-size:0.75rem; color:#666; font-weight:500; display:flex; align-items:center; gap:5px;">
-                        <i class="fa-solid fa-ticket" style="color:#ff9933;"></i> ${dailyPasses} Daily Passes Available
-                    </div>
-                `;
+                        <div style="font-size:0.85rem; font-weight:600; color:#333; margin-bottom:4px;">
+                            ${usedSlots} / ${paidSlots} Slots
+                        </div>
+                        <div style="height:6px; width:100px; background:#e0e0e0; border-radius:3px; overflow:hidden; margin-bottom:6px;">
+                            <div style="height:100%; width:${percentage}%; background:${barColor};"></div>
+                        </div>
+                        
+                        <div style="font-size:0.75rem; color:#666; font-weight:500; display:flex; align-items:center; gap:5px;">
+                            <i class="fa-solid fa-ticket" style="color:#ff9933;"></i> ${dailyPasses} Daily Passes
+                        </div>
+                    `;
                     }
 
-                    // --- 3. LEADERBOARD ---
-                    if (u.referralBy && u.referralBy !== "DIRECT") {
-                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
-                        referralCounts[u.referralBy].total += 1;
-                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
-                    }
-
-                    // --- 4. STATUS ---
+                    // --- 3. STATUS HTML ---
                     let statusHtml = '<span style="color:#c62828; background:#ffebee; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">LOCKED</span>';
                     if (u.isPaid) {
                         statusHtml = '<span style="color:#1b5e20; background:#e8f5e9; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:600;">ACTIVE</span>';
                     }
 
-                    // --- 5. RENDER ROW ---
+                    // --- 4. RENDER ROW (RENDER LAST!) ---
                     allTable.innerHTML += `
-                <tr style="border-bottom:1px solid #f0f0f0;">
-                    <td style="padding:15px 10px;">
-                        <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
-                        <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
-                    </td>
-                    <td style="padding:15px 10px; vertical-align:middle;">
-                        ${slotDisplay}
-                    </td>
-                    <td style="padding:15px 10px; font-weight:500; color:#555;">
-                        ${u.referralBy || 'DIRECT'}
-                    </td>
-                    <td style="padding:15px 10px;">
-                        ${statusHtml}
-                    </td>
-                    <td style="padding:15px 10px; text-align:right;">
-                        <button onclick="viewAgencyDetails('${doc.id}', '${u.agencyName || 'Agency'}')" 
-                            style="background: white; border: 1px solid #ccc; color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition:0.2s;">
-                            View Staff <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </td>
-                </tr>`;
+                    <tr style="border-bottom:1px solid #f0f0f0;">
+                        <td style="padding:15px 10px;">
+                            <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete Profile'}</div>
+                            <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+                        </td>
+                        <td style="padding:15px 10px; vertical-align:middle;">
+                            ${slotDisplay}
+                        </td>
+                        <td style="padding:15px 10px; font-weight:500; color:#555;">
+                            ${u.referralBy || 'DIRECT'}
+                        </td>
+                        <td style="padding:15px 10px;">
+                            ${statusHtml}
+                        </td>
+                        <td style="padding:15px 10px; text-align:right; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+                            
+                            <button onclick="navigator.clipboard.writeText('${botLink}'); alert('Link Copied: ${safeCode}');" 
+                                title="Copy Client Link"
+                                style="background: #e3f2fd; border: 1px solid #bbdefb; color: #1565c0; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+
+                            <button onclick="viewAgencyDetails('${doc.id}', '${u.agencyName || 'Agency'}')" 
+                                style="background: white; border: 1px solid #ccc; color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                                View <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </td>
+                    </tr>`;
+
+                    // --- 5. LEADERBOARD ---
+                    if (u.referralBy && u.referralBy !== "DIRECT") {
+                        if (!referralCounts[u.referralBy]) referralCounts[u.referralBy] = { total: 0, paid: 0 };
+                        referralCounts[u.referralBy].total += 1;
+                        if (u.isPaid) referralCounts[u.referralBy].paid += 1;
+                    }
                 });
 
-                // (Leaderboard rendering code remains the same...)
+                // Render Leaderboard
                 Object.keys(referralCounts).forEach(code => {
                     const data = referralCounts[code];
                     leaderboardDiv.innerHTML += `
-                <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
-                    <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
-                    <div style="display:flex; gap:10px; margin-top:12px;">
-                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                            <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
-                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                    <div class="card stat-card" style="border-top: 4px solid ${data.paid > 0 ? '#138808' : '#999'}; padding:1rem;">
+                        <div style="font-size: 1.1rem; font-weight: bold; color:var(--navy);">${code}</div>
+                        <div style="display:flex; gap:10px; margin-top:12px;">
+                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                                <div style="font-size:1.3rem; font-weight:700; color:#138808; line-height:1;">${data.paid}</div>
+                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">SALES</div>
+                            </div>
+                            <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
+                                <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
+                                <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
+                            </div>
                         </div>
-                        <div style="flex:1; background:#f5f5f5; padding:8px; border-radius:8px; text-align:center;">
-                            <div style="font-size:1.3rem; font-weight:700; color:#333; line-height:1;">${data.total}</div>
-                            <div style="font-size:0.65rem; color:#666; font-weight:600; margin-top:4px;">LEADS</div>
-                        </div>
-                    </div>
-                </div>`;
+                    </div>`;
                 });
             });
         }
@@ -3903,46 +4053,77 @@
         // 👤 PROFILE MODAL LOGIC (NEW)
         // ==========================================
 
-     // 1. OPEN PROFILE (Updated to Load Photo)
-     window.openProfile = async (id) => {
-        currentNurseId = id;
-        const nurse = allNurses.find(n => n.id === id);
-        if (!nurse) return;
+// 1. OPEN PROFILE (Populates ALL Details)
+window.openProfile = async (id) => {
+    currentNurseId = id;
+    const nurse = allNurses.find(n => n.id === id);
+    if (!nurse) return;
 
-        // Fill Info Header
-        document.getElementById('p-name').innerText = nurse.name;
-        document.getElementById('p-role').innerText = nurse.role;
+    // A. Header Stats
+    document.getElementById('p-name').innerText = nurse.name;
+    document.getElementById('p-role').innerText = nurse.role;
 
-        // Fill Edit Form Text Fields
-        document.getElementById('edit-id').value = nurse.id;
-        document.getElementById('edit-name').value = nurse.name;
-        document.getElementById('edit-phone').value = nurse.phone;
-        document.getElementById('edit-rate').value = nurse.rate;
-        document.getElementById('edit-role').value = nurse.role;
+    // B. Fill Text Inputs
+    document.getElementById('edit-id').value = nurse.id;
+    document.getElementById('edit-name').value = nurse.name || "";
+    document.getElementById('edit-phone').value = nurse.phone || "";
+    document.getElementById('edit-role').value = nurse.role || "";
+    document.getElementById('edit-rate').value = nurse.rate || "";
+    
+    // New Fields
+    document.getElementById('edit-gender').value = nurse.gender || "Female";
+    document.getElementById('edit-dob').value = nurse.dob || "";
+    document.getElementById('edit-age').value = nurse.age || "";
+    document.getElementById('edit-permAddress').value = nurse.permanentAddress || "";
+    document.getElementById('edit-commAddress').value = nurse.communicationAddress || "";
+    document.getElementById('edit-place').value = nurse.place || "";
 
-        // 📸 FILL EDIT FORM PHOTO
-        const editPreview = document.getElementById('editPhotoPreview');
-        // Reset input (so previous selection doesn't stick)
-        const photoInput = document.getElementById('editPhotoInput');
-        if (photoInput) photoInput.value = ""; 
-        
-        if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
-            editPreview.src = nurse.profilePhoto;
-        } else {
-            editPreview.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-        }
+    // C. Fill Checkboxes (Skills & Languages)
+    const skills = nurse.skills || [];
+    document.querySelectorAll('input[name="editSkills"]').forEach(cb => {
+        cb.checked = skills.includes(cb.value);
+    });
 
-        // RESET Calendar to Today & Render
-        currentCalDate = new Date();
-        renderCalendar();
+    const langs = nurse.languages || [];
+    document.querySelectorAll('input[name="editLangs"]').forEach(cb => {
+        cb.checked = langs.includes(cb.value);
+    });
 
-        // Load Docs
-        loadDocuments(id);
+    // D. Photos & Signature
+    
+    // 1. Profile Photo
+    const photoPreview = document.getElementById('editPhotoPreview');
+    const photoInput = document.getElementById('editPhotoInput');
+    if(photoInput) photoInput.value = ""; // Reset file input
 
-        // Show Modal & Switch to first tab
-        document.getElementById('profileModal').classList.add('active');
-        window.switchProfileTab('attendance');
-    };
+    if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
+        photoPreview.src = nurse.profilePhoto;
+    } else {
+        photoPreview.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+    }
+
+    // 2. Signature
+    const signPreview = document.getElementById('editSignPreview');
+    const signPlaceholder = document.getElementById('editSignPlaceholder');
+    const signInput = document.getElementById('editSignInput');
+    if(signInput) signInput.value = ""; // Reset file input
+    
+    if (nurse.signature && nurse.signature.length > 100) {
+        signPreview.src = nurse.signature;
+        signPreview.style.display = 'block';
+        if(signPlaceholder) signPlaceholder.style.display = 'none';
+    } else {
+        signPreview.style.display = 'none';
+        if(signPlaceholder) signPlaceholder.style.display = 'flex'; // or block
+    }
+
+    // E. Init View
+    currentCalDate = new Date();
+    renderCalendar();
+    loadDocuments(id);
+    document.getElementById('profileModal').classList.add('active');
+    window.switchProfileTab('attendance'); 
+};
 
         // 2. SWITCH TABS (Keep this!)
         window.switchProfileTab = (tab) => {
@@ -4090,71 +4271,96 @@
             }
         };
 
-     // --- EDIT PROFILE SUBMIT (With Photo Update) ---
-     const editForm = document.getElementById('editNurseForm');
-     if (editForm) {
-         editForm.addEventListener('submit', async (e) => {
-             e.preventDefault();
-             
-             // UI Feedback: Lock Button
-             const btn = e.target.querySelector('button[type="submit"]');
-             const originalText = btn.innerText;
-             btn.innerText = "Updating...";
-             btn.disabled = true;
+// --- EDIT PROFILE SUBMIT (Full Update with Signature & Skills) ---
+const editForm = document.getElementById('editNurseForm');
+if (editForm) {
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-             const id = document.getElementById('edit-id').value;
-             const name = document.getElementById('edit-name').value;
-             const phone = document.getElementById('edit-phone').value;
-             const rate = document.getElementById('edit-rate').value;
-             const role = document.getElementById('edit-role').value;
-             const photoInput = document.getElementById('editPhotoInput');
+        // UI Feedback: Lock Button
+        const btn = e.target.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+        btn.innerText = "Updating...";
+        btn.disabled = true;
 
-             try {
-                 // 1. Prepare Basic Update Object
-                 let updateData = { name, phone, rate, role };
+        const id = document.getElementById('edit-id').value;
+        const photoInput = document.getElementById('editPhotoInput');
+        const signInput = document.getElementById('editSignInput');
 
-                 // 2. Check if a NEW Photo was uploaded
-                 if (photoInput.files && photoInput.files[0]) {
-                     const file = photoInput.files[0];
-                     const toBase64 = file => new Promise((resolve, reject) => {
-                         const reader = new FileReader();
-                         reader.readAsDataURL(file);
-                         reader.onload = () => resolve(reader.result);
-                         reader.onerror = error => reject(error);
-                     });
-                     const newPhotoUrl = await toBase64(file);
-                     
-                     // Add photo to the update payload
-                     updateData.profilePhoto = newPhotoUrl; 
-                 }
+        try {
+            // 1. HELPER: Convert File to Base64
+            const toBase64 = file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
 
-                 // 3. DUAL WRITE (Update Dashboard + Bot)
-                 const batch = writeBatch(db);
-                 
-                 const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", id);
-                 const rootNurseRef = doc(db, "nurses", id);
+            // 2. PREPARE DATA OBJECT (Gather All Fields)
+            let updateData = {
+                // Basic Info
+                name: document.getElementById('edit-name').value,
+                phone: document.getElementById('edit-phone').value,
+                role: document.getElementById('edit-role').value,
+                rate: document.getElementById('edit-rate').value,
+                
+                // Personal Details
+                gender: document.getElementById('edit-gender').value,
+                dob: document.getElementById('edit-dob').value,
+                age: document.getElementById('edit-age').value,
+                
+                // Address
+                permanentAddress: document.getElementById('edit-permAddress').value,
+                communicationAddress: document.getElementById('edit-commAddress').value,
+                place: document.getElementById('edit-place').value,
 
-                 batch.update(agencyNurseRef, updateData);
-                 batch.update(rootNurseRef, updateData);
+                // Checkboxes (Skills & Languages)
+                skills: Array.from(document.querySelectorAll('input[name="editSkills"]:checked')).map(cb => cb.value),
+                languages: Array.from(document.querySelectorAll('input[name="editLangs"]:checked')).map(cb => cb.value)
+            };
 
-                 await batch.commit();
+            // 3. HANDLE FILE UPLOADS (Only if changed)
+            
+            // A. Profile Photo
+            if (photoInput.files && photoInput.files[0]) {
+                const newPhotoUrl = await toBase64(photoInput.files[0]);
+                updateData.profilePhoto = newPhotoUrl;
+            }
 
-                 alert('✅ Profile Updated Successfully!');
-                 
-                 // Update Modal Title instantly
-                 document.getElementById('p-name').innerText = name;
-                 document.getElementById('p-role').innerText = role;
+            // B. Signature
+            if (signInput.files && signInput.files[0]) {
+                const newSignUrl = await toBase64(signInput.files[0]);
+                updateData.signature = newSignUrl;
+            }
 
-             } catch (error) {
-                 console.error("Update Error:", error);
-                 alert("Error updating profile: " + error.message);
-             } finally {
-                 // Restore Button
-                 btn.innerText = originalText;
-                 btn.disabled = false;
-             }
-         });
-     }
+            // 4. DUAL WRITE (Update Dashboard + Bot)
+            const batch = writeBatch(db);
+
+            const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", id);
+            const rootNurseRef = doc(db, "nurses", id);
+
+            batch.update(agencyNurseRef, updateData);
+            batch.update(rootNurseRef, updateData);
+
+            await batch.commit();
+
+            // 5. SUCCESS
+            alert('✅ Full Profile Updated Successfully!');
+
+            // Update Modal Title instantly
+            document.getElementById('p-name').innerText = updateData.name;
+            document.getElementById('p-role').innerText = updateData.role;
+
+        } catch (error) {
+            console.error("Update Error:", error);
+            alert("Error updating profile: " + error.message);
+        } finally {
+            // Restore Button
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    });
+}
 
         // ==========================================
         // 🛠️ HELPER FUNCTIONS (Render, Camera, Etc)
@@ -4203,65 +4409,65 @@
         // Global State for Bulk Actions
         let isManageMode = false;
         let selectedNurses = new Set();
-       // --- FINAL RENDER FUNCTION (With Profile Photos) ---
-       function renderStaffList() {
-        const grid = document.getElementById('staff-grid');
-        grid.innerHTML = '';
+        // --- FINAL RENDER FUNCTION (With Profile Photos) ---
+        function renderStaffList() {
+            const grid = document.getElementById('staff-grid');
+            grid.innerHTML = '';
 
-        const now = Date.now();
-        const msPerDay = 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            const msPerDay = 24 * 60 * 60 * 1000;
 
-        allNurses.forEach(nurse => {
-            // 1. Photo vs Initials Logic
-            let avatarHtml = '';
-            
-            // Check if photo exists and is a valid Base64 string (length check)
-            if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
-                avatarHtml = `<img src="${nurse.profilePhoto}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
-            } else {
-                // Fallback to Initials
-                const names = nurse.name.split(' ');
-                const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
-                avatarHtml = initials;
-            }
+            allNurses.forEach(nurse => {
+                // 1. Photo vs Initials Logic
+                let avatarHtml = '';
 
-            // 2. Expiry Logic (Prioritize validUntil from DB)
-            let expiry = nurse.validUntil;
-            if (!expiry) {
-                // Fallback: If DB value is missing, use CreatedAt + 30 Days
-                const start = nurse.createdAt || now;
-                expiry = start + (30 * msPerDay);
-            }
+                // Check if photo exists and is a valid Base64 string (length check)
+                if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
+                    avatarHtml = `<img src="${nurse.profilePhoto}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
+                } else {
+                    // Fallback to Initials
+                    const names = nurse.name.split(' ');
+                    const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+                    avatarHtml = initials;
+                }
 
-            const daysLeft = Math.ceil((expiry - now) / msPerDay);
+                // 2. Expiry Logic (Prioritize validUntil from DB)
+                let expiry = nurse.validUntil;
+                if (!expiry) {
+                    // Fallback: If DB value is missing, use CreatedAt + 30 Days
+                    const start = nurse.createdAt || now;
+                    expiry = start + (30 * msPerDay);
+                }
 
-            // 3. Colors & Text
-            let statusColor = '#138808'; // Green
-            let statusText = `${daysLeft} Days Left`;
+                const daysLeft = Math.ceil((expiry - now) / msPerDay);
 
-            if (daysLeft <= 0) {
-                statusColor = '#d32f2f'; // Red
-                statusText = "EXPIRED";
-            } else if (daysLeft <= 5) {
-                statusColor = '#ff9933'; // Orange
-                statusText = `${daysLeft} Days (Renew Soon)`;
-            }
+                // 3. Colors & Text
+                let statusColor = '#138808'; // Green
+                let statusText = `${daysLeft} Days Left`;
 
-            // 4. Badge Logic (Daily vs Monthly)
-            const isDaily = nurse.type === 'daily';
-            const badgeHtml = isDaily
-                ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
-                : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
+                if (daysLeft <= 0) {
+                    statusColor = '#d32f2f'; // Red
+                    statusText = "EXPIRED";
+                } else if (daysLeft <= 5) {
+                    statusColor = '#ff9933'; // Orange
+                    statusText = `${daysLeft} Days (Renew Soon)`;
+                }
 
-            // 5. Checkbox & Rating
-            const checkDisplay = isManageMode ? 'flex' : 'none';
-            const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
-            const rating = nurse.rating || 4.5;
-            const reviewCount = nurse.reviewCount || 12;
-            const starHTML = getStarRatingHTML(rating, reviewCount);
+                // 4. Badge Logic (Daily vs Monthly)
+                const isDaily = nurse.type === 'daily';
+                const badgeHtml = isDaily
+                    ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
+                    : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
 
-            // 🟢 FIXED BUTTONS: Side-by-Side, No Overlap, Always Visible
-            const actionButtonsHtml = `
+                // 5. Checkbox & Rating
+                const checkDisplay = isManageMode ? 'flex' : 'none';
+                const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
+                const rating = nurse.rating || 4.5;
+                const reviewCount = nurse.reviewCount || 12;
+                const starHTML = getStarRatingHTML(rating, reviewCount);
+
+                // 🟢 FIXED BUTTONS: Side-by-Side, No Overlap, Always Visible
+                const actionButtonsHtml = `
             <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 20;">
                 
                 <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
@@ -4285,8 +4491,8 @@
                 </button>
             </div>`;
 
-            // Render Card
-            grid.innerHTML += `
+                // Render Card
+                grid.innerHTML += `
 <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
     
     <div style="display: ${checkDisplay}; position: absolute; top: 12px; left: 12px; z-index: 10;">
@@ -4332,8 +4538,8 @@
         View Profile
     </button>
 </div>`;
-        });
-    }
+            });
+        }
 
         function populateLoginSelect() {
             const sel = document.getElementById('nurse-login-select');
@@ -4645,125 +4851,136 @@
             window.toggleMode();
         };
 
-        // --- UPDATED FORM SUBMISSION (With Profile Photo & Credits) ---
+        // --- UPDATED FORM SUBMISSION (With Full Application Details) ---
         document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // UI Feedback: Lock button
+            // UI Feedback
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
-            btn.innerText = "Saving...";
+            btn.innerText = "Saving Application...";
             btn.disabled = true;
 
-            // 1. GET FORM VALUES
+            // 1. GET BASIC VALUES
             const planType = document.querySelector('input[name="staffPlan"]:checked').value;
             const name = document.getElementById('nurseName').value;
             const phone = document.getElementById('nursePhone').value;
-            const role = document.getElementById('nurseSpec').value;
+            const role = document.getElementById('nurseSpec').value; // Primary Title
             const rate = document.getElementById('nurseRate').value;
-            const photoInput = document.getElementById('nursePhotoInput'); // 📸 Get the file input
 
-            // 2. CHECK CREDITS
+            // 2. GET NEW DETAILS
+            const gender = document.getElementById('nurseGender').value;
+            const dob = document.getElementById('nurseDob').value;
+            const age = document.getElementById('nurseAge').value;
+            const permAddress = document.getElementById('nursePermAddress').value;
+            const commAddress = document.getElementById('nurseCommAddress').value;
+            const place = document.getElementById('nursePlace').value;
+
+            // 3. COLLECT CHECKBOXES (Skills & Languages)
+            const skills = Array.from(document.querySelectorAll('input[name="nurseSkills"]:checked')).map(cb => cb.value);
+            const languages = Array.from(document.querySelectorAll('input[name="nurseLangs"]:checked')).map(cb => cb.value);
+
+            // 4. CHECK CREDITS
             const extraSlots = currentUserData?.extraSlots || 0;
             const usedSlots = allNurses.filter(n => !n.type || n.type === 'monthly').length;
             const monthlyLeft = extraSlots - usedSlots;
             const dailyPasses = currentUserData?.dailyPasses || 0;
 
-            // A. Block if no Monthly Slots
             if (planType === 'monthly' && monthlyLeft <= 0) {
-                alert("⚠️ No Monthly Slots Available!\n\nPlease click the 'Buy More' button above to purchase slots.");
+                alert("⚠️ No Monthly Slots Available!");
                 btn.innerText = originalText; btn.disabled = false; return;
             }
-
-            // B. Block if no Daily Passes
             if (planType === 'daily' && dailyPasses <= 0) {
-                alert("⚠️ No Daily Passes Available!\n\nPlease click the 'Buy More' button above to purchase a pass.");
+                alert("⚠️ No Daily Passes Available!");
                 btn.innerText = originalText; btn.disabled = false; return;
             }
 
-            // 3. CALCULATE EXPIRY DATE
-            let expiryDate;
-            if (planType === 'monthly') {
-                expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000); // 30 Days
-            } else {
-                expiryDate = Date.now() + (24 * 60 * 60 * 1000); // 24 Hours
-            }
+            // 5. CALCULATE EXPIRY
+            const expiryDate = planType === 'monthly'
+                ? Date.now() + (30 * 24 * 60 * 60 * 1000)
+                : Date.now() + (24 * 60 * 60 * 1000);
 
             try {
-                // 4. PROCESS PHOTO (Convert Image to Text String/Base64)
-                let photoUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"; // Default placeholder
+                // 6. PROCESS IMAGES (Photo & Signature)
+                const photoInput = document.getElementById('nursePhotoInput');
+                const signInput = document.getElementById('nurseSign');
 
+                // Helper to convert file to Base64
+                const toBase64 = file => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+
+                // A. Profile Photo
+                let photoUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
                 if (photoInput.files && photoInput.files[0]) {
-                    const file = photoInput.files[0];
-                    const toBase64 = file => new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = error => reject(error);
-                    });
-                    photoUrl = await toBase64(file);
+                    photoUrl = await toBase64(photoInput.files[0]);
                 }
 
-                // 5. PREPARE BATCH WRITE
-                const batch = writeBatch(db);
+                // B. Signature
+                let signUrl = "";
+                if (signInput.files && signInput.files[0]) {
+                    signUrl = await toBase64(signInput.files[0]);
+                }
 
-                // A. Generate Unique ID
-                const newNurseRef = doc(collection(db, "nurses"));
-                const nurseId = newNurseRef.id;
-
-                // B. Create References for Dual Write
-                const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", nurseId); // Dashboard View
-                const rootNurseRef = doc(db, "nurses", nurseId); // Bot View
-
-                // C. Prepare Data Object
+                // 7. PREPARE DATA OBJECT
                 const nurseData = {
-                    name,
-                    phone,
-                    role,
-                    rate,
+                    // Core Info
+                    name, phone, role, rate,
                     timestamp: Date.now(),
                     validUntil: expiryDate,
                     type: planType,
                     status: "offline",
                     agencyId: currentUser.uid,
                     agencyName: currentUserData.agencyName || "Silver Care Agency",
-                    profilePhoto: photoUrl // 🟢 SAVE THE PHOTO HERE
+                    profilePhoto: photoUrl,
+
+                    // Application Details
+                    gender, dob, age,
+                    permanentAddress: permAddress,
+                    communicationAddress: commAddress,
+                    skills: skills,
+                    languages: languages,
+                    place: place,
+                    signature: signUrl
                 };
 
-                // D. Queue the Writes
+                // 8. BATCH WRITE (Dashboard + Bot)
+                const batch = writeBatch(db);
+                const newNurseRef = doc(collection(db, "nurses"));
+                const nurseId = newNurseRef.id;
+
+                const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", nurseId);
+                const rootNurseRef = doc(db, "nurses", nurseId);
+
                 batch.set(agencyNurseRef, nurseData);
                 batch.set(rootNurseRef, nurseData);
 
-                // 6. CONSUME THE CORRECT CREDIT
+                // Consume Credit
                 const agencyUserRef = doc(db, "users", currentUser.uid);
-
                 if (planType === 'monthly') {
-                    batch.update(agencyUserRef, {
-                        nurseCount: increment(1)
-                    });
+                    batch.update(agencyUserRef, { nurseCount: increment(1) });
                 } else {
-                    batch.update(agencyUserRef, {
-                        dailyPasses: increment(-1)
-                    });
+                    batch.update(agencyUserRef, { dailyPasses: increment(-1) });
                 }
 
-                // 7. COMMIT ALL CHANGES
                 await batch.commit();
 
-                // 8. SUCCESS FEEDBACK
-                alert(`✅ Staff Added Successfully!\nActive on WhatsApp Bot.\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
+                // 9. SUCCESS
+                alert("✅ Application Saved Successfully!");
                 window.closeModal();
                 e.target.reset();
 
-                // Reset the photo preview to default
+                // Reset Previews
                 document.getElementById('nursePhotoPreview').src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
                 document.getElementById('nursePhotoPreview').style.opacity = "0.6";
 
             } catch (err) {
-                console.error("Error adding staff:", err);
+                console.error("Error:", err);
                 alert("Error saving data: " + err.message);
             } finally {
-                // Restore button state
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
@@ -5450,8 +5667,47 @@
         window.previewEditPhoto = (input) => {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById('editPhotoPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+        // ✍️ Helper: Preview Signature in Edit Modal
+        window.previewEditSignature = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('editSignPlaceholder').style.display = 'none';
+                    const img = document.getElementById('editSignPreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+        // 🎂 Auto-Calculate Age
+        window.calculateAge = () => {
+            const dob = document.getElementById('nurseDob').value;
+            if (dob) {
+                const diff = Date.now() - new Date(dob).getTime();
+                const ageDate = new Date(diff);
+                const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+                document.getElementById('nurseAge').value = calculatedAge;
+            }
+        };
+        // ✍️ Helper: Preview Signature in Add Modal
+        window.previewSignature = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Hide the "Tap to Upload" text
+                    document.getElementById('sign-placeholder').style.display = 'none';
+                    
+                    // Show the Image
+                    const img = document.getElementById('sign-preview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
                 }
                 reader.readAsDataURL(input.files[0]);
             }
