@@ -213,7 +213,7 @@
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
-        
+
 
         /* TOAST STYLES */
         .toast {
@@ -1450,109 +1450,130 @@
             right: 30px;
             cursor: pointer;
         }
+
         /* --- NEW TIMELINE CARD DESIGN --- */
-.log-card {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 12px;
-    padding: 0; /* Remove padding here, we handle it inside */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    border: 1px solid #f0f0f0;
-    margin-bottom: 12px;
-    overflow: hidden;
-    transition: transform 0.2s;
-}
+        .log-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            /* Remove padding here, we handle it inside */
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
 
-.log-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
+        .log-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
 
-/* 1. Left Timeline Section */
-.log-timeline {
-    background: #f8f9fa;
-    padding: 15px 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    border-right: 1px solid #eee;
-    min-width: 90px;
-    text-align: right;
-}
+        /* 1. Left Timeline Section */
+        .log-timeline {
+            background: #f8f9fa;
+            padding: 15px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            border-right: 1px solid #eee;
+            min-width: 90px;
+            text-align: right;
+        }
 
-.time-point {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 6px;
-    font-family: 'Courier New', monospace;
-    font-weight: 700;
-    font-size: 0.85rem;
-}
+        .time-point {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
 
-.tp-start { color: #2e7d32; } /* Green */
-.tp-end   { color: #c62828; } /* Red */
+        .tp-start {
+            color: #2e7d32;
+        }
 
-/* 2. Photo Section */
-.log-photo-box {
-    padding: 10px;
-    position: relative;
-    cursor: pointer;
-}
+        /* Green */
+        .tp-end {
+            color: #c62828;
+        }
 
-.log-photo-box img {
-    width: 55px;
-    height: 55px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+        /* Red */
 
-/* 3. Details Section */
-.log-info {
-    flex: 1;
-    padding: 12px 15px 12px 5px;
-}
+        /* 2. Photo Section */
+        .log-photo-box {
+            padding: 10px;
+            position: relative;
+            cursor: pointer;
+        }
 
-.log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
-}
+        .log-photo-box img {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-.log-name {
-    font-weight: 700;
-    color: var(--navy);
-    font-size: 1rem;
-}
+        /* 3. Details Section */
+        .log-info {
+            flex: 1;
+            padding: 12px 15px 12px 5px;
+        }
 
-.log-address {
-    font-size: 0.8rem;
-    color: #666;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.3;
-}
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
 
-/* Status Badges */
-.status-badge {
-    font-size: 0.7rem;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+        .log-name {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 1rem;
+        }
 
-.badge-ongoing { background: #e3f2fd; color: #1565c0; }
-.badge-completed { background: #e8f5e9; color: #2e7d32; }
-.badge-checkin { background: #fff3e0; color: #e65100; }
+        .log-address {
+            font-size: 0.8rem;
+            color: #666;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-ongoing {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge-completed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-checkin {
+            background: #fff3e0;
+            color: #e65100;
+        }
     </style>
 </head>
 
@@ -1721,7 +1742,7 @@
                         <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">For corporate or bulk bookings.
                         </p>
                         <a href="mailto:silvercare.partnerships@gmail.com"
-                        style="color: #e65100; font-weight: 700; text-decoration: none; font-size: 1.1rem; word-break: break-all;">silvercare.partnerships@gmail.com</a>
+                            style="color: #e65100; font-weight: 700; text-decoration: none; font-size: 1.1rem; word-break: break-all;">silvercare.partnerships@gmail.com</a>
                     </div>
 
                     <div
@@ -1915,6 +1936,22 @@
                     </button>
                 </header>
 
+                <div class="card"
+                    style="margin-bottom: 2rem; background: #e3f2fd; border: 1px solid #bbdefb; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="color: #0d47a1; margin-bottom: 5px;">🔗 Client Booking Link</h3>
+                        <p style="font-size: 0.9rem; color: #555;">Share this link with your patients. It connects them
+                            directly to <b>YOUR</b> staff.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="dashboard-link-input" readonly
+                            style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; width: 250px; background: white; color: #333; font-weight: 600;">
+                        <button onclick="copyDashboardLink()" class="btn-primary" style="padding: 10px 20px;">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+
                 <div class="stats-grid">
                     <div class="card stat-card" onclick="switchTab('staff')">
                         <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
@@ -1939,16 +1976,18 @@
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
                     <h2 style="font-family: 'Rozha One'; color: var(--navy); margin:0;">Recent Activity</h2>
-                    
-                    <div style="display:flex; align-items:center; gap:8px; background:white; padding:6px 12px; border-radius:8px; border:1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+
+                    <div
+                        style="display:flex; align-items:center; gap:8px; background:white; padding:6px 12px; border-radius:8px; border:1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                         <span style="color:#666; font-size:0.8rem;"><i class="fa-solid fa-filter"></i> Date:</span>
-                        <input type="date" id="dashboard-date-filter" class="form-input" 
-                               style="width:auto; padding:4px; border:none; background:transparent; font-weight:600; color:var(--navy); font-size:0.9rem;"
-                               onchange="renderDashboardLogs()">
+                        <input type="date" id="dashboard-date-filter" class="form-input"
+                            style="width:auto; padding:4px; border:none; background:transparent; font-weight:600; color:var(--navy); font-size:0.9rem;"
+                            onchange="renderDashboardLogs()">
                     </div>
                 </div>
 
-                <div class="nurse-grid" id="dashboard-grid" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                <div class="nurse-grid" id="dashboard-grid"
+                    style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
                 </div>
             </div>
 
@@ -2191,7 +2230,6 @@
         </main>
     </div>
 
-
     <div class="modal" id="addModal">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto; scrollbar-width: thin;">
             <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -2239,6 +2277,20 @@
                     </div>
                 </div>
 
+                <div style="text-align:center; margin-bottom: 1.5rem;">
+                    <div style="position:relative; width:100px; height:100px; margin:0 auto; border-radius:50%; background:#f0f0f0; border:2px dashed #ccc; overflow:hidden; cursor:pointer;"
+                        onclick="document.getElementById('nursePhotoInput').click()">
+                        <img id="nursePhotoPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                            style="width:100%; height:100%; object-fit:cover; opacity:0.6;">
+                        <div
+                            style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.5); color:white; font-size:0.7rem; padding:2px;">
+                            Upload</div>
+                    </div>
+                    <input type="file" id="nursePhotoInput" accept="image/*" style="display:none;"
+                        onchange="previewNursePhoto(this)">
+                    <label style="font-size:0.8rem; color:#666; display:block; margin-top:5px;">Tap to add photo</label>
+                </div>
+
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" class="form-input" id="nurseName" required placeholder="Ex. Anjali Gupta">
@@ -2276,6 +2328,7 @@
             </form>
         </div>
     </div>
+
     <div id="modal-onboarding" class="login-overlay" style="display: none; z-index: 9999;">
         <div class="login-card" style="text-align: center;">
             <h2 style="color: var(--navy); margin-bottom: 1rem;">Welcome to Silver Care!</h2>
@@ -2422,16 +2475,35 @@
             <div id="tab-edit" class="tab-content">
                 <form id="editNurseForm">
                     <input type="hidden" id="edit-id">
-                    <div class="form-group"><label>Full Name</label><input type="text" id="edit-name"
-                            class="form-input"></div>
-                    <div class="form-group"><label>Phone</label><input type="text" id="edit-phone" class="form-input">
+
+                    <div style="text-align:center; margin-bottom: 1.5rem;">
+                        <div style="position:relative; width:100px; height:100px; margin:0 auto; border-radius:50%; background:#f0f0f0; border:2px dashed #ccc; overflow:hidden; cursor:pointer;"
+                             onclick="document.getElementById('editPhotoInput').click()">
+                            <img id="editPhotoPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" 
+                                 style="width:100%; height:100%; object-fit:cover; opacity:0.8;">
+                            <div style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.5); color:white; font-size:0.7rem; padding:2px;">Change</div>
+                        </div>
+                        <input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="previewEditPhoto(this)">
                     </div>
-                    <div class="form-group"><label>Rate (₹)</label><input type="number" id="edit-rate"
-                            class="form-input"></div>
-                    <div class="form-group"><label>Role</label><input type="text" id="edit-role" class="form-input">
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="edit-name" class="form-input">
                     </div>
-                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update
-                        Profile</button>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="edit-phone" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Rate (₹)</label>
+                        <input type="number" id="edit-rate" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" id="edit-role" class="form-input">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Update Profile</button>
                 </form>
             </div>
         </div>
@@ -2801,6 +2873,15 @@
                 }
 
                 currentUserData = docSnap.data();
+                if (currentUserData.agencyCode) {
+                    const botNumber = "12183792683"; // Your Bot Number
+                    const text = encodeURIComponent(`Join ${currentUserData.agencyCode}`);
+                    const link = `https://wa.me/${botNumber}?text=${text}`;
+
+                    // Update Dashboard Input
+                    const linkInput = document.getElementById('dashboard-link-input');
+                    if (linkInput) linkInput.value = link;
+                }
 
                 // 3. CHECK ONBOARDING
                 if (!currentUserData.agencyName) {
@@ -2822,90 +2903,123 @@
                 startDataSync(uid);
             });
         }
-        // --- DATA SYNC (Loads Nurses/Logs/Payouts ONLY after Gatekeeper passes) ---
-        // --- DATA SYNC (Reads Bookings AND Availability Attendance) ---
+        // --- DATA SYNC (Corrected: Reads Root Bookings + Filters by My Staff) ---
         function startDataSync(uid) {
             if (unsubscribeNurses) return;
-
             console.log("🔄 Starting Data Sync...");
 
-            // 1. Nurses Directory
+            // 🛠️ HELPER: Safe Date Converter
+            const getSafeTime = (val) => {
+                if (!val) return null;
+                if (typeof val === 'number') return val;
+                if (val.toDate) return val.toDate().getTime();
+                if (val.seconds) return val.seconds * 1000;
+                return new Date(val).getTime();
+            };
+
+            // 1. Nurses Directory (We need this first to know WHO is your staff)
             unsubscribeNurses = onSnapshot(collection(db, "users", uid, "nurses"), (snapshot) => {
                 allNurses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderStaffList();
                 populateLoginSelect();
                 const totalEl = document.getElementById('stat-total');
                 if (totalEl) totalEl.innerText = allNurses.length;
+
+                // ⚡ Trigger Log Refresh whenever staff list changes
+                if (window.refreshLogs) window.refreshLogs();
             });
 
-            // 2. COMBINED LOGS: Bookings + Attendance (Availability)
-            const bookingsRef = collection(db, "users", uid, "bookings");
+            // 2. LOGS & ATTENDANCE
+            // 🛑 FIX: Point to ROOT "bookings" collection (Source of Truth)
+            const bookingsRef = collection(db, "bookings");
             const attendanceRef = collection(db, "users", uid, "attendance");
 
-            // Init temporary holders attached to window so they persist between updates
             window.tempBookingsLogs = [];
             window.tempAttendanceLogs = [];
 
-            // Helper to merge both lists and update the UI
+            // Update Function
             const updateMergedLogs = () => {
-                // Combine arrays
                 const merged = [...window.tempBookingsLogs, ...window.tempAttendanceLogs];
+                // Sort Newest First
+                merged.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-                // Sort by time (newest first)
-                merged.sort((a, b) => b.timestamp - a.timestamp);
+                allLogs = merged;
+                window.allLogs = merged; // Debugging
 
-                allLogs = merged; // Update Global State
-
-                // --- UPDATE UI ---
-                
-                // 1. Init Dashboard Date & Render
+                // Render UI
                 const dashInput = document.getElementById('dashboard-date-filter');
-                if(dashInput && !dashInput.value) dashInput.valueAsDate = new Date();
-                if(window.renderDashboardLogs) window.renderDashboardLogs(); // Call the window function
+                if (dashInput && !dashInput.value) dashInput.valueAsDate = new Date();
+                if (window.renderDashboardLogs) window.renderDashboardLogs();
 
-                // 2. Init Logs Page Date & Render
                 const logsInput = document.getElementById('logs-date-filter');
-                if(logsInput && !logsInput.value) logsInput.valueAsDate = new Date();
-                if(window.renderAllLogs) window.renderAllLogs();
+                if (logsInput && !logsInput.value) logsInput.valueAsDate = new Date();
+                if (window.renderAllLogs) window.renderAllLogs();
 
-                // Update "Present Today" Stat
+                // Stats
                 const today = new Date().toDateString();
-                const todayCount = allLogs.filter(l => new Date(l.timestamp).toDateString() === today).length;
-
+                const uniquePresent = new Set(
+                    allLogs.filter(l => l.timestamp && new Date(l.timestamp).toDateString() === today)
+                        .map(l => l.nurseId)
+                );
                 const presentEl = document.getElementById('stat-present');
-                if (presentEl) presentEl.innerText = todayCount;
+                if (presentEl) presentEl.innerText = uniquePresent.size;
 
-                // Recalculate Payroll (if view is open)
                 if (document.getElementById('view-payroll') && document.getElementById('view-payroll').classList.contains('active-view')) {
                     window.calculatePayroll();
                 }
             };
+            window.refreshLogs = updateMergedLogs;
 
-            // Listener A: Bookings (Actual Jobs)
+            // Listener A: Root Bookings (Filtered by My Nurses)
             unsubscribeLogs = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
                 window.tempBookingsLogs = [];
+
+                // 🔒 Security: Get List of My Nurse IDs
+                const myNurseIds = allNurses.map(n => n.id);
+
                 snapshot.forEach(doc => {
                     const b = doc.data();
-                    // We treat "Arrived", "In Progress", and "Completed" as being PRESENT
-                    if (['nurse_arrived', 'in_progress', 'completed'].includes(b.status)) {
+
+                    // 🛑 FILTER: Only show if this booking belongs to MY nurse
+                    if (!b.assignedNurseId || !myNurseIds.includes(b.assignedNurseId)) return;
+
+                    const status = b.status ? b.status.toLowerCase() : 'unknown';
+                    const startTime = getSafeTime(b.startedAt) || getSafeTime(b.timestamp);
+                    const endTime = getSafeTime(b.completedAt);
+
+                    // 1️⃣ EVENT: REACHED (Blue)
+                    if (['nurse_arrived', 'in_progress', 'completed'].includes(status)) {
                         window.tempBookingsLogs.push({
-                            id: doc.id,
+                            id: doc.id + "_start",
                             nurseId: b.assignedNurseId,
                             nurseName: b.assignedNurseName || "Assigned Nurse",
-                            timestamp: b.startedAt || b.timestamp, // Start Time
-                            endTime: b.completedAt || null,        // 🟢 Added: End Time
+                            timestamp: startTime || Date.now(),
                             photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                             address: b.nurse_location_address || b.location,
-                            type: 'job',
-                            status: b.status                       // 🟢 Added: Status
+                            type: 'job_start',
+                            status: status
+                        });
+                    }
+
+                    // 2️⃣ EVENT: COMPLETED (Red)
+                    if (status === 'completed' && endTime) {
+                        window.tempBookingsLogs.push({
+                            id: doc.id + "_end",
+                            nurseId: b.assignedNurseId,
+                            nurseName: b.assignedNurseName || "Assigned Nurse",
+                            timestamp: endTime,
+                            photo: b.nurse_selfie_url || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+                            address: b.nurse_location_address || b.location,
+                            type: 'job_end',
+                            status: 'completed',
+                            duration: startTime ? (endTime - startTime) : 0
                         });
                     }
                 });
                 updateMergedLogs();
             });
 
-            // Listener B: Attendance (Availability Check-ins from Bot)
-            // 🌟 This picks up the new records created when they share location
+            // Listener B: Availability (Unchanged - works fine)
             const unsubAttendance = onSnapshot(query(attendanceRef, orderBy("timestamp", "desc")), (snapshot) => {
                 window.tempAttendanceLogs = [];
                 snapshot.forEach(doc => {
@@ -2914,20 +3028,17 @@
                         id: doc.id,
                         nurseId: a.nurseId,
                         nurseName: a.nurseName,
-                        timestamp: a.timestamp,
-                        endTime: null, // Availability check-ins have no end time
-                        photo: a.photo || "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Map Icon
+                        timestamp: getSafeTime(a.timestamp),
+                        photo: a.photo || "https://cdn-icons-png.flaticon.com/512/684/684908.png",
                         address: a.address,
                         type: 'checkin'
                     });
                 });
                 updateMergedLogs();
             });
-
-            // Track this listener to unsubscribe later if needed
             window.unsubscribeAttendance = unsubAttendance;
 
-            // 3. Payouts (Existing Code)
+            // Keep Payouts & Feed (Using Root Bookings for feed too)
             const payoutsRef = collection(db, "users", uid, "payouts");
             onSnapshot(payoutsRef, (snapshot) => {
                 allPayouts = snapshot.docs.map(doc => doc.id);
@@ -2936,27 +3047,40 @@
                 }
             });
 
-            // 4. Bookings Request Feed (Existing Code)
             unsubscribeBookings = onSnapshot(query(bookingsRef, orderBy("timestamp", "desc")), (snapshot) => {
                 const grid = document.getElementById('bookings-grid');
                 if (grid) {
                     grid.innerHTML = '';
-                    if (snapshot.empty) {
-                        grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No new requests.</p>';
-                    } else {
-                        snapshot.docs.forEach(doc => {
-                            const b = doc.data();
-                            grid.innerHTML += `
-                        <div class="card" style="border-left: 5px solid #25D366;">
-                            <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
-                            <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
-                            <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
-                        </div>`;
-                        });
-                    }
+                    const myNurseIds = allNurses.map(n => n.id);
+
+                    let count = 0;
+                    snapshot.forEach(doc => {
+                        const b = doc.data();
+                        // Only show bookings relevant to me (or unassigned ones if you want)
+                        // For now, let's show ALL new requests or just my assigned ones
+                        if (b.assignedNurseId && !myNurseIds.includes(b.assignedNurseId)) return;
+
+                        count++;
+                        grid.innerHTML += `
+                <div class="card" style="border-left: 5px solid #25D366;">
+                    <h3><i class="fa-brands fa-whatsapp"></i> ${b.clientPhone}</h3>
+                    <p style="font-size:0.9rem;"><b>Loc:</b> ${b.location}</p>
+                    <span style="font-size:0.8rem; color:#888;">${new Date(b.timestamp).toLocaleTimeString()}</span>
+                </div>`;
+                    });
+                    if (count === 0) grid.innerHTML = '<p style="color:#888; grid-column:1/-1; text-align:center;">No requests found.</p>';
                 }
             });
         }
+
+        window.copyDashboardLink = () => {
+            const copyText = document.getElementById("dashboard-link-input");
+            if (!copyText || !copyText.value) return alert("Link not generated yet.");
+
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Link Copied! Send this to your clients.");
+        };
 
         // ==========================================
         // 💰 PRICING & PLAN LOGIC (Copy This Block)
@@ -3338,11 +3462,12 @@
         };
         // --- UPDATED ONBOARDING (Preserves Lead Logic + Auto-Payment) ---
         window.submitOnboarding = async () => {
+
             const agencyName = document.getElementById('inp-agency-name').value;
             let referralCode = document.getElementById('inp-referral-code').value;
 
             if (!agencyName) return alert("Enter Agency Name");
-
+            const agencyCode = agencyName.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
             // Normalize code to uppercase
             referralCode = referralCode ? referralCode.toUpperCase().trim() : "DIRECT";
 
@@ -3353,6 +3478,7 @@
                 // 1. Create/Update the Agency Profile
                 await setDoc(doc(db, "users", currentUser.uid), {
                     agencyName: agencyName,
+                    agencyCode: agencyCode,
                     referralBy: referralCode,
                     email: currentUser.email,
                     createdAt: serverTimestamp(),
@@ -3465,7 +3591,39 @@
                     if (paidSlots > 0) percentage = Math.min((usedSlots / paidSlots) * 100, 100);
 
                     const barColor = usedSlots >= paidSlots ? '#e65100' : '#138808';
+                    const safeCode = (u.agencyCode || (u.agencyName || "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase());
+    const botLink = `https://wa.me/12183792683?text=Join%20${encodeURIComponent(safeCode)}`;
 
+    // 🟢 UPDATED TABLE ROW
+    allTable.innerHTML += `
+    <tr style="border-bottom:1px solid #f0f0f0;">
+        <td style="padding:15px 10px;">
+            <div style="font-weight:bold; color:var(--navy); font-size:0.95rem;">${u.agencyName || 'Incomplete'}</div>
+            <div style="font-size:0.8rem; color:#666; margin-top:2px;">${u.email}</div>
+        </td>
+        <td style="padding:15px 10px; vertical-align:middle;">
+            ${slotDisplay}
+        </td>
+        <td style="padding:15px 10px; font-weight:500; color:#555;">
+            ${u.referralBy || 'DIRECT'}
+        </td>
+        <td style="padding:15px 10px;">
+            ${statusHtml}
+        </td>
+        <td style="padding:15px 10px; text-align:right; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+            
+            <button onclick="navigator.clipboard.writeText('${botLink}'); alert('Link Copied: ${safeCode}');" 
+                title="Copy Client Link"
+                style="background: #e3f2fd; border: 1px solid #bbdefb; color: #1565c0; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                <i class="fa-solid fa-link"></i>
+            </button>
+
+            <button onclick="viewAgencyDetails('${doc.id}', '${u.agencyName || 'Agency'}')" 
+                style="background: white; border: 1px solid #ccc; color: var(--navy); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
+                View <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </td>
+    </tr>`;
                     // --- 2. BUILD THE DISPLAY HTML ---
                     let slotDisplay = '';
 
@@ -3745,38 +3903,46 @@
         // 👤 PROFILE MODAL LOGIC (NEW)
         // ==========================================
 
-        // ==========================================
-        // 👤 PROFILE, TABS & CALENDAR LOGIC
-        // ==========================================
+     // 1. OPEN PROFILE (Updated to Load Photo)
+     window.openProfile = async (id) => {
+        currentNurseId = id;
+        const nurse = allNurses.find(n => n.id === id);
+        if (!nurse) return;
 
-        // 1. OPEN PROFILE
-        window.openProfile = async (id) => {
-            currentNurseId = id;
-            const nurse = allNurses.find(n => n.id === id);
-            if (!nurse) return;
+        // Fill Info Header
+        document.getElementById('p-name').innerText = nurse.name;
+        document.getElementById('p-role').innerText = nurse.role;
 
-            // Fill Info
-            document.getElementById('p-name').innerText = nurse.name;
-            document.getElementById('p-role').innerText = nurse.role;
+        // Fill Edit Form Text Fields
+        document.getElementById('edit-id').value = nurse.id;
+        document.getElementById('edit-name').value = nurse.name;
+        document.getElementById('edit-phone').value = nurse.phone;
+        document.getElementById('edit-rate').value = nurse.rate;
+        document.getElementById('edit-role').value = nurse.role;
 
-            // Fill Edit Form
-            document.getElementById('edit-id').value = nurse.id;
-            document.getElementById('edit-name').value = nurse.name;
-            document.getElementById('edit-phone').value = nurse.phone;
-            document.getElementById('edit-rate').value = nurse.rate;
-            document.getElementById('edit-role').value = nurse.role;
+        // 📸 FILL EDIT FORM PHOTO
+        const editPreview = document.getElementById('editPhotoPreview');
+        // Reset input (so previous selection doesn't stick)
+        const photoInput = document.getElementById('editPhotoInput');
+        if (photoInput) photoInput.value = ""; 
+        
+        if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
+            editPreview.src = nurse.profilePhoto;
+        } else {
+            editPreview.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+        }
 
-            // RESET Calendar to Today & Render
-            currentCalDate = new Date();
-            renderCalendar();
+        // RESET Calendar to Today & Render
+        currentCalDate = new Date();
+        renderCalendar();
 
-            // Load Docs
-            loadDocuments(id);
+        // Load Docs
+        loadDocuments(id);
 
-            // Show Modal & Switch to first tab
-            document.getElementById('profileModal').classList.add('active');
-            window.switchProfileTab('attendance');
-        };
+        // Show Modal & Switch to first tab
+        document.getElementById('profileModal').classList.add('active');
+        window.switchProfileTab('attendance');
+    };
 
         // 2. SWITCH TABS (Keep this!)
         window.switchProfileTab = (tab) => {
@@ -3924,26 +4090,71 @@
             }
         };
 
-        // --- EDIT PROFILE SUBMIT ---
-        const editForm = document.getElementById('editNurseForm');
-        if (editForm) {
-            editForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const id = document.getElementById('edit-id').value;
+     // --- EDIT PROFILE SUBMIT (With Photo Update) ---
+     const editForm = document.getElementById('editNurseForm');
+     if (editForm) {
+         editForm.addEventListener('submit', async (e) => {
+             e.preventDefault();
+             
+             // UI Feedback: Lock Button
+             const btn = e.target.querySelector('button[type="submit"]');
+             const originalText = btn.innerText;
+             btn.innerText = "Updating...";
+             btn.disabled = true;
 
-                await updateDoc(doc(db, "users", currentUser.uid, "nurses", id), {
-                    name: document.getElementById('edit-name').value,
-                    phone: document.getElementById('edit-phone').value,
-                    rate: document.getElementById('edit-rate').value,
-                    role: document.getElementById('edit-role').value
-                });
+             const id = document.getElementById('edit-id').value;
+             const name = document.getElementById('edit-name').value;
+             const phone = document.getElementById('edit-phone').value;
+             const rate = document.getElementById('edit-rate').value;
+             const role = document.getElementById('edit-role').value;
+             const photoInput = document.getElementById('editPhotoInput');
 
-                alert('Profile Updated Successfully!');
-                // Update Modal Title instantly
-                document.getElementById('p-name').innerText = document.getElementById('edit-name').value;
-                document.getElementById('p-role').innerText = document.getElementById('edit-role').value;
-            });
-        }
+             try {
+                 // 1. Prepare Basic Update Object
+                 let updateData = { name, phone, rate, role };
+
+                 // 2. Check if a NEW Photo was uploaded
+                 if (photoInput.files && photoInput.files[0]) {
+                     const file = photoInput.files[0];
+                     const toBase64 = file => new Promise((resolve, reject) => {
+                         const reader = new FileReader();
+                         reader.readAsDataURL(file);
+                         reader.onload = () => resolve(reader.result);
+                         reader.onerror = error => reject(error);
+                     });
+                     const newPhotoUrl = await toBase64(file);
+                     
+                     // Add photo to the update payload
+                     updateData.profilePhoto = newPhotoUrl; 
+                 }
+
+                 // 3. DUAL WRITE (Update Dashboard + Bot)
+                 const batch = writeBatch(db);
+                 
+                 const agencyNurseRef = doc(db, "users", currentUser.uid, "nurses", id);
+                 const rootNurseRef = doc(db, "nurses", id);
+
+                 batch.update(agencyNurseRef, updateData);
+                 batch.update(rootNurseRef, updateData);
+
+                 await batch.commit();
+
+                 alert('✅ Profile Updated Successfully!');
+                 
+                 // Update Modal Title instantly
+                 document.getElementById('p-name').innerText = name;
+                 document.getElementById('p-role').innerText = role;
+
+             } catch (error) {
+                 console.error("Update Error:", error);
+                 alert("Error updating profile: " + error.message);
+             } finally {
+                 // Restore Button
+                 btn.innerText = originalText;
+                 btn.disabled = false;
+             }
+         });
+     }
 
         // ==========================================
         // 🛠️ HELPER FUNCTIONS (Render, Camera, Etc)
@@ -3992,125 +4203,137 @@
         // Global State for Bulk Actions
         let isManageMode = false;
         let selectedNurses = new Set();
-        // --- FINAL RENDER FUNCTION (Clean UI + Fixed Buttons) ---
-        function renderStaffList() {
-            const grid = document.getElementById('staff-grid');
-            grid.innerHTML = '';
+       // --- FINAL RENDER FUNCTION (With Profile Photos) ---
+       function renderStaffList() {
+        const grid = document.getElementById('staff-grid');
+        grid.innerHTML = '';
 
-            const now = Date.now();
-            const msPerDay = 24 * 60 * 60 * 1000;
+        const now = Date.now();
+        const msPerDay = 24 * 60 * 60 * 1000;
 
-            allNurses.forEach(nurse => {
-                // 1. Initials
+        allNurses.forEach(nurse => {
+            // 1. Photo vs Initials Logic
+            let avatarHtml = '';
+            
+            // Check if photo exists and is a valid Base64 string (length check)
+            if (nurse.profilePhoto && nurse.profilePhoto.length > 100) {
+                avatarHtml = `<img src="${nurse.profilePhoto}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
+            } else {
+                // Fallback to Initials
                 const names = nurse.name.split(' ');
                 const initials = names.length > 1 ? names[0][0] + names[1][0] : names[0][0];
+                avatarHtml = initials;
+            }
 
-                // 2. Expiry Logic (Prioritize validUntil from DB)
-                let expiry = nurse.validUntil;
-                if (!expiry) {
-                    // Fallback: If DB value is missing, use CreatedAt + 30 Days
-                    const start = nurse.createdAt || now;
-                    expiry = start + (30 * msPerDay);
-                }
+            // 2. Expiry Logic (Prioritize validUntil from DB)
+            let expiry = nurse.validUntil;
+            if (!expiry) {
+                // Fallback: If DB value is missing, use CreatedAt + 30 Days
+                const start = nurse.createdAt || now;
+                expiry = start + (30 * msPerDay);
+            }
 
-                const daysLeft = Math.ceil((expiry - now) / msPerDay);
+            const daysLeft = Math.ceil((expiry - now) / msPerDay);
 
-                // 3. Colors & Text
-                let statusColor = '#138808'; // Green
-                let statusText = `${daysLeft} Days Left`;
+            // 3. Colors & Text
+            let statusColor = '#138808'; // Green
+            let statusText = `${daysLeft} Days Left`;
 
-                if (daysLeft <= 0) {
-                    statusColor = '#d32f2f'; // Red
-                    statusText = "EXPIRED";
-                } else if (daysLeft <= 5) {
-                    statusColor = '#ff9933'; // Orange
-                    statusText = `${daysLeft} Days (Renew Soon)`;
-                }
+            if (daysLeft <= 0) {
+                statusColor = '#d32f2f'; // Red
+                statusText = "EXPIRED";
+            } else if (daysLeft <= 5) {
+                statusColor = '#ff9933'; // Orange
+                statusText = `${daysLeft} Days (Renew Soon)`;
+            }
 
-                // 4. Badge Logic (Daily vs Monthly)
-                const isDaily = nurse.type === 'daily';
-                const badgeHtml = isDaily
-                    ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
-                    : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
+            // 4. Badge Logic (Daily vs Monthly)
+            const isDaily = nurse.type === 'daily';
+            const badgeHtml = isDaily
+                ? `<span style="background:#fff3e0; color:#e65100; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #ffe0b2; margin-left:6px; vertical-align:middle; font-weight:bold;">DAILY</span>`
+                : `<span style="background:#e3f2fd; color:#1565c0; font-size:0.6rem; padding:2px 6px; border-radius:4px; border:1px solid #bbdefb; margin-left:6px; vertical-align:middle; font-weight:bold;">MONTHLY</span>`;
 
-                // 5. Checkbox & Rating
-                const checkDisplay = isManageMode ? 'flex' : 'none';
-                const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
-                const rating = nurse.rating || 4.5;
-                const reviewCount = nurse.reviewCount || 12;
-                const starHTML = getStarRatingHTML(rating, reviewCount);
+            // 5. Checkbox & Rating
+            const checkDisplay = isManageMode ? 'flex' : 'none';
+            const isChecked = selectedNurses.has(nurse.id) ? 'checked' : '';
+            const rating = nurse.rating || 4.5;
+            const reviewCount = nurse.reviewCount || 12;
+            const starHTML = getStarRatingHTML(rating, reviewCount);
 
-                // 🟢 FIXED BUTTONS: Side-by-Side, No Overlap, Always Visible
-                const actionButtonsHtml = `
-                <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 20;">
-                    
-                    <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
-                        title="Replace Staff"
-                        style="width: 32px; height: 32px; border-radius: 50%; border: none; 
-                               background: #e3f2fd; color: #1565c0; cursor: pointer; 
-                               display: flex; align-items: center; justify-content: center; 
-                               box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;">
-                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
-                    
-                    <button onclick="window.removeNurse('${nurse.id}')"
-                        title="Delete Permanently"
-                        class="delete-btn-force"
-                        style="width: 32px; height: 32px; border-radius: 50%; border: none; 
-                               background: #ffebee; color: #c62828; cursor: pointer; 
-                               display: flex; align-items: center; justify-content: center; 
-                               box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;
-                               opacity: 1; visibility: visible;">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>`;
+            // 🟢 FIXED BUTTONS: Side-by-Side, No Overlap, Always Visible
+            const actionButtonsHtml = `
+            <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 20;">
+                
+                <button onclick="openReplaceModal('${nurse.id}', '${nurse.name}', ${nurse.validUntil})" 
+                    title="Replace Staff"
+                    style="width: 32px; height: 32px; border-radius: 50%; border: none; 
+                           background: #e3f2fd; color: #1565c0; cursor: pointer; 
+                           display: flex; align-items: center; justify-content: center; 
+                           box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                </button>
+                
+                <button onclick="window.removeNurse('${nurse.id}')"
+                    title="Delete Permanently"
+                    class="delete-btn-force"
+                    style="width: 32px; height: 32px; border-radius: 50%; border: none; 
+                           background: #ffebee; color: #c62828; cursor: pointer; 
+                           display: flex; align-items: center; justify-content: center; 
+                           box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;
+                           opacity: 1; visibility: visible;">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>`;
 
-                // Render Card
-                grid.innerHTML += `
-    <div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
-        
-        <div style="display: ${checkDisplay}; position: absolute; top: 12px; left: 12px; z-index: 10;">
-            <input type="checkbox" style="width: 20px; height: 20px; accent-color: #d32f2f; cursor: pointer;" 
-                ${isChecked} onchange="toggleSelection('${nurse.id}')">
-        </div>
+            // Render Card
+            grid.innerHTML += `
+<div class="card nurse-card" style="display: flex; flex-direction: column; height: 100%; min-height: 280px; position: relative;">
+    
+    <div style="display: ${checkDisplay}; position: absolute; top: 12px; left: 12px; z-index: 10;">
+        <input type="checkbox" style="width: 20px; height: 20px; accent-color: #d32f2f; cursor: pointer;" 
+            ${isChecked} onchange="toggleSelection('${nurse.id}')">
+    </div>
 
-        ${actionButtonsHtml}
+    ${actionButtonsHtml}
 
-        <div style="flex: 1;">
-            <div class="nurse-header" style="margin-top: 25px;">
-                <div class="nurse-avatar">${initials}</div>
-                <div class="nurse-info">
-                    <h3 style="margin-bottom:2px; display:flex; align-items:center;">
-                        ${nurse.name} 
-                        ${badgeHtml}
-                    </h3>
-                    <p style="font-size:0.85rem; color:#666;">${nurse.role}</p>
-                    ${starHTML}
-                </div>
+    <div style="flex: 1;">
+        <div class="nurse-header" style="margin-top: 25px;">
+            <div class="nurse-avatar" style="overflow:hidden; background:${nurse.profilePhoto ? 'transparent' : ''}">
+                ${avatarHtml}
             </div>
-
-            <div class="metrics-row">
-                <div class="metric">
-                    <span class="metric-val">₹${nurse.rate}</span>
-                    <span class="metric-lbl">Daily Rate</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-val" style="color:${statusColor}; font-size:0.9rem;">
-                        ${statusText}
-                    </span>
-                    <span class="metric-lbl">Validity</span>
-                </div>
+            
+            <div class="nurse-info">
+                <h3 style="margin-bottom:2px; display:flex; align-items:center;">
+                    ${nurse.name} 
+                    ${badgeHtml}
+                </h3>
+                <p style="font-size:0.85rem; color:#666;">${nurse.role}</p>
+                ${starHTML}
             </div>
         </div>
 
-        <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
-            style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
-                   border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-            View Profile
-        </button>
-    </div>`;
-            });
-        }
+        <div class="metrics-row">
+            <div class="metric">
+                <span class="metric-val">₹${nurse.rate}</span>
+                <span class="metric-lbl">Daily Rate</span>
+            </div>
+            <div class="metric">
+                <span class="metric-val" style="color:${statusColor}; font-size:0.9rem;">
+                    ${statusText}
+                </span>
+                <span class="metric-lbl">Validity</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-profile" onclick="window.openProfile('${nurse.id}')" 
+        style="margin-top: 20px; width: 100%; background: #e3f2fd; color: #1565c0; 
+               border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+        View Profile
+    </button>
+</div>`;
+        });
+    }
 
         function populateLoginSelect() {
             const sel = document.getElementById('nurse-login-select');
@@ -4123,154 +4346,161 @@
             });
         }
 
-       // 🟢 FIX: Attached to window + Added Date Filter Logic
-       window.renderDashboardLogs = () => {
-        const grid = document.getElementById('dashboard-grid');
-        const dateInput = document.getElementById('dashboard-date-filter');
+        // 🟢 FIX: Attached to window + Added Date Filter Logic
+        window.renderDashboardLogs = () => {
+            const grid = document.getElementById('dashboard-grid');
+            const dateInput = document.getElementById('dashboard-date-filter');
 
-        // 1. Set Default to Today
-        if (dateInput && !dateInput.value) {
-            dateInput.valueAsDate = new Date();
-        }
+            // 1. Set Default to Today
+            if (dateInput && !dateInput.value) {
+                dateInput.valueAsDate = new Date();
+            }
 
-        // Safety Check
-        if (!grid || !dateInput) return;
+            // Safety Check
+            if (!grid || !dateInput) return;
 
-        grid.innerHTML = '';
+            grid.innerHTML = '';
 
-        // 2. Filter Logs by Selected Date
-        const selectedDate = new Date(dateInput.value).toDateString();
-        
-        const filteredLogs = allLogs.filter(log => {
-            const logDate = new Date(log.timestamp).toDateString();
-            return logDate === selectedDate;
-        });
+            // 2. Filter Logs by Selected Date
+            const selectedDate = new Date(dateInput.value).toDateString();
 
-        // 3. Handle Empty State
-        if (filteredLogs.length === 0) {
-            grid.innerHTML = `
+            const filteredLogs = allLogs.filter(log => {
+                const logDate = new Date(log.timestamp).toDateString();
+                return logDate === selectedDate;
+            });
+
+            // 3. Handle Empty State
+            if (filteredLogs.length === 0) {
+                grid.innerHTML = `
                 <div style="color:#999; grid-column:1/-1; text-align:center; padding:2rem; background:#f9f9f9; border-radius:12px; border:1px dashed #ddd;">
                     <i class="fa-regular fa-clock" style="font-size:1.5rem; margin-bottom:8px; opacity:0.5;"></i>
                     <p style="font-size:0.9rem;">No activity found for <b>${selectedDate}</b>.</p>
                 </div>`;
-            return;
-        }
+                return;
+            }
 
-        // 4. Render Logs (Show all matching logs for that day)
-        filteredLogs.forEach(log => {
-            grid.innerHTML += createLogCard(log);
-        });
-    };
+            // 4. Render Logs (Show all matching logs for that day)
+            filteredLogs.forEach(log => {
+                grid.innerHTML += createLogCard(log);
+            });
+        };
 
-       // 🟢 FIX: Attach to 'window' so HTML onchange="" can see it
-       window.renderAllLogs = () => {
-        const container = document.getElementById('logs-list-container');
-        const dateInput = document.getElementById('logs-date-filter');
-        
-        // 1. Set Default Date to Today if empty
-        if (dateInput && !dateInput.value) {
-            dateInput.valueAsDate = new Date();
-        }
+        // 🟢 FIX: Attach to 'window' so HTML onchange="" can see it
+        window.renderAllLogs = () => {
+            const container = document.getElementById('logs-list-container');
+            const dateInput = document.getElementById('logs-date-filter');
 
-        // Safety check
-        if (!container || !dateInput) return;
+            // 1. Set Default Date to Today if empty
+            if (dateInput && !dateInput.value) {
+                dateInput.valueAsDate = new Date();
+            }
 
-        container.innerHTML = '';
+            // Safety check
+            if (!container || !dateInput) return;
 
-        // 2. Filter Logs by Selected Date
-        // Note: We use 'toDateString' to ignore exact time (HH:MM:SS)
-        const selectedDate = new Date(dateInput.value).toDateString();
-        
-        const filteredLogs = allLogs.filter(log => {
-            const logDate = new Date(log.timestamp).toDateString();
-            return logDate === selectedDate;
-        });
+            container.innerHTML = '';
 
-        // 3. Show Empty State if no logs for that date
-        if (filteredLogs.length === 0) {
-            container.innerHTML = `
+            // 2. Filter Logs by Selected Date
+            // Note: We use 'toDateString' to ignore exact time (HH:MM:SS)
+            const selectedDate = new Date(dateInput.value).toDateString();
+
+            const filteredLogs = allLogs.filter(log => {
+                const logDate = new Date(log.timestamp).toDateString();
+                return logDate === selectedDate;
+            });
+
+            // 3. Show Empty State if no logs for that date
+            if (filteredLogs.length === 0) {
+                container.innerHTML = `
                 <div style="text-align:center; padding:3rem; color:#999;">
                     <i class="fa-regular fa-calendar-xmark" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i>
                     <p>No activity found for <b>${selectedDate}</b>.</p>
                 </div>`;
-            return;
-        }
-
-        // 4. Render Filtered Logs
-        filteredLogs.forEach(log => {
-            container.innerHTML += createLogCard(log);
-        });
-    };
-
-    function createLogCard(log) {
-        // 1. Time Formatting
-        const startObj = new Date(log.timestamp);
-        const startTime = startObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-        let endTimeHtml = '';
-        let statusBadge = '';
-
-        // 2. Determine Layout based on Type (Job vs Check-in)
-        if (log.type === 'checkin') {
-            // Scenario A: Just Availability (One time only)
-            endTimeHtml = `<div class="time-point" style="opacity:0.4;">
-                                <span>--:--</span> <i class="fa-solid fa-ellipsis-vertical"></i>
-                           </div>`;
-            statusBadge = `<span class="status-badge badge-checkin">Available</span>`;
-        
-        } else {
-            // Scenario B: Job (Might have End Time)
-            if (log.endTime) {
-                // Job Completed
-                const endObj = new Date(log.endTime);
-                const endTime = endObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                
-                endTimeHtml = `<div class="time-point tp-end">
-                                    <span>${endTime}</span> <i class="fa-solid fa-flag-checkered"></i>
-                               </div>`;
-                statusBadge = `<span class="status-badge badge-completed">Completed</span>`;
-            } else {
-                // Job Ongoing
-                endTimeHtml = `<div class="time-point" style="color:#ff9800;">
-                                    <span style="font-size:0.7rem;">ON DUTY</span> <i class="fa-solid fa-spinner fa-spin"></i>
-                               </div>`;
-                statusBadge = `<span class="status-badge badge-ongoing">On Duty</span>`;
+                return;
             }
-        }
 
-        // 3. Address Cleanup (Remove "India", "Uttar Pradesh" to save space)
-        let cleanAddress = log.address || "GPS Location";
-        cleanAddress = cleanAddress.replace(', Uttar Pradesh', '').replace(', India', '');
+            // 4. Render Filtered Logs
+            filteredLogs.forEach(log => {
+                container.innerHTML += createLogCard(log);
+            });
+        };
 
-        // 4. Safe Strings for onclick
-        const safeName = log.nurseName ? log.nurseName.replace(/'/g, "\\'") : "Staff";
-        const safePhoto = log.photo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+        function createLogCard(log) {
+            // 1. Time Formatting
+            const timeObj = new Date(log.timestamp);
+            const timeStr = timeObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        return `
-        <div class="log-card">
-            <div class="log-timeline">
-                <div class="time-point tp-start">
-                    <span>${startTime}</span> <i class="fa-solid fa-play"></i>
-                </div>
-                ${endTimeHtml}
+            // 2. Define Styles based on Log Type
+            let borderClass = '';
+            let iconHtml = '';
+            let titleText = '';
+            let badgeHtml = '';
+
+            if (log.type === 'checkin') {
+                // 🟡 TYPE 1: AVAILABILITY
+                borderClass = 'border-left: 5px solid #ffb300;'; // Amber
+                iconHtml = `<div style="background:#fff8e1; color:#ffb300; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;"><i class="fa-solid fa-location-dot"></i></div>`;
+                titleText = "Marked Available";
+                badgeHtml = `<span style="background:#fff8e1; color:#ff6f00; font-size:0.7rem; padding:3px 8px; border-radius:4px; font-weight:700;">READY</span>`;
+
+            } else if (log.type === 'job_start') {
+                // 🔵 TYPE 2: REACHED PATIENT
+                borderClass = 'border-left: 5px solid #2196f3;'; // Blue
+                iconHtml = `<div style="background:#e3f2fd; color:#1565c0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;"><i class="fa-solid fa-house-medical"></i></div>`;
+                titleText = "Reached Location";
+                badgeHtml = `<span style="background:#e3f2fd; color:#0d47a1; font-size:0.7rem; padding:3px 8px; border-radius:4px; font-weight:700;">STARTED</span>`;
+
+            } else if (log.type === 'job_end') {
+                // 🔴 TYPE 3: DUTY COMPLETED
+                borderClass = 'border-left: 5px solid #4caf50;'; // Green
+                iconHtml = `<div style="background:#e8f5e9; color:#2e7d32; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;"><i class="fa-solid fa-flag-checkered"></i></div>`;
+                titleText = "Duty Completed";
+
+                // Calculate Duration Text (e.g., "6h 30m")
+                let durationStr = "";
+                if (log.duration) {
+                    const hrs = Math.floor(log.duration / (1000 * 60 * 60));
+                    const mins = Math.floor((log.duration % (1000 * 60 * 60)) / (1000 * 60));
+                    durationStr = `${hrs}h ${mins}m`;
+                }
+                badgeHtml = `<span style="background:#e8f5e9; color:#1b5e20; font-size:0.7rem; padding:3px 8px; border-radius:4px; font-weight:700;">DONE ${durationStr ? '(' + durationStr + ')' : ''}</span>`;
+            }
+
+            // 3. Address Cleanup
+            let cleanAddress = log.address || "GPS Location";
+            cleanAddress = cleanAddress.replace(', Uttar Pradesh', '').replace(', India', '');
+
+            // 4. Safety Checks
+            const safePhoto = log.photo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+            const safeName = log.nurseName ? log.nurseName.replace(/'/g, "\\'") : "Staff";
+
+            // 5. Render Card
+            return `
+        <div class="card" style="display:flex; align-items:center; gap:15px; padding:15px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05); ${borderClass}">
+            <div style="text-align:center; min-width:60px;">
+                <div style="font-weight:800; color:#333; font-size:1rem; line-height:1;">${timeStr}</div>
+                <div style="font-size:0.65rem; color:#999; text-transform:uppercase; margin-top:4px;">Time</div>
             </div>
 
-            <div class="log-photo-box" onclick="viewImage('${safePhoto}', '${safeName}', '${startTime}')">
-                <img src="${safePhoto}" alt="Selfie">
+            ${iconHtml}
+
+            <div style="flex:1;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                    <div style="font-weight:700; color:var(--navy); font-size:1rem;">${log.nurseName}</div>
+                    ${badgeHtml}
+                </div>
+                
+                <div style="font-size:0.9rem; color:#555; font-weight:600; margin-bottom:2px;">${titleText}</div>
+                
+                <div style="font-size:0.8rem; color:#777; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px;">
+                    <i class="fa-solid fa-map-pin" style="font-size:0.75rem; color:#ff5722;"></i> ${cleanAddress}
+                </div>
             </div>
 
-            <div class="log-info">
-                <div class="log-header">
-                    <div class="log-name">${log.nurseName}</div>
-                    ${statusBadge}
-                </div>
-                <div class="log-address">
-                    <i class="fa-solid fa-location-dot" style="color:#ff5722; font-size:0.8rem; margin-right:4px;"></i>
-                    ${cleanAddress}
-                </div>
-            </div>
+            <img src="${safePhoto}" onclick="viewImage('${safePhoto}', '${safeName}', '${timeStr}')" 
+                 style="width:45px; height:45px; border-radius:10px; object-fit:cover; border:1px solid #eee; cursor:pointer;">
         </div>`;
-    }
+        }
 
         window.viewImage = (src, name, time) => {
             const modal = document.getElementById('img-viewer-modal');
@@ -4415,9 +4645,15 @@
             window.toggleMode();
         };
 
-        // --- UPDATED FORM SUBMISSION (Dual Write: Dashboard + Bot) ---
+        // --- UPDATED FORM SUBMISSION (With Profile Photo & Credits) ---
         document.getElementById('addNurseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // UI Feedback: Lock button
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = "Saving...";
+            btn.disabled = true;
 
             // 1. GET FORM VALUES
             const planType = document.querySelector('input[name="staffPlan"]:checked').value;
@@ -4425,6 +4661,7 @@
             const phone = document.getElementById('nursePhone').value;
             const role = document.getElementById('nurseSpec').value;
             const rate = document.getElementById('nurseRate').value;
+            const photoInput = document.getElementById('nursePhotoInput'); // 📸 Get the file input
 
             // 2. CHECK CREDITS
             const extraSlots = currentUserData?.extraSlots || 0;
@@ -4435,30 +4672,42 @@
             // A. Block if no Monthly Slots
             if (planType === 'monthly' && monthlyLeft <= 0) {
                 alert("⚠️ No Monthly Slots Available!\n\nPlease click the 'Buy More' button above to purchase slots.");
-                return;
+                btn.innerText = originalText; btn.disabled = false; return;
             }
 
             // B. Block if no Daily Passes
             if (planType === 'daily' && dailyPasses <= 0) {
                 alert("⚠️ No Daily Passes Available!\n\nPlease click the 'Buy More' button above to purchase a pass.");
-                return;
+                btn.innerText = originalText; btn.disabled = false; return;
             }
 
             // 3. CALCULATE EXPIRY DATE
             let expiryDate;
             if (planType === 'monthly') {
-                // 🗓️ Monthly: Today + 30 Days
-                expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000);
+                expiryDate = Date.now() + (30 * 24 * 60 * 60 * 1000); // 30 Days
             } else {
-                // 🗓️ Daily: Today + 24 Hours
-                expiryDate = Date.now() + (24 * 60 * 60 * 1000);
+                expiryDate = Date.now() + (24 * 60 * 60 * 1000); // 24 Hours
             }
 
             try {
-                // 4. PREPARE BATCH WRITE
+                // 4. PROCESS PHOTO (Convert Image to Text String/Base64)
+                let photoUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"; // Default placeholder
+
+                if (photoInput.files && photoInput.files[0]) {
+                    const file = photoInput.files[0];
+                    const toBase64 = file => new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = error => reject(error);
+                    });
+                    photoUrl = await toBase64(file);
+                }
+
+                // 5. PREPARE BATCH WRITE
                 const batch = writeBatch(db);
 
-                // A. Generate Unique ID (Use Root Collection to ensure global uniqueness)
+                // A. Generate Unique ID
                 const newNurseRef = doc(collection(db, "nurses"));
                 const nurseId = newNurseRef.id;
 
@@ -4475,16 +4724,17 @@
                     timestamp: Date.now(),
                     validUntil: expiryDate,
                     type: planType,
-                    status: "offline", // Initial status for bot
-                    agencyId: currentUser.uid, // Link back to Agency
-                    agencyName: currentUserData.agencyName || "Silver Care Agency"
+                    status: "offline",
+                    agencyId: currentUser.uid,
+                    agencyName: currentUserData.agencyName || "Silver Care Agency",
+                    profilePhoto: photoUrl // 🟢 SAVE THE PHOTO HERE
                 };
 
                 // D. Queue the Writes
                 batch.set(agencyNurseRef, nurseData);
                 batch.set(rootNurseRef, nurseData);
 
-                // 5. CONSUME THE CORRECT CREDIT (In the same batch)
+                // 6. CONSUME THE CORRECT CREDIT
                 const agencyUserRef = doc(db, "users", currentUser.uid);
 
                 if (planType === 'monthly') {
@@ -4497,17 +4747,25 @@
                     });
                 }
 
-                // 6. COMMIT ALL CHANGES AT ONCE
+                // 7. COMMIT ALL CHANGES
                 await batch.commit();
 
-                // 7. SUCCESS FEEDBACK
+                // 8. SUCCESS FEEDBACK
                 alert(`✅ Staff Added Successfully!\nActive on WhatsApp Bot.\nValidity: ${planType === 'monthly' ? '30 Days' : '24 Hours'}`);
                 window.closeModal();
                 e.target.reset();
 
+                // Reset the photo preview to default
+                document.getElementById('nursePhotoPreview').src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+                document.getElementById('nursePhotoPreview').style.opacity = "0.6";
+
             } catch (err) {
                 console.error("Error adding staff:", err);
                 alert("Error saving data: " + err.message);
+            } finally {
+                // Restore button state
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
         });
 
@@ -4814,7 +5072,7 @@
 
                                 let contentClass = l.is_critical ? 'log-critical' : '';
                                 let mainText = l.summary || l.raw_text || "Update logged.";
-                                
+
                                 let vitalsHtml = '';
                                 if (l.vitals) {
                                     let parts = [];
@@ -5176,6 +5434,27 @@
             }).catch((error) => {
                 window.showToast("Invalid OTP", "error");
             });
+        };
+        // 📸 Helper: Preview Photo in Add Modal
+        window.previewNursePhoto = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('nursePhotoPreview').src = e.target.result;
+                    document.getElementById('nursePhotoPreview').style.opacity = "1";
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+        // 📸 Helper: Preview Photo in Edit Modal
+        window.previewEditPhoto = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('editPhotoPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         };
     </script>
 </body>
